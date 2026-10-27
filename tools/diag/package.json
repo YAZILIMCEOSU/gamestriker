@@ -1,0 +1,14 @@
+{
+  "name": "striker-diag",
+  "private": true,
+  "version": "1.9.0",
+  "type": "module",
+  "description": "Striker gömülü tanılama paketini Node altında çalıştıran doğrulama aracı (sıfır bağımlılık)",
+  "scripts": {
+    "diag": "node run-diagnostics.mjs ../../striker-dev/index.html",
+    "diag:base": "node run-diagnostics.mjs ../../inner.html",
+    "probe": "node run-diagnostics.mjs ../../striker-dev/index.html --probe",
+    "balance": "node run-diagnostics.mjs ../../striker-dev/index.html --balance",
+    "save": "node run-diagnostics.mjs ../../striker-dev/index.html --save"
+  }
+}
