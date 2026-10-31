@@ -22,6 +22,7 @@
  *   node run-diagnostics.mjs ../../striker-dev/index.html --audit    # görev 0 simülasyon ayrıştırması
  *   node run-diagnostics.mjs ../../striker-dev/index.html --world    # plan/missions_192.json ↔ build (birebir)
  *   node run-diagnostics.mjs ../../striker-dev/index.html --atmos    # gece/alacakaranlık/tozlu atmosfer katmanı
+ *   node run-diagnostics.mjs ../../striker-dev/index.html --twist    # 8 twist kuralı motora bağlı mı
  *
  * Çıkış kodu: 0 = hepsi geçti · 1 = en az bir test başarısız · 2 = araç hatası
  *
@@ -40,7 +41,8 @@ const MODE = args.includes('--probe') ? 'probe'
   : args.includes('--terrain') ? 'terrain'
   : args.includes('--audit') ? 'audit'
   : args.includes('--world') ? 'world'
-  : args.includes('--atmos') ? 'atmos' : 'diag';
+  : args.includes('--atmos') ? 'atmos'
+  : args.includes('--twist') ? 'twist' : 'diag';
 const htmlArg = args.find((a) => !a.startsWith('--'));
 const target = resolve(htmlArg || join(here, '../../striker-dev/index.html'));
 
@@ -458,6 +460,90 @@ if (MODE === 'atmos') {
     (html.match(/uNight:\{value:0\}/g) || []).length === 2 && (html.match(/uDust:\{value:0\}/g) || []).length === 2, 'başlangıç 0 değil');
 
   console.log(`\nSONUÇ: ${fails === 0 ? 'atmosfer katmanı bağlı ve tutarlı' : fails + ' kontrol BAŞARISIZ'}`);
+  process.exit(fails === 0 ? 0 : 1);
+}
+
+if (MODE === 'twist') {
+  // 8 twist metni v3.79'da yazıldı, v3.82'de motora bağlandı.
+  // Eşleşmezse ternary'nin else dalı v3.81 sabitidir — regresyon yok.
+  const TW = [
+    ['low', 'Yalnızca düşük irtifada uçuş', 'player.y-this.terr'],
+    ['reinf', 'Düşman her 90 saniyede takviye gönderir', 'reinfT>=90'],
+    ['fuel', 'Yakıt üç katı hızlı tükenir', '?3:1'],
+    ['radar', 'Radar kapalı, hedefler gözle bulunur', '?[]:s.alive.map'],
+    ['fog', 'Sis perdesi görüşü yarıya indirir', 'fog.density*=2'],
+    ['flee', 'Bir hedef saldırı sırasında kaçar', 'finish(!1,"escaped")'],
+    ['missile', 'Yalnızca füze ile vurulabilir hedefler', 'n.kind==="gun"'],
+    ['sensor', 'Kanat sensörü arızalı, manuel nişan', '?.1:.53'],
+  ];
+  let fails = 0;
+  const chk = (n, c, d) => { console.log(`${c ? 'PASS' : 'FAIL'}  ${n}${c ? '' : '  -> ' + d}`); if (!c) fails++; };
+  for (const [id, text, hook] of TW) {
+    const sites = html.split(`mission.twist==="${text}"`).length - 1;
+    chk(`${id}: davranış kancası var (${sites})`, sites >= 1, 'yalnız tablo');
+    chk(`${id}: kanca gerçek etki içeriyor (${hook})`, html.includes(hook), 'etki yok');
+  }
+  // yakit formulu GERCEK satirdan calisir
+  const fuelLine = html.match(/this\.fuel=Math\.max\(0,this\.fuel-a\*\(96\/this\.mission\.limit\)\*\(this\.mission\.twist==="([^"]+)"\?3:1\)\)/);
+  chk('yakıt satırı 3x ternary', !!fuelLine, 'formül yok');
+  if (fuelLine) {
+    const drain = (twist, a, limit) => a * (96 / limit) * (twist === fuelLine[1] ? 3 : 1);
+    const base = drain('açık', 1, 360), fast = drain(fuelLine[1], 1, 360);
+    chk('yakıt x3 gerçekten 3 kat', Math.abs(fast / base - 3) < 1e-9, `${fast}/${base}`);
+    chk('twist yokken yakıt v3.81 ile aynı', Math.abs(base - 96 / 360) < 1e-9, String(base));
+  }
+  // kilit menzili else dali 2900, sensor else dali .53 — eski sabit duruyor
+  chk('kilit else dalı 2900 (twist yok = v3.81)', /1450:2900/.test(html), '2900 kayıp');
+  chk('koni else dalı .53 (twist yok = v3.81)', /\?\.1:\.53/.test(html), '.53 kayıp');
+  chk('işaret else dalı 12000 (twist yok = v3.81)', /:12000;this\.camera\.updateMatrixWorld/.test(html), '12000 kayıp');
+  // kacis metni 10 dil
+  const esc = html.match(/escaped:\[([^\]]+)\]/);
+  const nLang = esc ? esc[1].split('","').length : 0;
+  chk('escaped metni 10 dil', nLang === 10, String(nLang));
+  // dagilim
+  const have = MISSION_LIST.map((m) => m.twist).filter(Boolean);
+  const uniq = [...new Set(have)];
+  console.log(`  twist'li görev: ${have.length}/${MISSION_LIST.length} · ${uniq.length} farklı`);
+  chk('8 twist de görevlerde kullanılıyor', TW.every(([, t]) => have.includes(t)), uniq.join(' | '));
+  const counts = Object.fromEntries(TW.map(([, t]) => [t, have.filter((x) => x === t).length]));
+  const minC = Math.min(...Object.values(counts));
+  chk('her twist en az 15 görevde', minC >= 15, String(minC));
+
+  // GERÇEK simülasyon: Pa.update yakıtı, Pa.updateEnemies kaçışı koşar
+  const PR = { ...__defaults().preferences, assisted: true, difficulty: 'normal' };
+  const IN = { yaw: 0, pitch: 0, throttle: 0.42, fire: false, boost: false };
+  const fuelText = TW.find((t) => t[0] === 'fuel')[1];
+  const fuelM = MISSION_LIST.find((m) => m.twist === fuelText && m.targets);
+  const plain = MISSION_LIST.find((m) => m.twist && m.twist !== fuelText && m.targets && m.limit);
+  chk('yakıt simülasyonu için iki görev bulundu', !!(fuelM && plain), `${fuelM && fuelM.id}/${plain && plain.id}`);
+  if (fuelM && plain) {
+    const burn = (m) => {
+      const u = new Sim(m, 'striker', PR);
+      const f0 = u.fuel;
+      for (let i = 0; i < 180; i++) { u.update(1 / 60, IN); u.events.length = 0; }
+      return (f0 - u.fuel) * m.limit;
+    };
+    const dFuel = burn(fuelM), dPlain = burn(plain);
+    console.log(`  yakıt (normalize): twist ${dFuel.toFixed(1)} · düz ${dPlain.toFixed(1)} · oran ${(dFuel / dPlain).toFixed(2)}  görev ${fuelM.id}/${plain.id}`);
+    chk('simülasyon: yakıt twist 2.5–3.5 kat hızlı', dPlain > 0 && dFuel / dPlain >= 2.5 && dFuel / dPlain <= 3.5, `${dFuel}/${dPlain}`);
+  }
+
+  const fleeM = MISSION_LIST.find((m) => m.twist === TW.find((t) => t[0] === 'flee')[1] && m.targets);
+  chk('kaçış simülasyonu için görev bulundu', !!fleeM, 'yok');
+  if (!fleeM) { console.log(`\nSONUÇ: ${fails} kontrol BAŞARISIZ`); process.exit(1); }
+  const fu = new Sim(fleeM, 'striker', PR);
+  fu.phase = 'combat';
+  fu.updateEnemies(0.016);
+  const escaper = fu.entities.find((n) => n.flee);
+  chk('simülasyon: kaçan hedef seçildi', !!escaper, 'flee bayrağı yok');
+  if (escaper) {
+    const x0 = escaper.position.x, z0 = escaper.position.z;
+    for (let i = 0; i < 60; i++) fu.updateEnemies(1 / 60);
+    const moved = Math.hypot(escaper.position.x - x0, escaper.position.z - z0);
+    console.log(`  kaçış 1 sn: ${moved.toFixed(1)} m (75 beklenir)`);
+    chk('simülasyon: kaçan hedef ~75 m/sn uzaklaşıyor', moved > 60 && moved < 90, moved.toFixed(1));
+  }
+  console.log(`\nSONUÇ: ${fails === 0 ? '8 twist motora bağlı' : fails + ' kontrol BAŞARISIZ'}`);
   process.exit(fails === 0 ? 0 : 1);
 }
 
