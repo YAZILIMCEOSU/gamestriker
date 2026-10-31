@@ -394,7 +394,7 @@ if (MODE === 'atmos') {
           sun: { color: col('sunColor'), intensity: null },
           hemi: { color: col('hemiSky'), groundColor: col('hemiGnd'), intensity: null },
           fill: { color: col('fillColor'), intensity: null },
-          sceneE: { fog: { color: col('fogColor'), density: null } },
+          sceneE: { fog: { color: col('fogColor'), density: null }, environmentIntensity: 0 },
         };
         return { rec, self };
       };
@@ -403,20 +403,20 @@ if (MODE === 'atmos') {
 
       const g = run('gece'), a = run('alacakaranlık'), t = run('tozlu'), d = run('açık');
       const rows = [
-        ['gece', g, 1, 0, 0.55, 0.42, 3e-5],
-        ['alacakaranlık', a, 0.42, 0, 2.3, 1.15, 4e-5],
-        ['tozlu', t, 0, 1, 2.6, 2.1, 1.6e-4],
+        ['gece', g, 1, 0, 1.7, 1.85, 3.5e-5, 0.28],
+        ['alacakaranlık', a, 0.78, 0, 2.15, 1.7, 5.5e-5, 0.45],
+        ['tozlu', t, 0, 1, 2.6, 2.1, 1.6e-4, 0.82],
       ];
-      console.log('  hava            uNight uDust  sun.i  hemi.i  fog.dens');
-      for (const [nm, r, un, ud, si, hi, gd] of rows) {
+      console.log('  hava            uNight uDust  sun.i  hemi.i  fog.dens  ei');
+      for (const [nm, r, un, ud, si, hi, gd, ei] of rows) {
         const v = r.self;
-        console.log(`  ${nm.padEnd(15)} ${String(v.skyMaterial.uniforms.uNight.value).padEnd(6)} ${String(v.skyMaterial.uniforms.uDust.value).padEnd(6)} ${String(v.sun.intensity).padEnd(6)} ${String(v.hemi.intensity).padEnd(7)} ${v.sceneE.fog.density}`);
+        console.log(`  ${nm.padEnd(15)} ${String(v.skyMaterial.uniforms.uNight.value).padEnd(6)} ${String(v.skyMaterial.uniforms.uDust.value).padEnd(6)} ${String(v.sun.intensity).padEnd(6)} ${String(v.hemi.intensity).padEnd(7)} ${String(v.sceneE.fog.density).padEnd(9)} ${v.sceneE.environmentIntensity}`);
         chk(`${nm}: uNight=${un} uDust=${ud}`, eq(v.skyMaterial.uniforms.uNight.value, un) && eq(v.skyMaterial.uniforms.uDust.value, ud),
           `${v.skyMaterial.uniforms.uNight.value}/${v.skyMaterial.uniforms.uDust.value}`);
         chk(`${nm}: sea shader da aynı değeri aldı`, eq(v.seaMaterial.uniforms.uNight.value, un) && eq(v.seaMaterial.uniforms.uDust.value, ud), 'sky/sea ayrışmış');
-        chk(`${nm}: ışık profili uygulandı (sun=${si} hemi=${hi} fog=${gd})`,
-          eq(v.sun.intensity, si) && eq(v.hemi.intensity, hi) && eq(v.sceneE.fog.density, gd),
-          `${v.sun.intensity}/${v.hemi.intensity}/${v.sceneE.fog.density}`);
+        chk(`${nm}: ışık profili uygulandı (sun=${si} hemi=${hi} fog=${gd} ei=${ei})`,
+          eq(v.sun.intensity, si) && eq(v.hemi.intensity, hi) && eq(v.sceneE.fog.density, gd) && eq(v.sceneE.environmentIntensity, ei),
+          `${v.sun.intensity}/${v.hemi.intensity}/${v.sceneE.fog.density}/${v.sceneE.environmentIntensity}`);
       }
 
       // gece ile alacakaranlık AYRIRT EDİLEBİLİR olmalı (v3.79'da birebir aynıydı)
@@ -425,14 +425,14 @@ if (MODE === 'atmos') {
         && g.rec.sunColor !== a.rec.sunColor,
         `${g.self.skyMaterial.uniforms.uNight.value}/${a.self.skyMaterial.uniforms.uNight.value} ${g.rec.sunColor}/${a.rec.sunColor}`);
       chk('tozlu ≠ sisli (uDust=1, sis toprak rengi)', t.self.skyMaterial.uniforms.uDust.value === 1 && t.rec.fogColor === '#b39a6d', `${t.rec.fogColor}`);
-      chk('gece ay ışığı soğuk, sis rengi koyu', g.rec.sunColor === '#7090c8' && g.rec.fogColor === '#0d1522', `${g.rec.sunColor}/${g.rec.fogColor}`);
+      chk('gece ay ışığı soğuk (B>R), sis rengi koyu', g.rec.sunColor === '#8eb4dc' && g.rec.fogColor === '#121c2e', `${g.rec.sunColor}/${g.rec.fogColor}`);
 
       // normal hava: taban çizgisi aynen geri gelmeli (v3.79 davranışı korunuyor)
       chk('normal hava: uNight=uDust=0 (shader v3.79 ile aynı)',
         eq(d.self.skyMaterial.uniforms.uNight.value, 0) && eq(d.self.skyMaterial.uniforms.uDust.value, 0), 'sıfırlanmamış');
-      chk('normal hava: ışıklar taban değerine döndü (sun 3.9 / hemi 2.8 / fill 1.15)',
-        eq(d.self.sun.intensity, 3.9) && eq(d.self.hemi.intensity, 2.8) && eq(d.self.fill.intensity, 1.15),
-        `${d.self.sun.intensity}/${d.self.hemi.intensity}/${d.self.fill.intensity}`);
+      chk('normal hava: ışıklar taban değerine döndü (sun 3.9 / hemi 2.8 / fill 1.15 / ei .82)',
+        eq(d.self.sun.intensity, 3.9) && eq(d.self.hemi.intensity, 2.8) && eq(d.self.fill.intensity, 1.15) && eq(d.self.sceneE.environmentIntensity, 0.82),
+        `${d.self.sun.intensity}/${d.self.hemi.intensity}/${d.self.fill.intensity}/${d.self.sceneE.environmentIntensity}`);
       chk('normal hava: sis rengine dokunulmuyor (setSunset kazanır)', d.rec.fogColor === undefined, String(d.rec.fogColor));
 
       // 205 görevin tamamının weatherKey'i hatasız koşmalı
