@@ -549,6 +549,7 @@ if (MODE === 'curve') {
   chk('görev 1 çökmeden bitiyor', !s0.threw && s0.u.result && s0.u.result.success, s0.threw ? s0.threw.message : (s0.u.result && s0.u.result.reason) || 'bitmedi');
   chk('görev 1 pusu dalgası yok (yalnızca listedeki hedefler)', extra <= 0, `fazla öldürme ${extra}`);
   chk('görev 1 bitince can %40 üstü', s0.u.healthPercent >= 40, String(s0.u.healthPercent));
+  chk('görev 1 sorti canı %90 üstü', s0.u.healthPercent >= 90, String(s0.u.healthPercent));
   const s1 = sortie(1, 95);
   chk('görev 2 takviye twist\'i oyunu çökertmiyor', !s1.threw, s1.threw && s1.threw.message);
   const sea = new Sim(MISSION_LIST[0], 'striker', { ...PR, assisted: false });
@@ -603,6 +604,45 @@ if (MODE === 'curve') {
   const htmlNow = readFileSync(target, 'utf8');
   chk('radar denizi baklava, dalmışı halka çizer', htmlNow.includes('b.sea?"#7ee0ff"') && htmlNow.includes('b.sub?S.jsx("circle"') && htmlNow.includes('M0-4.2l3.4'), 'şekil yok');
   chk('kenar oku deniz türünü yazar', htmlNow.includes('corvette:"COR"') && htmlNow.includes('sea-mark'), 'etiket yok');
+  const foot = [
+    ['radar', 90, 2.45],
+    ['sam', 120, 1.85],
+    ['depot', 160, 1.4],
+  ];
+  for (const [name, base, k] of foot) {
+    const span = Math.round(base * k);
+    chk(`${name} tabanı 200-400 m`, htmlNow.includes(`inner.scale.setScalar(${k})`) && span >= 200 && span <= 400, `${span}`);
+  }
+  const hitKind = (kind, partK, expectZ) => {
+    const m = MISSION_LIST.find((q) => (q.targets || []).includes(kind));
+    if (!m) return { ok: false, detail: 'görev yok' };
+    const u = new Sim(m, 'striker', PR);
+    const ent = u.entities.find((e) => e.kind === kind && e.parts);
+    if (!ent) return { ok: false, detail: 'varlık yok' };
+    const part = ent.parts.find((p) => p.k === partK);
+    if (expectZ != null && !(part.o[2] < 0)) return { ok: false, detail: `z=${part.o[2]}` };
+    u.partW(ent, part, u.temp);
+    const shot = { kind: 'gun', damage: 30, previous: u.temp.clone(), position: u.temp.clone() };
+    const h0 = part.h;
+    const hit = u.hitParts(ent, shot);
+    return { ok: hit && part.h < h0, detail: `${kind} ${partK} hit=${hit} h=${part.h}/${h0} o=${part.o.join(',')}` };
+  };
+  const dish = hitKind('radar', 'dish');
+  console.log(`  tesis vuruş ${dish.detail}`);
+  chk('radar çanağına atış parçaya denk geliyor', dish.ok, dish.detail);
+  const af = new Sim(MISSION_LIST[0], 'striker', PR);
+  const afEnt = { position: { x: 0, y: 0, z: 0 }, heading: 0, parts: af.mkParts('airfield'), maxHp: 400, hp: 400 };
+  const hang = afEnt.parts.filter((p) => p.k === 'hangar');
+  af.partW(afEnt, hang[0], af.temp);
+  const hangShot = { kind: 'gun', damage: 20, previous: af.temp.clone(), position: af.temp.clone() };
+  const hangHit = af.hitParts(afEnt, hangShot);
+  const ghost = af.temp.clone().set(-150, 11, 140);
+  const ghostShot = { kind: 'gun', damage: 20, previous: ghost.clone(), position: ghost.clone() };
+  const ghostHit = af.hitParts(afEnt, ghostShot);
+  chk('havaalanı hangarı görünen tarafta ve vuruş alıyor', hang.length === 3 && hang.every((p) => p.o[2] < 0) && hangHit, hang.map((p) => p.o.join(',')).join(' | '));
+  chk('eski hangar noktası artık isabet değil', !ghostHit, String(ghostHit));
+  const sam = hitKind('sam', 'launcher');
+  chk('SAM lançeri parça vuruşu alıyor', sam.ok, sam.detail);
   console.log(`\nSONUÇ: ${fails === 0 ? 'kampanya eğrisi 205 göreve yayıldı' : fails + ' kontrol BAŞARISIZ'}`);
   process.exit(fails === 0 ? 0 : 1);
 }
