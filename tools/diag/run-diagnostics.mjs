@@ -528,6 +528,27 @@ if (MODE === 'curve') {
   chk('simülasyon: görev 0, görev 160 dan az düşman', a.n < b.n, `${a.n}/${b.n}`);
   chk('simülasyon: görev 0 toplam düşman canı daha düşük', a.hp < b.hp * 0.55, `${Math.round(a.hp)}/${Math.round(b.hp)}`);
   chk('simülasyon: görev 0 düşmanı tek füze bandında (ortalama can ≤ gövde)', a.n > 0 && a.hp / a.n <= a.hull, `${Math.round(a.hp / a.n)}/${a.hull}`);
+  const sortie = (id, sec) => {
+    const u = new Sim(MISSION_LIST.find((m) => m.id === id), 'striker', PR);
+    const input = { yaw: 0, pitch: 0, throttle: 0.55, fire: true, boost: false };
+    let threw = null;
+    try {
+      for (let i = 0; i < sec * 60 && !u.result; i++) {
+        u.update(1 / 60, input);
+        if (u.lock >= 1) u.fireMissile();
+        u.events.length = 0;
+      }
+    } catch (err) { threw = err; }
+    return { u, threw };
+  };
+  const s0 = sortie(0, 120);
+  const extra = s0.u.kills - (MISSION_LIST[0].targets || []).length;
+  console.log(`  görev 1 sorti: ${s0.threw ? 'ÇÖKTÜ ' + s0.threw.message : (s0.u.result ? s0.u.result.reason + ' başarı=' + s0.u.result.success : 'bitmedi')} can ${s0.u.healthPercent} süre ${Math.round(s0.u.time)}s öldürme ${s0.u.kills}`);
+  chk('görev 1 çökmeden bitiyor', !s0.threw && s0.u.result && s0.u.result.success, s0.threw ? s0.threw.message : (s0.u.result && s0.u.result.reason) || 'bitmedi');
+  chk('görev 1 pusu dalgası yok (yalnızca listedeki hedefler)', extra <= 0, `fazla öldürme ${extra}`);
+  chk('görev 1 bitince can %40 üstü', s0.u.healthPercent >= 40, String(s0.u.healthPercent));
+  const s1 = sortie(1, 95);
+  chk('görev 2 takviye twist\'i oyunu çökertmiyor', !s1.threw, s1.threw && s1.threw.message);
   console.log(`\nSONUÇ: ${fails === 0 ? 'kampanya eğrisi 205 göreve yayıldı' : fails + ' kontrol BAŞARISIZ'}`);
   process.exit(fails === 0 ? 0 : 1);
 }
