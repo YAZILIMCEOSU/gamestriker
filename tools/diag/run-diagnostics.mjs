@@ -574,6 +574,17 @@ if (MODE === 'curve') {
   const b0 = Math.abs(steer.targetBearing);
   for (let i = 0; i < 6 * 60; i++) steer.update(1 / 60, { yaw: 0.2, pitch: 0, throttle: 0.5, fire: false, boost: false });
   chk('hafif kol kolay görevde rotayı kesmiyor', Math.abs(steer.targetBearing) < b0 - 0.05, `${b0.toFixed(2)} -> ${Math.abs(steer.targetBearing).toFixed(2)}`);
+  const card = (MISSION_LIST[0].targets || []).length;
+  const sim0 = new Sim(MISSION_LIST[0], 'striker', PR);
+  const listed = sim0.entities.filter((e) => e.listed);
+  const hudDenom = (sim0.mission.targets || []).length;
+  const hudNum = sim0.entities.filter((e) => e.listed && !(e.hp > 0)).length;
+  console.log(`  sayaç kart ${card} · HUD ${hudNum}/${hudDenom} · varlık ${sim0.entities.length}`);
+  chk('kart, HUD ve görev listesi aynı payda', card === hudDenom && listed.length === card, `${card}/${hudDenom}/${listed.length}`);
+  chk('HUD uçak gemisini hedef saymıyor', sim0.entities.length > card && hudDenom === card, `${sim0.entities.length}/${hudDenom}`);
+  listed[0].hp = 0;
+  sim0.finish(true, 'landed');
+  chk('sonuç ekranı aynı kırılımı yazıyor', sim0.result.done === 1 && sim0.result.goal === card, `${sim0.result.done}/${sim0.result.goal}`);
   console.log(`\nSONUÇ: ${fails === 0 ? 'kampanya eğrisi 205 göreve yayıldı' : fails + ' kontrol BAŞARISIZ'}`);
   process.exit(fails === 0 ? 0 : 1);
 }
