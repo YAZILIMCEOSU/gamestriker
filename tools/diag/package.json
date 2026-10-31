@@ -1,7 +1,7 @@
 {
   "name": "striker-diag",
   "private": true,
-  "version": "1.9.0",
+  "version": "1.10.0",
   "type": "module",
   "description": "Striker gömülü tanılama paketini Node altında çalıştıran doğrulama aracı (sıfır bağımlılık)",
   "scripts": {
@@ -9,6 +9,8 @@
     "diag:base": "node run-diagnostics.mjs ../../inner.html",
     "probe": "node run-diagnostics.mjs ../../striker-dev/index.html --probe",
     "balance": "node run-diagnostics.mjs ../../striker-dev/index.html --balance",
-    "save": "node run-diagnostics.mjs ../../striker-dev/index.html --save"
+    "save": "node run-diagnostics.mjs ../../striker-dev/index.html --save",
+    "terrain": "node run-diagnostics.mjs ../../striker-dev/index.html --terrain",
+    "verify": "node run-diagnostics.mjs ../../striker-dev/index.html && node run-diagnostics.mjs ../../striker-dev/index.html --terrain && node run-diagnostics.mjs ../../striker-dev/index.html --balance && node run-diagnostics.mjs ../../striker-dev/index.html --save"
   }
 }

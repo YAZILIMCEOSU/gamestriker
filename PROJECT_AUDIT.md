@@ -306,6 +306,7 @@ oyuncu profilleri silinir. Dışa/içe aktarma ve IndexedDB yedeği yok.
 | ~~**B-1**~~ | **KAPATILDI (v1.8):** gömülü test `Lock, guided missile, impact` v1.7'de FAIL idi (5/5 tekrar, deterministik). Kök neden: v1.2'de eklenen düşman HP `×1.6` çarpanı, füze hasarı güncellenmeden uygulanmıştı → hafif hedef 160 hp, füze 110 hasar, tek füze imha etmiyordu; 1. görevde 18 vuruş gerekiyor, kapasite 10 füzeydi. **Çözüm:** `×1.6` çarpanı geri alındı (görev süresi zaten hedef sayısı 7–13 ve koridor derinliğinden geliyor). Ölçüm sonrası: gereken atış 18→**11**, asistli sorti süresi 57.4→**70.4 sn** (kısalmadı), 11/11 PASS. | ✅ **KAPALI** | `build.py` + `--balance` |
 | ~~**B-2**~~ | **KAPATILDI (v1.8):** `patch_v3…v9` + `audio2.js`/`audio4.js` → `striker-dev/archive/` (açıklamalı README ile). Tek giriş noktası artık kökteki `python3 build.py` → `patch_v10.py`. | ✅ **KAPALI** | `striker-dev/archive/README.md` |
 | ~~**B-3**~~ | **KAPATILDI (v1.9):** sürümlü save + migrasyon zinciri. Yeni anahtar `striker.profile.v3`, eski anahtarlar (`idea-game.striker.v2/v1`) okuma sırasında otomatik bulunup taşınıyor (**migrate-on-read**), eski anahtar **silinmiyor** (doğal yedek). Bozuk/bilinmeyen sürüm `striker.profile.v3.quarantine`'a yazılıyor — veri asla atılmıyor. 3 gömülü test + `--save` 16 senaryo. | ✅ **KAPALI** | `tools/diag --save` |
+| ~~**B-13**~~ | **KAPATILDI (v1.10):** kullanıcı bildirimi *"dağın içinde hedef gösteriyor"*. Kök neden: v6 hedef-doğuş döngüsü `for(let q=1;q<8&&this.terr(d,p)>4;q++)` — **eşik sabit `terr>4`, oysa kara hedefleri y=8 (gemi) / y=26 (radar) duruyor** ve döngü **en fazla 7 tur**. Kaçamayan hedef arazinin içinde doğuyordu. Ölçüm (`tools/diag --terrain`, 464 hedef / 48 görev): **16 hedef zeminin altında, en kötü −232 m**, 46/48 görev etkilenmiş. **Çözüm:** koşul hedefin kendi irtifasına bağlandı (`terr <= g-6`), arama 96 tura çıkarıldı, son çare olarak hedef gömülmek yerine zeminin 50 m üstüne kaldırılıyor. Hava hedeflerinin davranışı **aynen** bırakıldı (denge değişmesin). Sonuç: **0/464 gömülü**, en kötü açıklık **+8 m**, yerleşim medyanı \|x\| 1410 m → 1410 m (yığılma yok). Yan etki: 1. görev asistli sorti 70,4 → 32,8 sn (gömülü destroyer artık açık suda) → **X4 par kalibrasyonu** açıldı. | ✅ **KAPALI** | `tools/diag --terrain` A/B (v1.9 exit 1 → v1.10 exit 0) |
 | **B-4** | Harici bağımlılıklar: Google Fonts + **Cloudflare Insights beacon**. Çevrimdışı oynanışı bozar, Play Store gizlilik beyanı gerektirir, mağaza incelemesinde üçüncü taraf izleme sorusu doğurur. | ORTA | `<link>`/`<script src>` taraması |
 | **B-5** | 965 KB tek modül, kod bölme yok → düşük uç cihazda açılış yavaş. | ORTA | bundle ölçümü |
 | **B-6** | Depo hijyeni: `new.html` (2,8 MB, başka uygulama), `page.html`/`app.html` (Arena sarmalayıcı, birebir kopya), `original.html` (`inner.html` kopyası) → 6,2 MB'ın ~3,9 MB'ı oyun değil. | ORTA | md5 tablosu |
@@ -498,3 +499,49 @@ rozet `1.9 DEV`.
 içinde ham kayıt durur; ayrıca eski `idea-game.striker.v2` anahtarı da silinmediği için ikinci yedektir.
 
 **Sıradaki:** P3 — harici bağımlılıklar (B-4) + PWA/offline.
+
+---
+
+### P2.5 — 2026-10-31 (uygulandı, doğrulandı) · v1.10 DEV · plan dışı kullanıcı hatası
+
+**Tetikleyici:** kullanıcı bildirimi *"dağın içinde hedef gösteriyor"*. Roadmap'te yoktu;
+P2 ile P3 arasına alındı çünkü oyuncunun her görevde gördüğü görsel bir kusurdu.
+
+| # | İş | Doğrulama |
+|---|---|---|
+| 1 | `tools/diag`'a **`--terrain`** modu eklendi (kalıcı regresyon testi). `terr()` `Pa.prototype` üzerinde olduğu için `sim.terr(x,z)` doğrudan çağrılıyor — **arazi yüksekliği koddan okunuyor, sabit yazılmıyor** | 464 hedef / 48 görev taranıyor |
+| 2 | **A) Gömülü hedef** ölçümü: `terr(x,z) > y + 1` | v1.9: **16/464**, en kötü **−232 m** |
+| 3 | **B) Gövdesi araziye giren** ölçümü; `h > SEA` korumasıyla gemi yanlış pozitifi elendi | ilk sürüm 200 yanlış pozitif üretiyordu → gerçek değer **0** |
+| 4 | **C) Görüş hattı** ölçümü; ışının ilk %5 / son %15'i yoksayılıyor (yoksa A kusuru C'yi şişiriyordu) | C **bilgi amaçlı**, çıkış kodunu etkilemez |
+| 5 | **Yerleşim dağılımı** ölçümü (|x| min/medyan/ort/%90/maks + merkeze yığılma) | düzeltmenin hedefleri koridora çekmediğini kanıtlıyor |
+| 6 | `patch_v12.py`: kara hedefi yerleşimi `terr <= g-6` + 96 tur arama + gömülmeye karşı zemin üstüne kaldırma | `--terrain` **16 → 0**, exit **1 → 0** |
+| 7 | Hava hedeflerinin kaçış döngüsü **aynen** korundu | sorti dengesi hava hedeflerinde değişmedi |
+| 8 | Rozet 10 dilin hepsinde `1.10 DEV` (eskiden de/es/fr/it/pt/ru/id "1.3 DEV", ar "1.4 DEV") | `build.py` → `rozet : ['1.10 DEV']` (tek değer) |
+
+**A/B kanıtı** (aynı araç, iki build — eski build `docs/index.html` olarak duruyordu):
+
+| Ölçüt | v1.9 | v1.10 |
+|---|---|---|
+| Gömülü hedef | 16/464 | **0/464** |
+| En kötü açıklık | −232 m | **+8 m** |
+| Yerleşim medyan \|x\| | 1410 m | 1410 m |
+| `--terrain` exit | 1 | **0** |
+| Gömülü testler | 14/14 | **14/14** |
+| `--save` | 16/16 | **16/16** |
+| Asistli sorti (1. görev) | 70,4 sn / 2190 | 32,8 sn / 2590 |
+
+**Kanıt (v1.10 DEV, md5 `4dd0ea19b75273195dc84e3d30566ef5`, 1.099.683 bayt):** `build.py`
+exit 0 · `node --check` temiz (967.965 kr) · gömülü testler **14/14** · `--terrain` **0 gömülü**
+· `--balance` BAŞARILI 7/7 · `--save` **16/16** · sunucu `GET /` → 200, sunulan md5 ==
+depodaki md5, rozet `UÇUŞ SÜRÜMÜ 1.10 DEV`.
+
+**Açık kalan (dürüst kayıt):**
+- **Bölüm C: 198/464 hedef görev başlangıcında bir tepenin arkasında.** Bu bir hata değil —
+  radarın dağ arkasındaki hedefi göstermesi gerçekçi. Ama oyuncu "dağın içinde hedef"
+  hissini buradan da alabilir; P7'de (kamera/VFX) işaretçiye *occlusion* görsel ipucu
+  (soluk/kesikli çerçeve) eklenebilir.
+- **X4 açıldı:** 48 görevin `par = 240 + n*50` formülü gerçek sorti süreleriyle uyumsuz.
+- **GPU/ses/dokunma doğrulanamadı** — sandbox'ta yok. Görsel olarak "hedef artık dağın
+  içinde değil" teyidi gerçek cihazda yapılmalı (`QA_CHECKLIST.md` MANUEL maddeleri).
+
+**Sıradaki:** P3 — harici bağımlılıklar (B-4) + PWA/offline + kod bölme (B-5).

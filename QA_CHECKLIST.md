@@ -99,7 +99,10 @@ cd tools/diag && node run-diagnostics.mjs ../../striker-dev/index.html --save   
 | Kayıt | Durum |
 |---|---|
 | B-3 save migrasyonu yok | ✅ **v1.9'da kapatıldı** (migrasyon zinciri + karantina + 3 test) |
+| B-13 hedefler araziye gömülüyordu ("dağın içinde hedef") | ✅ **v1.10'da kapatıldı** (`--terrain` 16/464 → 0/464) |
+| X4 görev par süreleri kalibre değil | açık → 1. görev 32,8 sn, par 240 sn |
 | B-4 harici Google Fonts + Cloudflare beacon | açık → P3 |
+| B-5 965 KB tek modül, kod bölme yok | açık → P3 |
 | B-9 landscape kilidi yok | açık → P9 |
 | B-11 canlı yayın v0.9 | açık → yeniden deploy gerekli |
 | B-12 mSet varsayılana çöküyordu | ✅ **v1.8'de kapatıldı** (+ regresyon testi eklendi) |

@@ -4,12 +4,12 @@ Tarayıcıda çalışan 3D deniz-hava muharebe oyunu. **Tek dosyalık** minify R
 ve onu üreten Python yama hattı. 16 uçak · 48 görev (4 bölüm) · 10 dil · 4 kalite profili ·
 tamamen prosedürel grafik ve sentezlenmiş ses (harici asset yok).
 
-**Güncel build:** `striker-dev/index.html` — *UÇUŞ SÜRÜMÜ 1.9 DEV*
+**Güncel build:** `striker-dev/index.html` — *UÇUŞ SÜRÜMÜ 1.10 DEV*
 
 ## Hızlı başlangıç
 
 ```bash
-python3 build.py                 # derle + sözdizimi + 11 gömülü test + özet
+python3 build.py                 # derle + sözdizimi + 14 gömülü test + özet
 python3 striker-dev/server.py    # önizleme → http://localhost:8080
 ```
 
@@ -17,11 +17,11 @@ python3 striker-dev/server.py    # önizleme → http://localhost:8080
 
 ```
 inner.html                     dokunulmamış temel build (v0.9) — DEĞİŞTİRME
-   │  python3 striker-dev/patch_v11.py   (build.py en güncel patch_vN.py'yi otomatik seçer)
+   │  python3 striker-dev/patch_v12.py   (build.py en güncel patch_vN.py'yi otomatik seçer)
    │  girdiler: audio_class.js · striker-dev/audio5.js · fw_dict.txt
    │            striker-dev/i18n_data.py · striker-dev/i18n_ar.py
    ▼
-striker-dev/index.html         MASTER build (v1.8 DEV)
+striker-dev/index.html         MASTER build (v1.10 DEV)
    ├─ inline CSS   ~121 KB
    └─ inline JS    ~965 KB   (React + Three.js + oyun)
 ```
@@ -36,13 +36,14 @@ striker-dev/index.html         MASTER build (v1.8 DEV)
 |---|---|
 | `build.py` | tek komutla derle + doğrula |
 | `striker-dev/index.html` | güncel build (master) |
-| `striker-dev/patch_v11.py` | **aktif** build script'i (`build.py` en yüksek N'yi otomatik seçer) |
+| `striker-dev/patch_v12.py` | **aktif** build script'i (`build.py` en yüksek N'yi otomatik seçer) |
 | `striker-dev/archive/` | tarihî build script'leri — **çalıştırma** (bkz. içindeki README) |
 | `striker-dev/server.py` | `no-store` başlıklı geliştirme sunucusu (`0.0.0.0:8080`) |
 | `inner.html` | v0.9 temel (build girdisi) |
 | `tools/diag/` | gömülü test paketini dışarıdan çalıştıran araç (sıfır bağımlılık) |
 | `PROJECT_AUDIT.md` | Phase 0 adli analizi: mimari, hatalar, riskler, yol haritası |
 | `QA_CHECKLIST.md` | doğrulama listesi (otomatik / manuel / eksik ayrımıyla) |
+| `FAZ_PLANI.md` | **faz yol haritası + kabul kriterleri + doğrulama komutları** (tek doğruluk kaynağı) |
 | `striker-gelistirme-plani.md` | v1.0 → v1.7 geliştirme günlüğü |
 | `new.html` | ayrı bir araç: "Tanıtım Videosu Stüdyosu" (oyun değil) |
 | `page.html`, `app.html` | Arena sarmalayıcı sayfası (oyun değil, birbirinin kopyası) |
@@ -51,8 +52,12 @@ striker-dev/index.html         MASTER build (v1.8 DEV)
 
 ```bash
 python3 build.py                                                   # exit 0 beklenir
-cd tools/diag && node run-diagnostics.mjs ../../striker-dev/index.html            # 11/11 PASS
-cd tools/diag && node run-diagnostics.mjs ../../striker-dev/index.html --balance  # denge dökümü
+cd tools/diag && npm run verify    # 4 mod sırayla: gömülü testler + arazi + denge + save
+```
+
+Modlar tek tek: `node run-diagnostics.mjs ../../striker-dev/index.html` (14/14 gömülü test) ·
+`--terrain` (hedef araziye gömülmüş mü — B-13 bekçisi) · `--balance` (füze ekonomisi) ·
+`--save` (16 migrasyon/karantina senaryosu).
 ```
 
 Bu araçlar simülasyon mantığını test eder; render/GPU/ses test etmez. Onlar için tarayıcıda

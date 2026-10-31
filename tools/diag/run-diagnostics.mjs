@@ -32,7 +32,8 @@ const here = dirname(fileURLToPath(import.meta.url));
 const args = process.argv.slice(2);
 const MODE = args.includes('--probe') ? 'probe'
   : args.includes('--balance') ? 'balance'
-  : args.includes('--save') ? 'save' : 'diag';
+  : args.includes('--save') ? 'save'
+  : args.includes('--terrain') ? 'terrain' : 'diag';
 const htmlArg = args.find((a) => !a.startsWith('--'));
 const target = resolve(htmlArg || join(here, '../../striker-dev/index.html'));
 
@@ -214,6 +215,116 @@ if (MODE === 'save') {
   check('bilinmeyen sürüm karantinada saklandı', !!ls.getItem(__quarantineKey), 'karantina boş');
 
   console.log(`\nSONUÇ: ${fails === 0 ? 'tüm save senaryoları geçti' : fails + ' senaryo BAŞARISIZ'}  (anahtar: ${KEY}, eski: ${LEGACY}, karantina: ${__quarantineKey})`);
+  process.exit(fails === 0 ? 0 : 1);
+}
+
+if (MODE === 'terrain') {
+  // ================================================================== --terrain
+  // Kullanıcı hatası: "dağın içinde hedef gösteriyor".
+  // İki ayrı kusur ölçülür — ikisi de koddan gerçek zamanlı hesaplanır:
+  //   A) GÖMÜLME  : hedef merkezi (veya gövde yarıçapı) arazi yüksekliğinin altında.
+  //                 terr() Pa.prototype üzerinde olduğu için sim.terr(x,z) doğrudan çağrılır.
+  //   B) GÖRÜŞ HATTI (LOS): oyuncudan hedefe ışın yürütülür; arada dağ varsa HUD
+  //                 işaretçisi hâlâ çiziliyor mu? (occlusion culling yok)
+  // Sıfır bağımlılık: üçgen/izdüşüm hesabı yok, yalnızca oyunun kendi terr() fonksiyonu.
+  const BURIED = 1;          // merkezin zemin altında sayılması için eşik (m)
+  const clipFactor = 0.5;    // gövde yarıçapının bu kadarı KARAYA girerse "kesişiyor"
+  const SEA = 1;             // terr <= SEA ise deniz: gemi y=8'de DOĞRU konumdadır (yanlış pozitif önleme)
+  const LOS_HEAD = 0.05;     // ışının oyuncuya yakın %5'i yoksay (uçak zaten alçak uçabilir)
+  const LOS_TAIL = 0.85;     // ışının hedefe yakın %15'i yoksay — yoksa A kusuru C'yi şişirir
+
+  // arazi örnekleyici: iki nokta arasında 60 m adımlarla yürü
+  const los = (sim, from, to) => {
+    const dx = to.x - from.x, dy = to.y - from.y, dz = to.z - from.z;
+    const len = Math.hypot(dx, dy, dz);
+    const steps = Math.max(8, Math.min(400, Math.round(len / 60)));
+    for (let i = 1; i < steps; i++) {
+      const t = i / steps;
+      if (t < LOS_HEAD || t > LOS_TAIL) continue;      // yalnızca ORTA bölüm: gerçek "araya dağ girdi"
+      const y = from.y + dy * t;
+      const h = sim.terr(from.x + dx * t, from.z + dz * t);
+      if (h > y + 2) return { blocked: true, t, h, y };
+    }
+    return { blocked: false };
+  };
+
+  const buried = [], clipping = [], occluded = [], allX = [];
+  let targets = 0, missionsBad = new Set(), worst = null, peak = -Infinity, peakAt = null;
+
+  for (const mission of MISSION_LIST) {
+    const sim = new Sim(mission, 'striker', prefs);
+    // arazi zirvesini de raporla (dağ ne kadar yüksek?)
+    for (let x = -4200; x <= 4200; x += 200) {
+      for (let z = -7200; z <= 2000; z += 200) {
+        const h = sim.terr(x, z);
+        if (h > peak) { peak = h; peakAt = { x, z }; }
+      }
+    }
+    let badHere = false;
+    for (const e of sim.entities) {
+      targets++;
+      const p = e.position;
+      allX.push(p.x);
+      const h = sim.terr(p.x, p.z);
+      const clearance = p.y - h;
+      if (clearance <= BURIED) {
+        buried.push({ m: mission.id, k: e.kind, air: !!e.airborne, x: p.x, y: p.y, z: p.z, h, clearance, r: e.radius });
+        badHere = true;
+      } else if (h > SEA && clearance < e.radius * clipFactor) {   // h>SEA: denizdeki gemi yanlış pozitif sayılmaz
+        clipping.push({ m: mission.id, k: e.kind, air: !!e.airborne, x: p.x, y: p.y, z: p.z, h, clearance, r: e.radius });
+        badHere = true;
+      }
+      const oc = los(sim, sim.player, p);
+      if (oc.blocked) { occluded.push({ m: mission.id, k: e.kind, pct: oc.t * 100, h: oc.h, y: oc.y }); badHere = true; }
+      if (!worst || clearance < worst.clearance) worst = { m: mission.id, k: e.kind, clearance, h, y: p.y };
+    }
+    if (badHere) missionsBad.add(mission.id);
+  }
+
+  console.log('=== ARAZİ (terr) — koddan okundu ===');
+  console.log(`  zirve            : ${peak.toFixed(0)} m @ (${peakAt.x}, ${peakAt.z})`);
+  console.log(`  incelenen hedef  : ${targets} hedef / ${MISSION_LIST.length} görev\n`);
+
+  console.log('=== A) DAĞIN İÇİNE GÖMÜLMÜŞ HEDEF ===');
+  if (!buried.length) console.log('  yok');
+  for (const b of buried.slice(0, 25)) {
+    console.log(`  görev ${String(b.m).padStart(2)}  ${b.k.padEnd(11)} ${b.air ? 'hava' : 'kara'}  y=${String(Math.round(b.y)).padStart(4)}  arazi=${String(Math.round(b.h)).padStart(4)}  → ${Math.round(b.clearance)} m  (yarıçap ${b.r})`);
+  }
+  if (buried.length > 25) console.log(`  ... ve ${buried.length - 25} hedef daha`);
+  console.log(`  TOPLAM: ${buried.length}/${targets} hedef zeminin altında\n`);
+
+  console.log('=== B) DAĞA KESİŞEN (gövdesi gömülü) HEDEF ===');
+  if (!clipping.length) console.log('  yok');
+  for (const c of clipping.slice(0, 25)) {
+    console.log(`  görev ${String(c.m).padStart(2)}  ${c.k.padEnd(11)} y=${String(Math.round(c.y)).padStart(4)}  arazi=${String(Math.round(c.h)).padStart(4)}  açıklık=${Math.round(c.clearance)} m < ${Math.round(c.r * clipFactor)} m eşik`);
+  }
+  if (clipping.length > 25) console.log(`  ... ve ${clipping.length - 25} hedef daha`);
+  console.log(`  TOPLAM: ${clipping.length}/${targets}\n`);
+
+  console.log('=== C) GÖRÜŞ HATTI KAPALI AMA HUD İŞARETÇİSİ ÇİZİLİYOR ===');
+  if (!occluded.length) console.log('  yok');
+  for (const o of occluded.slice(0, 25)) {
+    console.log(`  görev ${String(o.m).padStart(2)}  ${o.k.padEnd(11)} hattın %${o.pct.toFixed(0)}'inde dağ: zemin ${Math.round(o.h)} m > ışın ${Math.round(o.y)} m`);
+  }
+  if (occluded.length > 25) console.log(`  ... ve ${occluded.length - 25} hedef daha`);
+  console.log(`  TOPLAM: ${occluded.length}/${targets}\n`);
+
+  console.log(`  en kötü hedef    : görev ${worst.m} ${worst.k} → açıklık ${Math.round(worst.clearance)} m (y=${worst.y}, arazi=${Math.round(worst.h)})`);
+  console.log(`  etkilenen görev  : ${missionsBad.size}/${MISSION_LIST.length}`);
+
+  // --- yerleşim dağılımı: düzeltme hedefleri merkezde YIĞMIŞ mı?
+  // (v6 kaçış döngüsü hedefleri uzağa savuruyordu; yeni arama en yakın geçerli x'i
+  //  seçtiği için deniz boşluğuna, yani merkez hattına çekebilir. Bunu görünür kıl.)
+  const xs = allX.map((v) => Math.abs(v));
+  xs.sort((a, b) => a - b);
+  const mean = xs.reduce((a, b) => a + b, 0) / xs.length;
+  const q = (p) => xs[Math.min(xs.length - 1, Math.floor(xs.length * p))];
+  console.log(`\n=== YERLEŞİM DAĞILIMI (|x|, kara hedefleri dahil tümü) ===`);
+  console.log(`  min ${xs[0].toFixed(0)} m · medyan ${q(0.5).toFixed(0)} m · ort ${mean.toFixed(0)} m · %90 ${q(0.9).toFixed(0)} m · maks ${xs[xs.length - 1].toFixed(0)} m`);
+  console.log(`  merkez hattına yığılma (|x|<300 m): ${xs.filter((v) => v < 300).length}/${xs.length} hedef`);
+
+  const fails = buried.length + clipping.length;
+  console.log(`\nSONUÇ: ${fails === 0 ? 'temiz — hiçbir hedef araziye gömülü değil' : fails + ' hedef arazi kusuru taşıyor'}`);
   process.exit(fails === 0 ? 0 : 1);
 }
 
