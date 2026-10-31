@@ -24,6 +24,7 @@
  *   node run-diagnostics.mjs ../../striker-dev/index.html --atmos    # gece/alacakaranlık/tozlu atmosfer katmanı
  *   node run-diagnostics.mjs ../../striker-dev/index.html --twist    # 8 twist kuralı motora bağlı mı
  *   node run-diagnostics.mjs ../../striker-dev/index.html --curve    # 205 görev kampanya zorluk eğrisi
+ *   node run-diagnostics.mjs ../../striker-dev/index.html --hud      # dokunmatik HUD yerleşimi (CSS)
  *
  * Çıkış kodu: 0 = hepsi geçti · 1 = en az bir test başarısız · 2 = araç hatası
  *
@@ -47,6 +48,10 @@ const MODE = args.includes('--probe') ? 'probe'
   : args.includes('--curve') ? 'curve' : 'diag';
 const htmlArg = args.find((a) => !a.startsWith('--'));
 const target = resolve(htmlArg || join(here, '../../striker-dev/index.html'));
+if (args.includes('--hud')) {
+  const { checkHud } = await import('./hud-layout.mjs');
+  process.exit(checkHud(target));
+}
 
 // ============================================================ 1. bundle çıkar
 const html = readFileSync(target, 'utf8');
