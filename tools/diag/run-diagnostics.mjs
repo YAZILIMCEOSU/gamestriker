@@ -587,6 +587,22 @@ if (MODE === 'curve') {
   listed[0].hp = 0;
   sim0.finish(true, 'landed');
   chk('sonuç ekranı aynı kırılımı yazıyor', sim0.result.done === 1 && sim0.result.goal === card, `${sim0.result.done}/${sim0.result.goal}`);
+  const seaM = MISSION_LIST.find((m) => (m.targets || []).includes('sub') && (m.targets || []).some((t) => t === 'corvette' || t === 'destroyer' || t === 'port'));
+  const su = seaM && new Sim(seaM, 'striker', PR);
+  const sb = su && su.entities.find((e) => e.kind === 'sub' && e.listed);
+  let subSteps = 0;
+  while (sb && subSteps < 900 && !su.result && (subSteps < 8 || sb.surf !== false)) {
+    su.update(0.04, { yaw: 0, pitch: 0, throttle: 0.4, fire: false, boost: false });
+    subSteps++;
+  }
+  const seaN = su ? su.entities.filter((e) => !e.friendly && ['corvette', 'destroyer', 'sub', 'port'].includes(e.kind)).length : 0;
+  const landSq = su ? su.entities.filter((e) => !e.friendly && !e.airborne && !['corvette', 'destroyer', 'sub', 'port'].includes(e.kind)).length : 0;
+  console.log(`  deniz görev ${seaM && seaM.id}: deniz ${seaN} kara ${landSq} dalış y=${sb ? Math.round(sb.position.y) : 'yok'} surf=${sb ? sb.surf : '?'}`);
+  chk('deniz görevinde deniz hedefi var', seaN >= 1, String(seaN));
+  chk('dalmış denizaltı radar listesinde, kilitlenemez', !!sb && !sb.surf && sb.position.y < 0 && su.alive.some((e) => e.id === sb.id) && (su.targetId = sb.id, su.target == null), `y=${sb && sb.position.y}`);
+  const htmlNow = readFileSync(target, 'utf8');
+  chk('radar denizi baklava, dalmışı halka çizer', htmlNow.includes('b.sea?"#7ee0ff"') && htmlNow.includes('b.sub?S.jsx("circle"') && htmlNow.includes('M0-4.2l3.4'), 'şekil yok');
+  chk('kenar oku deniz türünü yazar', htmlNow.includes('corvette:"COR"') && htmlNow.includes('sea-mark'), 'etiket yok');
   console.log(`\nSONUÇ: ${fails === 0 ? 'kampanya eğrisi 205 göreve yayıldı' : fails + ' kontrol BAŞARISIZ'}`);
   process.exit(fails === 0 ? 0 : 1);
 }
