@@ -23,6 +23,7 @@
  *   node run-diagnostics.mjs ../../striker-dev/index.html --world    # plan/missions_192.json ↔ build (birebir)
  *   node run-diagnostics.mjs ../../striker-dev/index.html --atmos    # gece/alacakaranlık/tozlu atmosfer katmanı
  *   node run-diagnostics.mjs ../../striker-dev/index.html --twist    # 8 twist kuralı motora bağlı mı
+ *   node run-diagnostics.mjs ../../striker-dev/index.html --curve    # 205 görev kampanya zorluk eğrisi
  *
  * Çıkış kodu: 0 = hepsi geçti · 1 = en az bir test başarısız · 2 = araç hatası
  *
@@ -42,7 +43,8 @@ const MODE = args.includes('--probe') ? 'probe'
   : args.includes('--audit') ? 'audit'
   : args.includes('--world') ? 'world'
   : args.includes('--atmos') ? 'atmos'
-  : args.includes('--twist') ? 'twist' : 'diag';
+  : args.includes('--twist') ? 'twist'
+  : args.includes('--curve') ? 'curve' : 'diag';
 const htmlArg = args.find((a) => !a.startsWith('--'));
 const target = resolve(htmlArg || join(here, '../../striker-dev/index.html'));
 
@@ -460,6 +462,68 @@ if (MODE === 'atmos') {
     (html.match(/uNight:\{value:0\}/g) || []).length === 2 && (html.match(/uDust:\{value:0\}/g) || []).length === 2, 'başlangıç 0 değil');
 
   console.log(`\nSONUÇ: ${fails === 0 ? 'atmosfer katmanı bağlı ve tutarlı' : fails + ' kontrol BAŞARISIZ'}`);
+  process.exit(fails === 0 ? 0 : 1);
+}
+
+if (MODE === 'curve') {
+  const CAP = [4, 6, 8, 11, 13];
+  const NAME = ['kolay', 'orta', 'zor', 'uzman', 'as'];
+  let fails = 0;
+  const chk = (n, c, d) => { console.log(`${c ? 'PASS' : 'FAIL'}  ${n}${c ? '' : '  -> ' + d}`); if (!c) fails++; };
+  const rows = [0, 1, 2, 3, 4].map((t) => MISSION_LIST.filter((m) => m.tier === t));
+  console.log('  kademe   görev  hedef min/ort/max   hpScale');
+  for (let t = 0; t < 5; t++) {
+    const rs = rows[t];
+    const lens = rs.map((m) => (m.targets || []).length);
+    const avg = lens.length ? lens.reduce((a, b) => a + b, 0) / lens.length : 0;
+    console.log(`  ${NAME[t].padEnd(8)} ${String(rs.length).padStart(4)}   ${Math.min(...lens)}/${avg.toFixed(1)}/${Math.max(...lens)}     ${rs[0] && rs[0].hpScale}`);
+  }
+  chk('5 kademe de dolu', rows.every((r) => r.length > 0), rows.map((r) => r.length).join(','));
+  const early = MISSION_LIST.filter((m) => m.id < 12 && m.targets);
+  chk('ilk 12 görev en fazla 4 hedef', early.every((m) => m.targets.length <= 4), early.filter((m) => m.targets.length > 4).map((m) => m.id + ':' + m.targets.length).join(','));
+  chk('ilk görev kolay ve 4 hedef', MISSION_LIST[0].tier === 0 && MISSION_LIST[0].targets.length === 4, `${MISSION_LIST[0].tier}/${MISSION_LIST[0].targets.length}`);
+  const mid = MISSION_LIST.find((m) => m.id === 50);
+  const late = MISSION_LIST.find((m) => m.id === 160);
+  chk('görev 50 uzman değil, zor (tier 2) ve cap içinde', mid && mid.tier === 2 && mid.targets.length <= 8, mid && `${mid.tier}/${mid.targets.length}`);
+  chk('görev 160 as (tier 4) ve ilk görevden kalabalık', late && late.tier === 4 && late.targets.length > MISSION_LIST[0].targets.length, late && String(late.targets.length));
+  const over = MISSION_LIST.filter((m) => m.id < 192 && m.targets && !['race', 'waves', 'recon'].includes(m.kind) && m.targets.length > CAP[m.tier]);
+  chk('hiçbir standart görev kademe tavanını aşmıyor', over.length === 0, over.slice(0, 4).map((m) => m.id + ':' + m.targets.length).join(','));
+  chk('kolay par, limitin %70 inden geniş (3 yıldız mümkün)', early.every((m) => m.par >= m.limit * 0.7), 'par dar');
+  chk('hpScale kolay < as', MISSION_LIST[0].hpScale < (late && late.hpScale), `${MISSION_LIST[0].hpScale}/${late && late.hpScale}`);
+  // gerçek doğuş: aynı uçakta erken görev düşmanı geç görevden zayıf ve az
+  const PR = { ...__defaults().preferences, assisted: true, difficulty: 'normal' };
+  const spawn = (m) => {
+    const u = new Sim(m, 'striker', PR);
+    const foe = u.entities.filter((e) => e.hp > 0 && !e.friendly);
+    const hp = foe.reduce((a, e) => a + e.maxHp, 0);
+    return { n: foe.length, hp, hull: u.aircraft.hull };
+  };
+  const a = spawn(MISSION_LIST[0]);
+  const b = spawn(MISSION_LIST.find((m) => m.id === 160));
+  const near = (m) => {
+    const u = new Sim(m, 'striker', PR);
+    const foes = u.entities.filter((e) => e.hp > 0 && !e.friendly);
+    return Math.min(...foes.map((e) => Math.hypot(e.position.x - u.player.x, e.position.z - u.player.z)));
+  };
+  const n0 = near(MISSION_LIST[0]);
+  const n11 = near(MISSION_LIST[11]);
+  console.log(`  görev 0 en yakın hedef ${Math.round(n0)} m · görev 11 ${Math.round(n11)} m`);
+  const u0 = new Sim(MISSION_LIST[0], 'striker', PR);
+  const d0 = u0.entities.filter((e) => e.hp > 0 && !e.friendly).map((e) => Math.round(Math.hypot(e.position.x - u0.player.x, e.position.z - u0.player.z)));
+  chk('görev 0 dört hedefi de 3.2 km içinde', d0.length === 4 && d0.every((d) => d < 3200), d0.join(','));
+  const noClose = MISSION_LIST.filter((m) => m.tier < 2 && m.targets).filter((m) => {
+    const u = new Sim(m, 'striker', PR);
+    const ds = u.entities.filter((e) => e.hp > 0 && !e.friendly).map((e) => Math.hypot(e.position.x - u.player.x, e.position.z - u.player.z));
+    return Math.min(...ds) > 2500;
+  });
+  chk('kolay ve orta görevlerin hepsinde 2.5 km içinde hedef var', noClose.length === 0, noClose.map((m) => m.id).join(','));
+  chk('kolay görevde ilk hedef 2 km içinde (kilit menzili 2.9 km)', n0 < 2000 && n11 < 2200, `${Math.round(n0)}/${Math.round(n11)}`);
+  console.log(`  doğuş görev0: ${a.n} düşman, toplam can ${Math.round(a.hp)}, gövde ${a.hull}`);
+  console.log(`  doğuş görev160: ${b.n} düşman, toplam can ${Math.round(b.hp)}, gövde ${b.hull}`);
+  chk('simülasyon: görev 0, görev 160 dan az düşman', a.n < b.n, `${a.n}/${b.n}`);
+  chk('simülasyon: görev 0 toplam düşman canı daha düşük', a.hp < b.hp * 0.55, `${Math.round(a.hp)}/${Math.round(b.hp)}`);
+  chk('simülasyon: görev 0 düşmanı tek füze bandında (ortalama can ≤ gövde)', a.n > 0 && a.hp / a.n <= a.hull, `${Math.round(a.hp / a.n)}/${a.hull}`);
+  console.log(`\nSONUÇ: ${fails === 0 ? 'kampanya eğrisi 205 göreve yayıldı' : fails + ' kontrol BAŞARISIZ'}`);
   process.exit(fails === 0 ? 0 : 1);
 }
 
