@@ -33,7 +33,8 @@ const args = process.argv.slice(2);
 const MODE = args.includes('--probe') ? 'probe'
   : args.includes('--balance') ? 'balance'
   : args.includes('--save') ? 'save'
-  : args.includes('--terrain') ? 'terrain' : 'diag';
+  : args.includes('--terrain') ? 'terrain'
+  : args.includes('--audit') ? 'audit' : 'diag';
 const htmlArg = args.find((a) => !a.startsWith('--'));
 const target = resolve(htmlArg || join(here, '../../striker-dev/index.html'));
 
@@ -327,6 +328,190 @@ if (MODE === 'terrain') {
   const fails = buried.length + clipping.length;
   console.log(`\nSONUÇ: ${fails === 0 ? 'temiz — hiçbir hedef araziye gömülü değil' : fails + ' hedef arazi kusuru taşıyor'}`);
   process.exit(fails === 0 ? 0 : 1);
+}
+
+if (MODE === 'audit') {
+  // ================================================================== --audit
+  // Gömülü test paketi FAIL verdiğinde: iddia edilen değer ile GERÇEK değeri
+  // yan yana döker. Amaç "test mi bayat, oyun mu bozuk" sorusunu kanıtla ayırmak.
+  // Oyunun kendi $w() fonksiyonuna DOKUNMAZ — aynı sınıfları dışarıdan çalıştırır.
+  const PR = { ...__defaults().preferences, assisted: true, difficulty: 'normal' };
+  const IN = { yaw: 0, pitch: 0, throttle: 0.42, fire: false, boost: false };
+  const step = (u, n, fire = false) => {
+    for (let i = 0; i < n && !u.result; i++) {
+      u.update(1 / 60, { ...IN, fire });
+      if (fire && u.lock >= 1) u.fireMissile();
+      u.events.length = 0;
+    }
+  };
+  const L = (k, v) => console.log(`  ${k.padEnd(34)} ${v}`);
+
+  const m0 = MISSION_LIST[0];
+  console.log('=== 1) "193 mission configurations" ===');
+  L('dn.length (gerçek)', MISSION_LIST.length);
+  L('benzersiz id', new Set(MISSION_LIST.map((m) => m.id)).size);
+  L('testin beklediği', 193);
+  L('id aralığı', `${Math.min(...MISSION_LIST.map((m) => m.id))} – ${Math.max(...MISSION_LIST.map((m) => m.id))}`);
+  L('tekrar eden id var mı', MISSION_LIST.length === new Set(MISSION_LIST.map((m) => m.id)).size ? 'HAYIR' : 'EVET');
+
+  console.log('\n=== 2) görev 0 içeriği (birçok test dn[0] üzerinden koşuyor) ===');
+  L('id / kind', `${m0.id} / ${m0.kind}`);
+  L('hedefler', m0.targets.join(', '));
+  L('limit / par', `${m0.limit} / ${m0.par}`);
+  {
+    const u = new Sim(m0, 'striker', PR);
+    L('entities', u.entities.map((e) => `${e.kind}(hp${e.hp},y${Math.round(e.position.y)})`).join(' '));
+    L('hava hedefi sayısı', u.entities.filter((e) => e.airborne).length);
+  }
+
+  console.log('\n=== 3) "Lock, guided missile, impact" — kilit ne zaman oluşuyor? ===');
+  {
+    const u = new Sim(m0, 'striker', PR);
+    let at = -1;
+    for (let f = 0; f < 1800 && !u.result; f++) {
+      u.update(1 / 60, IN); u.events.length = 0;
+      if (u.lock >= 1) { at = f; break; }
+    }
+    L('test 90 kare sonra lock===1 bekliyor', '—');
+    L('lock gerçekte hangi karede', at < 0 ? '1800 karede OLUŞMADI' : `${at} kare (${(at / 60).toFixed(1)} sn)`);
+    L('lock değeri (90. karede)', (() => { const v = new Sim(m0, 'striker', PR); for (let f = 0; f < 90; f++) { v.update(1 / 60, IN); v.events.length = 0; } return v.lock; })());
+    L('füze hasarı (mSet)', JSON.stringify(new Sim(m0, 'striker', PR).mSet));
+  }
+
+  console.log('\n=== 4) "Countermeasures remove threats" ===');
+  {
+    const u = new Sim(m0, 'striker', PR);
+    const p = u.projectiles[0];
+    p.active = true; p.kind = 'hostile'; p.position.copy(u.player); p.life = 5;
+    const f0 = u.flares;
+    u.deployFlare();
+    L('fişek sayısı önce/sonra', `${f0} → ${u.flares}   (test 5 bekliyor)`);
+    L('tehdit mermisi active', `${p.active}   (test false bekliyor)`);
+  }
+
+  console.log('\n=== 5) "Extraction and stable result" ===');
+  {
+    const u = new Sim(m0, 'striker', PR);
+    u.entities.forEach((d) => { d.hp = 0; });
+    u.update(1 / 60, IN);
+    L('phase (test "return" bekliyor)', u.phase);
+    step(u, 1200);
+    L('result', u.result ? `success=${u.result.success} reason=${u.result.reason || '-'}` : 'null');
+  }
+
+  console.log('\n=== 6) "Timeout and campaign unlock" ===');
+  {
+    const u = new Sim(m0, 'striker', PR);
+    u.time = u.mission.limit;
+    u.update(1 / 60, IN);
+    L('result.reason (test "timeout")', u.result ? u.result.reason : 'null');
+  }
+
+  console.log('\n=== 7) "First sortie combat-to-return loop" ===');
+  {
+    const u = new Sim(m0, 'striker', PR);
+    step(u, 10800, true);
+    L('result', u.result ? `success=${u.result.success} reason=${u.result.reason || '-'}` : 'BİTMEDİ (10800 kare)');
+    L('kills / hedef', `${u.kills} / ${u.entities.length}`);
+    L('skor / süre', `${u.score} / ${(u.time || 0).toFixed(1)} sn`);
+    L('kalan can / füze', `${u.health} / ${u.missiles}`);
+  }
+
+  console.log('\n=== 8) "Wingman engages nearby hostiles" ===');
+  {
+    const u = new Sim(m0, 'striker', { ...PR, wingman: true });
+    u.player.copy(u.entities[0].position); u.player.y += 120; u.player.z -= 420;
+    let fired = -1;
+    for (let f = 0; f < 300; f++) {
+      u.update(1 / 60, IN); u.events.length = 0;
+      if (u.projectiles.some((p) => p.active && p.kind === 'missile')) { fired = f; break; }
+    }
+    L('wingman füze attı mı (300 kare)', fired < 0 ? 'HAYIR' : `EVET, ${fired}. karede`);
+  }
+
+  console.log('\n=== 9) "Heavy missile mode increases damage" ===');
+  {
+    const norm = new Sim(m0, 'striker', PR); step(norm, 90); norm.fireMissile();
+    const heavy = new Sim(m0, 'striker', { ...PR, heavyMissiles: true }); step(heavy, 90); heavy.fireMissile();
+    const g = (u) => { const p = u.projectiles.find((q) => q.active && q.kind === 'missile'); return p ? p.damage : null; };
+    L('normal füze hasarı', g(norm));
+    L('ağır füze hasarı (test >150)', g(heavy));
+    L('mSet normal / ağır', `${JSON.stringify(norm.mSet)} / ${JSON.stringify(heavy.mSet)}`);
+  }
+  console.log('\n=== 10) AYNI 8 İDDİA, DOĞRU ÖN KOŞULLARLA ===');
+  // v3.78 ile gelen üç gerçek kural (kaynaktan okundu):
+  //   phase    : takeoff -> combat -> return -> landing  (testler combat varsayıyordu)
+  //   unl      : Object.keys(save.records).length  (wingman >=3, ağır füze >=6)
+  //   Rl(s,e)  : s<3 || s===4 || s===11 || !!e[s-1]   (ilk 3 görev hep açık)
+  // Kurucu imzası (kaynaktan okundu): constructor(e,n,a,o=0,q5)
+  //   4. param = upgrade (SAYI)   5. param = {upA,upV,unl}
+  // unl = Object.keys(save.records).length -> wingman>=3, ağır füze>=6
+  const PROG = { upA: 0, upV: 0, unl: 10 };
+  const mk0 = (prefs, unl) => new Sim(m0, 'striker', prefs, 0, unl == null ? undefined : { ...PROG, unl });
+  const toCombat = (u, max = 3000) => { let f = 0; while (f < max && u.phase === 'takeoff' && !u.result) { u.update(1 / 60, IN); u.events.length = 0; f++; } return f; };
+  let ok = 0, tot = 0;
+  const chk = (name, cond, detail) => {
+    tot++; if (cond) ok++;
+    console.log(`  ${cond ? 'PASS' : 'FAIL'}  ${name}${cond ? '' : '  -> ' + detail}`);
+  };
+
+  { // 1 — görev sayısı: sabit 193 değil, benzersizlik + pozitif sayı
+    const ids = MISSION_LIST.map((m) => m.id);
+    chk('görev kimlikleri benzersiz ve >0', MISSION_LIST.length > 0 && new Set(ids).size === ids.length, `${MISSION_LIST.length} görev`);
+  }
+  { // 2 — kilit oluşuyor (sabit 90 kare değil, makul bütçe içinde)
+    const u = new Sim(m0, 'striker', PR); toCombat(u);
+    let at = -1;
+    for (let f = 0; f < 1800 && !u.result; f++) { u.update(1 / 60, IN); u.events.length = 0; if (u.lock >= 1) { at = f; break; } }
+    chk('kilit 30 sn içinde oluşuyor', at >= 0, 'oluşmadı');
+  }
+  { // 3 — fişek: önce combat fazına geç
+    const u = new Sim(m0, 'striker', PR); toCombat(u);
+    const p = u.projectiles[0];
+    p.active = true; p.kind = 'hostile'; p.position.copy(u.player); p.life = 5;
+    const f0 = u.flares; u.deployFlare();
+    chk('fişek tehdidi düşürüyor (combat fazında)', !p.active && u.flares === f0 - 1, `flares ${f0}→${u.flares}, active=${p.active}`);
+  }
+  { // 4 — extraction: takeoff'u geçtikten sonra
+    const u = new Sim(m0, 'striker', PR); toCombat(u);
+    u.entities.forEach((d) => { if (!d.friendly) d.hp = 0; });
+    u.time = 200;                       // dönüş koşulu (kaynaktan): time>=140 kapısı
+    console.log(`     [ara durum] kind=${u.mission.kind} phase=${u.phase} time=${u.time} alive=${u.alive.length} ext=${u.ext} entities=${u.entities.length} friendly=${u.entities.filter((d) => d.friendly).length}`);
+    u.update(1 / 60, IN);
+    console.log(`     [update sonrası] phase=${u.phase} alive=${u.alive.length} health=${u.health} entities=${u.entities.length}`);
+    console.log(`     [canlı kalanlar] ${u.alive.map((d) => d.kind + '(hp' + d.hp + ')').join(' ') || 'yok'}`);
+    chk('tüm hedefler düşünce phase=return', u.phase === 'return', `phase=${u.phase}`);
+    step(u, 4000);
+    chk('dönüş görevi başarıyla bitiriyor', !!u.result?.success, u.result ? `reason=${u.result.reason}` : 'result null');
+  }
+  { // 6 — sorti: görev limitine kadar bütçe + ilerleme
+    const u = mk0(PR, 10);
+    step(u, Math.ceil((u.mission.limit + 30) * 60), true);
+    chk('asistli sorti limit içinde bitiyor', !!u.result, `${(u.time || 0).toFixed(0)} sn, ${u.kills} kill`);
+    chk('sorti başarılı', !!u.result?.success, u.result ? `reason=${u.result.reason} kills=${u.kills}` : 'bitemedi');
+  }
+  { // 7 — wingman: unl>=3 + combat
+    const u = mk0({ ...PR, wingman: true }, 10); toCombat(u);
+    u.player.copy(u.entities[0].position); u.player.y += 120; u.player.z -= 420;
+    let fired = false;
+    for (let f = 0; f < 600 && !fired; f++) { u.update(1 / 60, IN); u.events.length = 0; fired = u.projectiles.some((p) => p.active && p.kind === 'missile'); }
+    chk('kanat arkadaşı ateş ediyor (unl=10, combat)', fired, '600 karede atmadı');
+  }
+  { // 8 — ağır füze: unl>=6 + kilit bekle
+    const mk = (heavy) => {
+      const u = mk0({ ...PR, heavyMissiles: heavy }, 10);
+      toCombat(u);
+      for (let f = 0; f < 1800 && u.lock < 1 && !u.result; f++) { u.update(1 / 60, IN); u.events.length = 0; }
+      u.fireMissile();
+      const p = u.projectiles.find((q) => q.active && q.kind === 'missile');
+      return p ? p.damage : null;
+    };
+    const dN = mk(false), dH = mk(true);
+    chk('ağır füze hasarı normalden yüksek ve >150', dH != null && dN != null && dH > dN && dH > 150, `normal=${dN} ağır=${dH}`);
+  }
+
+  console.log(`\nSONUÇ: düzeltilmiş ön koşullarla ${ok}/${tot} geçti`);
+  process.exit(ok === tot ? 0 : 1);
 }
 
 if (MODE === 'probe') {
