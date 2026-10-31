@@ -18,6 +18,10 @@
  *   node run-diagnostics.mjs ../../striker-dev/index.html --probe    # başarısız testin kök nedeni
  *   node run-diagnostics.mjs ../../striker-dev/index.html --balance  # füze ekonomisi dökümü
  *   node run-diagnostics.mjs ../../striker-dev/index.html --save     # save/migrasyon senaryoları (v1.9+)
+ *   node run-diagnostics.mjs ../../striker-dev/index.html --terrain  # hedef/yerleşim arazi kusurları
+ *   node run-diagnostics.mjs ../../striker-dev/index.html --audit    # görev 0 simülasyon ayrıştırması
+ *   node run-diagnostics.mjs ../../striker-dev/index.html --world    # plan/missions_192.json ↔ build (birebir)
+ *   node run-diagnostics.mjs ../../striker-dev/index.html --atmos    # gece/alacakaranlık/tozlu atmosfer katmanı
  *
  * Çıkış kodu: 0 = hepsi geçti · 1 = en az bir test başarısız · 2 = araç hatası
  *
@@ -35,7 +39,8 @@ const MODE = args.includes('--probe') ? 'probe'
   : args.includes('--save') ? 'save'
   : args.includes('--terrain') ? 'terrain'
   : args.includes('--audit') ? 'audit'
-  : args.includes('--world') ? 'world' : 'diag';
+  : args.includes('--world') ? 'world'
+  : args.includes('--atmos') ? 'atmos' : 'diag';
 const htmlArg = args.find((a) => !a.startsWith('--'));
 const target = resolve(htmlArg || join(here, '../../striker-dev/index.html'));
 
@@ -328,6 +333,131 @@ if (MODE === 'terrain') {
 
   const fails = buried.length + clipping.length;
   console.log(`\nSONUÇ: ${fails === 0 ? 'temiz — hiçbir hedef araziye gömülü değil' : fails + ' hedef arazi kusuru taşıyor'}`);
+  process.exit(fails === 0 ? 0 : 1);
+}
+
+if (MODE === 'atmos') {
+  // ================================================================== --atmos
+  // Faz 2b: gece / alacakaranlık / tozlu atmosferi gerçekten bağlı mı?
+  // İKİ katman: (A) shader uniform tutarlılığı  (B) setAtmosphere'ün GERÇEK
+  // gövdesi bundle'dan çıkarılıp stub bir `this` ile ÇALIŞTIRILIR (yeniden
+  // yazılmaz — kodun kendisi koşar).
+  let fails = 0;
+  const chk = (n, c, d) => { console.log(`${c ? 'PASS' : 'FAIL'}  ${n}${c ? '' : '  -> ' + d}`); if (!c) fails++; };
+
+  // ---- fonksiyon gövdesini süslü parantez sayarak çıkar
+  const extract = (name) => {
+    const i = html.indexOf(name + '(');
+    if (i < 0) return null;
+    let j = html.indexOf('{', i), d = 0, q = null;
+    for (let k = j; k < html.length; k++) {
+      const c = html[k];
+      if (q) { if (c === '\\') k++; else if (c === q) q = null; continue; }
+      if (c === '"' || c === "'" || c === '`') { q = c; continue; }
+      if (c === '{') d++; else if (c === '}' && --d === 0) return html.slice(i, k + 1);
+    }
+    return null;
+  };
+
+  console.log('=== A) SHADER UNIFORM TUTARLILIGI ===');
+  const shaders = [
+    ['sky', html.match(/fragmentShader:`([^`]*varying vec3 vDirection;[\s\S]*?)`/)],
+    ['sea', html.match(/fragmentShader:`([^`]*varying vec3 vWorld;[\s\S]*?)`/)],
+  ];
+  for (const [nm, m] of shaders) {
+    if (!m) { chk(`${nm} shader bulundu`, false, 'fragmentShader blogu yok'); continue; }
+    const src = m[1];
+    const used = [...new Set(src.match(/\bu[A-Z][A-Za-z0-9]*/g) || [])];
+    const undecl = used.filter((u) => !new RegExp(`uniform\\s+float\\s+${u}\\s*;`).test(src));
+    chk(`${nm}: kullanılan ${used.length} uniform'un hepsi tanımlı`, undecl.length === 0, undecl.join(', '));
+    for (const u of ['uNight', 'uDust']) {
+      chk(`${nm}: ${u} shader'da kullanılıyor`, new RegExp(`\\b${u}\\b`).test(src), 'referans yok');
+      chk(`${nm}: ${u} uniforms nesnesinde`, html.split(`${u}:{value:`).length - 1 === 2, `${html.split(`${u}:{value:`).length - 1} material`);
+    }
+  }
+
+  console.log('\n=== B) setAtmosphere GERCEK GOVDE ===');
+  const src = extract('setAtmosphere');
+  if (!src) { chk('setAtmosphere bulundu', false, 'index.html içinde yok'); }
+  else {
+    let obj;
+    try { obj = new Function('return {' + src + '}')(); chk('gövde sözdizimi geçerli', true); }
+    catch (e) { chk('gövde sözdizimi geçerli', false, e.message); }
+    if (obj) {
+      const mk = () => {
+        const rec = {};
+        const col = (k) => ({ set: (c) => { rec[k] = c; } });
+        const self = {
+          atmo: '',
+          skyMaterial: { uniforms: { uNight: { value: -1 }, uDust: { value: -1 } } },
+          seaMaterial: { uniforms: { uNight: { value: -1 }, uDust: { value: -1 } } },
+          sun: { color: col('sunColor'), intensity: null },
+          hemi: { color: col('hemiSky'), groundColor: col('hemiGnd'), intensity: null },
+          fill: { color: col('fillColor'), intensity: null },
+          sceneE: { fog: { color: col('fogColor'), density: null } },
+        };
+        return { rec, self };
+      };
+      const run = (k) => { const { rec, self } = mk(); obj.setAtmosphere.call(self, k); return { rec, self }; };
+      const eq = (a, b) => Math.abs(a - b) < 1e-9;
+
+      const g = run('gece'), a = run('alacakaranlık'), t = run('tozlu'), d = run('açık');
+      const rows = [
+        ['gece', g, 1, 0, 0.55, 0.42, 3e-5],
+        ['alacakaranlık', a, 0.42, 0, 2.3, 1.15, 4e-5],
+        ['tozlu', t, 0, 1, 2.6, 2.1, 1.6e-4],
+      ];
+      console.log('  hava            uNight uDust  sun.i  hemi.i  fog.dens');
+      for (const [nm, r, un, ud, si, hi, gd] of rows) {
+        const v = r.self;
+        console.log(`  ${nm.padEnd(15)} ${String(v.skyMaterial.uniforms.uNight.value).padEnd(6)} ${String(v.skyMaterial.uniforms.uDust.value).padEnd(6)} ${String(v.sun.intensity).padEnd(6)} ${String(v.hemi.intensity).padEnd(7)} ${v.sceneE.fog.density}`);
+        chk(`${nm}: uNight=${un} uDust=${ud}`, eq(v.skyMaterial.uniforms.uNight.value, un) && eq(v.skyMaterial.uniforms.uDust.value, ud),
+          `${v.skyMaterial.uniforms.uNight.value}/${v.skyMaterial.uniforms.uDust.value}`);
+        chk(`${nm}: sea shader da aynı değeri aldı`, eq(v.seaMaterial.uniforms.uNight.value, un) && eq(v.seaMaterial.uniforms.uDust.value, ud), 'sky/sea ayrışmış');
+        chk(`${nm}: ışık profili uygulandı (sun=${si} hemi=${hi} fog=${gd})`,
+          eq(v.sun.intensity, si) && eq(v.hemi.intensity, hi) && eq(v.sceneE.fog.density, gd),
+          `${v.sun.intensity}/${v.hemi.intensity}/${v.sceneE.fog.density}`);
+      }
+
+      // gece ile alacakaranlık AYRIRT EDİLEBİLİR olmalı (v3.79'da birebir aynıydı)
+      chk('gece ≠ alacakaranlık (uNight ve güneş rengi farklı)',
+        g.self.skyMaterial.uniforms.uNight.value !== a.self.skyMaterial.uniforms.uNight.value
+        && g.rec.sunColor !== a.rec.sunColor,
+        `${g.self.skyMaterial.uniforms.uNight.value}/${a.self.skyMaterial.uniforms.uNight.value} ${g.rec.sunColor}/${a.rec.sunColor}`);
+      chk('tozlu ≠ sisli (uDust=1, sis toprak rengi)', t.self.skyMaterial.uniforms.uDust.value === 1 && t.rec.fogColor === '#b39a6d', `${t.rec.fogColor}`);
+      chk('gece ay ışığı soğuk, sis rengi koyu', g.rec.sunColor === '#7090c8' && g.rec.fogColor === '#0d1522', `${g.rec.sunColor}/${g.rec.fogColor}`);
+
+      // normal hava: taban çizgisi aynen geri gelmeli (v3.79 davranışı korunuyor)
+      chk('normal hava: uNight=uDust=0 (shader v3.79 ile aynı)',
+        eq(d.self.skyMaterial.uniforms.uNight.value, 0) && eq(d.self.skyMaterial.uniforms.uDust.value, 0), 'sıfırlanmamış');
+      chk('normal hava: ışıklar taban değerine döndü (sun 3.9 / hemi 2.8 / fill 1.15)',
+        eq(d.self.sun.intensity, 3.9) && eq(d.self.hemi.intensity, 2.8) && eq(d.self.fill.intensity, 1.15),
+        `${d.self.sun.intensity}/${d.self.hemi.intensity}/${d.self.fill.intensity}`);
+      chk('normal hava: sis rengine dokunulmuyor (setSunset kazanır)', d.rec.fogColor === undefined, String(d.rec.fogColor));
+
+      // 205 görevin tamamının weatherKey'i hatasız koşmalı
+      const keys = [...new Set(MISSION_LIST.map((m) => m.weatherKey))];
+      let threw = null;
+      for (const k of keys) { try { run(k); } catch (e) { threw = `${k}: ${e.message}`; } }
+      chk(`8 havanın hepsi hatasız koştu (${keys.length} anahtar)`, threw === null, threw);
+      const special = keys.filter((k) => { const r = run(k); return r.self.skyMaterial.uniforms.uNight.value !== 0 || r.self.skyMaterial.uniforms.uDust.value !== 0; });
+      chk('en az 3 hava özel atmosfer profili alıyor', special.length >= 3, special.join(','));
+      console.log(`  özel profil: ${special.join(', ')}`);
+      const n1 = MISSION_LIST.filter((m) => special.includes(m.weatherKey)).length;
+      console.log(`  kapsanan görev: ${n1}/${MISSION_LIST.length}`);
+      chk('gece+alacakaranlık+tozlu görevleri kapsanıyor', n1 > 0, '0 görev');
+    }
+  }
+
+  console.log('\n=== C) BAGLANTI NOKTALARI ===');
+  chk('begin() setAtmosphere(weatherKey) çağırıyor',
+    /setAtmosphere\(e\.mission\.weatherKey/.test(html), 'çağrı yok');
+  chk('setMode() oyun dışına çıkınca atmosferi sıfırlıyor',
+    /setSunset\(!0\),this\.environment\.setAtmosphere\(""\)/.test(html), 'hangar gece tonunda kalır');
+  chk('uNight/uDust başlangıç değeri 0 (regresyon yok)',
+    (html.match(/uNight:\{value:0\}/g) || []).length === 2 && (html.match(/uDust:\{value:0\}/g) || []).length === 2, 'başlangıç 0 değil');
+
+  console.log(`\nSONUÇ: ${fails === 0 ? 'atmosfer katmanı bağlı ve tutarlı' : fails + ' kontrol BAŞARISIZ'}`);
   process.exit(fails === 0 ? 0 : 1);
 }
 
