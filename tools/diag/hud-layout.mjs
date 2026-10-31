@@ -193,6 +193,15 @@ export function checkHud(htmlPath) {
   const fire = html.includes('className:"weapon fire-button"')
     && /fire-button"[\s\S]{0,220}setPointerCapture/.test(html)
     && !/fire-button"[\s\S]{0,320}onPointerLeave/.test(html);
+  const lockInNav = html.includes('className:"nav-readout"') && html.includes('o("tracking")');
+  const statusOnMarker = html.includes('className:"target-status"');
+  chk('kilit yazısı rota satırında, işaretin üstünde değil', lockInNav && !statusOnMarker, statusOnMarker ? 'target-status duruyor' : 'nav-readout yok');
+  chk('alt ve telefon bandında hedef yazısı çizilmiyor', html.includes('b.y>64') && html.includes('b.y>8&&b.y<32'), 'bant koruması yok');
+  const captionBottom = (yPct, h) => (yPct / 100) * h + 34 + 18;
+  chk('masaüstü: bant dışı yazı rota kutusuna inmiyor', captionBottom(64, 768) < 628, String(Math.round(captionBottom(64, 768))));
+  const phoneNavTop = 118, phoneNavBot = 210;
+  const cap = (yPct) => (yPct / 100) * 844 + 27 + 16;
+  chk('telefon: bant sınırındaki yazı rota kutusuna girmiyor', cap(8) < phoneNavTop && cap(32) > phoneNavBot, `${Math.round(cap(8))}/${Math.round(cap(32))}`);
   chk('ateş tuşu parmak kayınca bırakmıyor (pointer capture, leave yok)', fire, 'leave veya capture eksik');
   const boost = /boost-button"[\s\S]{0,180}setPointerCapture/.test(html);
   chk('boost tuşu parmak kayınca açık kalmıyor', boost, 'setPointerCapture yok');
