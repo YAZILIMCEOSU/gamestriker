@@ -549,6 +549,31 @@ if (MODE === 'curve') {
   chk('görev 1 bitince can %40 üstü', s0.u.healthPercent >= 40, String(s0.u.healthPercent));
   const s1 = sortie(1, 95);
   chk('görev 2 takviye twist\'i oyunu çökertmiyor', !s1.threw, s1.threw && s1.threw.message);
+  const sea = new Sim(MISSION_LIST[0], 'striker', { ...PR, assisted: false });
+  const shots = [];
+  const orig = sea.spawn.bind(sea);
+  sea.spawn = (kind, pos, vel, life, dmg, target, msl) => {
+    if (kind === 'hostile') {
+      let src = '?', bd = 1e9;
+      for (const ent of sea.entities) {
+        if (!ent.hp || ent.friendly) continue;
+        const d = Math.hypot(ent.position.x - pos.x, ent.position.z - pos.z);
+        if (d < bd) { bd = d; src = ent.kind; }
+      }
+      shots.push({ src, msl: msl || 0 });
+    }
+    return orig(kind, pos, vel, life, dmg, target, msl);
+  };
+  for (let i = 0; i < 28 * 60 && !sea.result; i++) sea.update(1 / 60, { yaw: 0, pitch: 0, throttle: 0.7, fire: false, boost: false });
+  const shipMsl = shots.filter((q) => q.msl && (q.src === 'corvette' || q.src === 'destroyer'));
+  const ground = shots.filter((q) => q.src === 'sam' || q.src === 'radar');
+  console.log(`  deniz atışı ${shipMsl.length} · kara atışı ${ground.length}`);
+  chk('geçilen gemiden karşı füze geliyor', shipMsl.length >= 1, String(shipMsl.length));
+  chk('kolay görevde SAM ve radar ateş etmiyor', ground.length === 0, ground.map((q) => q.src).join(','));
+  const steer = new Sim(MISSION_LIST[0], 'striker', PR);
+  const b0 = Math.abs(steer.targetBearing);
+  for (let i = 0; i < 6 * 60; i++) steer.update(1 / 60, { yaw: 0.2, pitch: 0, throttle: 0.5, fire: false, boost: false });
+  chk('hafif kol kolay görevde rotayı kesmiyor', Math.abs(steer.targetBearing) < b0 - 0.05, `${b0.toFixed(2)} -> ${Math.abs(steer.targetBearing).toFixed(2)}`);
   console.log(`\nSONUÇ: ${fails === 0 ? 'kampanya eğrisi 205 göreve yayıldı' : fails + ' kontrol BAŞARISIZ'}`);
   process.exit(fails === 0 ? 0 : 1);
 }
