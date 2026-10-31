@@ -25,6 +25,7 @@
  *   node run-diagnostics.mjs ../../striker-dev/index.html --twist    # 8 twist kuralı motora bağlı mı
  *   node run-diagnostics.mjs ../../striker-dev/index.html --curve    # 205 görev kampanya zorluk eğrisi
  *   node run-diagnostics.mjs ../../striker-dev/index.html --hud      # dokunmatik HUD yerleşimi (CSS)
+ *   node run-diagnostics.mjs ../../striker-dev/index.html --islet   # adacık kenarı ve kaçış
  *
  * Çıkış kodu: 0 = hepsi geçti · 1 = en az bir test başarısız · 2 = araç hatası
  *
@@ -45,7 +46,8 @@ const MODE = args.includes('--probe') ? 'probe'
   : args.includes('--world') ? 'world'
   : args.includes('--atmos') ? 'atmos'
   : args.includes('--twist') ? 'twist'
-  : args.includes('--curve') ? 'curve' : 'diag';
+  : args.includes('--curve') ? 'curve'
+  : args.includes('--islet') ? 'islet' : 'diag';
 const htmlArg = args.find((a) => !a.startsWith('--'));
 const target = resolve(htmlArg || join(here, '../../striker-dev/index.html'));
 if (args.includes('--hud')) {
@@ -955,6 +957,135 @@ if (MODE === 'probe') {
   console.log(`  kills / score    : ${sim.kills} / ${sim.score}`);
   console.log(`  test beklentisi  : kills>=1 && score>0  →  ${ok ? 'KARŞILANDI' : 'KARŞILANMADI'}`);
   process.exit(ok ? 0 : 1);
+}
+
+if (MODE === 'islet') {
+  // P1: adacık merkezine uçuş ve kaçış. Tarayıcı yok; sabit adımlı sim.
+  const ids = [0, 1, 2, 7, 11, 12, 36, 50, 80, 144];
+  const fly = (sim, tx, tz, secs, input, steer) => {
+    let minSpd = 1e9, minClear = 1e9, maxStuck = 0, stuck = 0, impacts = 0, moved = 0;
+    const x0 = sim.player.x, z0 = sim.player.z;
+    let px = x0, pz = z0;
+    const N = Math.round(secs / 0.04);
+    for (let i = 0; i < N && !sim.result; i++) {
+      if (steer) {
+        const dx = tx - sim.player.x, dz = tz - sim.player.z;
+        sim.heading = Math.atan2(dx, -dz);
+      }
+      const ev0 = sim.events.length;
+      sim.update(0.04, input);
+      if (sim.events.slice(ev0).some((e) => e.kind === 'damage' || e.kind === 'terrainHit')) impacts++;
+      sim.events.length = 0;
+      minSpd = Math.min(minSpd, sim.speed);
+      const g = sim.terr(sim.player.x, sim.player.z);
+      minClear = Math.min(minClear, sim.player.y - Math.max(0, g));
+      const step = Math.hypot(sim.player.x - px, sim.player.z - pz);
+      moved += step;
+      if (step < 1.5 && sim.speed < 45) stuck++; else stuck = 0;
+      maxStuck = Math.max(maxStuck, stuck);
+      px = sim.player.x; pz = sim.player.z;
+    }
+    const gEnd = sim.terr(sim.player.x, sim.player.z);
+    return {
+      minSpd: Math.round(minSpd), minClear: Math.round(minClear), maxStuck,
+      impacts, moved: Math.round(moved), hp: Math.round(sim.health),
+      dead: sim.result ? sim.result.reason : '',
+      end: [Math.round(sim.player.x), Math.round(sim.player.y), Math.round(sim.player.z)],
+      gEnd: Math.round(gEnd), dist: Math.round(Math.hypot(sim.player.x - x0, sim.player.z - z0)),
+    };
+  };
+  const arm = (m, assisted) => {
+    const sim = new Sim(m, 'striker', { ...prefs, assisted });
+    sim.phase = 'combat'; sim.catT = 9; sim.speed = 170;
+    sim.terr(0, 0);
+    return sim;
+  };
+  let bowls = 0, pads = 0, noSea = 0;
+  for (const id of ids) {
+    const m = MISSION_LIST.find((q) => q.id === id) || MISSION_LIST[id];
+    if (!m) continue;
+    const sim = arm(m, false);
+    const peaks = sim.peaks || [];
+    const coast = (sim.mission.id || 0) === 1;
+    const features = coast ? [[-1800, 600, 5200, 200, 90]] : peaks.filter((q) => q[4] >= 90);
+    let closedHere = 0;
+    for (const q of features) {
+      pads++;
+      const [cx, cz, rad, ph, kind] = q;
+      const floor = sim.terr(cx, cz);
+      let seaRays = 0, gentle = 0, blocked = 0, maxWall = 0;
+      const rays = 24;
+      for (let a = 0; a < rays; a++) {
+        const ang = a / rays * Math.PI * 2;
+        let sea = false, wall = 0, gentleOk = true;
+        for (let d = 40; d <= 6000; d += 40) {
+          const h = sim.terr(cx + Math.cos(ang) * d, cz + Math.sin(ang) * d);
+          if (h > floor + 80) gentleOk = false;
+          wall = Math.max(wall, h - floor);
+          if (h <= 1) { sea = true; break; }
+        }
+        if (sea) seaRays++;
+        if (sea && gentleOk) gentle++;
+        if (!sea || wall > 180) blocked++;
+        maxWall = Math.max(maxWall, wall);
+      }
+      const closed = seaRays === 0 || (gentle === 0 && maxWall > 180);
+      if (seaRays === 0) noSea++;
+      if (closed) { bowls++; closedHere++; }
+    }
+    console.log(`görev ${m.id}: özellik ${features.length} kapalı ${closedHere}`);
+  }
+  console.log(`ÖZET pad ${pads} denizsiz ${noSea} kapalı ${bowls} (önce 48/102 kapalı krater)`);
+  const silence = (sim) => {
+    for (const e of sim.entities) if (!e.friendly) {
+      e.fireIn = 1e9;
+      if (e.parts) for (const p of e.parts) p.h = 0;
+    }
+  };
+  let failN = 0;
+  const note = (ok, msg) => { console.log(`${ok ? 'PASS' : 'FAIL'}  ${msg}`); if (!ok) failN++; };
+  for (const id of [0, 36, 80]) {
+    const m = MISSION_LIST.find((q) => q.id === id);
+    const base = arm(m, false);
+    silence(base);
+    let low = 0, worstC = 999, worstPad = 0;
+    for (const q of (base.peaks || []).filter((p) => p[4] >= 100)) {
+      const [cx, cz, rad] = q;
+      const sim = arm(m, false);
+      silence(sim);
+      const outside = rad * 1.7;
+      const g0 = Math.max(0, sim.terr(cx + outside, cz));
+      sim.player.set(cx + outside, g0 + 90, cz);
+      sim.speed = 220;
+      sim.pitch = 0;
+      const r = fly(sim, cx, cz, 9, { yaw: 0, pitch: 0, throttle: 0.8, fire: false, boost: false }, true);
+      if (r.minClear < worstC) { worstC = r.minClear; worstPad = q[4]; }
+      if (r.minClear < 24) low++;
+      const out = arm(m, false);
+      silence(out);
+      const gf = Math.max(0, out.terr(cx, cz));
+      out.player.set(cx, gf + 36, cz);
+      out.speed = 180;
+      out.pitch = 0;
+      const e2 = fly(out, cx + 6000, cz + 2000, 14, { yaw: 0, pitch: 0, throttle: 0.8, fire: false, boost: false }, true);
+      if (e2.dist < 1200 || e2.minClear < 18) {
+        failN++;
+        console.log(`FAIL  kaçış görev ${id} pad ${q[4]} uzaklık ${e2.dist} açıklık ${e2.minClear} ${e2.dead}`);
+      }
+    }
+    note(low === 0 && worstC >= 24, `görev ${id} içeri uçuş: alçak pad ${low} en kötü pad ${worstPad} açıklık ${worstC}`);
+  }
+  const home = arm(MISSION_LIST[0], true);
+  silence(home);
+  home.player.set(0, 80, 1560);
+  home.speed = 160;
+  const hpH = home.health;
+  const as = fly(home, 0, 0, 18, { yaw: 0, pitch: 0, throttle: 0.5, fire: false, boost: false }, false);
+  note(!as.dead && hpH - home.health <= 8, `görev 1 asistli kalkış arazi hasarı ${Math.round(hpH - home.health)} ${as.dead} irtifa ${as.end[1]}`);
+  const tgt = home.entities.find((e) => e.listed && !e.airborne);
+  if (tgt) note(tgt.position.y >= home.terr(tgt.position.x, tgt.position.z) - 1, `kara hedef arazinin üstünde y=${Math.round(tgt.position.y)} yer=${Math.round(home.terr(tgt.position.x, tgt.position.z))}`);
+  console.log(failN ? `SONUÇ: ${failN} adacık kontrolü BAŞARISIZ` : 'SONUÇ: adacık geçişi ve kaçış arazi hasarı vermiyor');
+  process.exit(failN ? 1 : 0);
 }
 
 // ================================================== 5. --balance: füze ekonomisi
