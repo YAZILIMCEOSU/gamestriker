@@ -34,7 +34,8 @@ const MODE = args.includes('--probe') ? 'probe'
   : args.includes('--balance') ? 'balance'
   : args.includes('--save') ? 'save'
   : args.includes('--terrain') ? 'terrain'
-  : args.includes('--audit') ? 'audit' : 'diag';
+  : args.includes('--audit') ? 'audit'
+  : args.includes('--world') ? 'world' : 'diag';
 const htmlArg = args.find((a) => !a.startsWith('--'));
 const target = resolve(htmlArg || join(here, '../../striker-dev/index.html'));
 
@@ -327,6 +328,79 @@ if (MODE === 'terrain') {
 
   const fails = buried.length + clipping.length;
   console.log(`\nSONUÇ: ${fails === 0 ? 'temiz — hiçbir hedef araziye gömülü değil' : fails + ' hedef arazi kusuru taşıyor'}`);
+  process.exit(fails === 0 ? 0 : 1);
+}
+
+if (MODE === 'world') {
+  // ================================================================== --world
+  // "her görev farklı lokasyon + hava şartları" — plan verisi gerçekten devrede mi?
+  // missions_192.json (build girdisi) ile build'i BİREBİR karşılaştırır.
+  const planPath = resolve(htmlArg ? dirname(target) : join(here, '../../striker-dev'), 'plan', 'missions_192.json');
+  let PLAN = null;
+  try { PLAN = JSON.parse(readFileSync(planPath, 'utf8')); } catch (e) { fail(`plan okunamadı: ${planPath} (${e.message})`); }
+
+  let fails = 0;
+  const chk = (name, cond, detail) => { console.log(`${cond ? 'PASS' : 'FAIL'}  ${name}${cond ? '' : '  -> ' + detail}`); if (!cond) fails++; };
+  const F = ['region', 'regionKey', 'regionNote', 'weatherKey', 'conceptType', 'twist'];
+
+  console.log(`plan       : ${planPath.replace(process.cwd() + '/', '')}  (${PLAN.length} konsept)`);
+  console.log(`görevler   : ${MISSION_LIST.length}\n`);
+
+  // 1) alan doluluğu
+  const empty = [];
+  for (const m of MISSION_LIST) for (const f of F) {
+    if (typeof m[f] !== 'string' || !m[f].length) empty.push(`${m.id}.${f}`);
+  }
+  chk(`tüm görevlerde 6 konsept alanı dolu`, empty.length === 0, empty.slice(0, 6).join(', ') + (empty.length > 6 ? ` …(${empty.length})` : ''));
+
+  // 2) motor indeksleri geçerli aralıkta (tüketiciler 0..5 / 0..4 bekliyor)
+  const badB = MISSION_LIST.filter((m) => !(m.biome >= 0 && m.biome <= 5));
+  const badW = MISSION_LIST.filter((m) => !(m.weather >= 0 && m.weather <= 4));
+  chk('biome 0..5 aralığında (buildIslands/biomePal)', badB.length === 0, `${badB.length} görev: ${badB.slice(0, 4).map((m) => m.id + '=' + m.biome).join(', ')}`);
+  chk('weather 0..4 aralığında (setWeather/HUD overlay)', badW.length === 0, `${badW.length} görev: ${badW.slice(0, 4).map((m) => m.id + '=' + m.weather).join(', ')}`);
+
+  // 3) 0..191 plan ile BİREBİR eşleşiyor mu
+  const WMAP = { 'açık': 0, 'sisli': 2, 'yağmurlu': 1, 'karlı': 3, 'fırtınalı': 4, 'gece': 0, 'tozlu': 2, 'alacakaranlık': 0 };
+  const mism = [];
+  for (const c of PLAN) {
+    const i = c.id - PLAN[0].id;              // plan id 301..492 -> 0..191
+    const m = MISSION_LIST.find((x) => x.id === i);
+    if (!m) { mism.push(`${i}: görev yok`); continue; }
+    if (m.region !== c.region || m.conceptType !== c.type || m.weatherKey !== c.weather || m.twist !== c.twist) {
+      mism.push(`${i}: ${m.region}/${m.weatherKey} ≠ ${c.region}/${c.weather}`);
+    }
+    if (m.weather !== WMAP[c.weather]) mism.push(`${i}: weather ${m.weather} ≠ ${WMAP[c.weather]} (${c.weather})`);
+  }
+  chk('192 konsept plan ile birebir eşleşiyor', mism.length === 0, mism.slice(0, 4).join(' | ') + (mism.length > 4 ? ` …(${mism.length})` : ''));
+
+  // 4) gece / alacakaranlık -> sunset=1 (mevcut gece ışığı devreye giriyor)
+  const night = MISSION_LIST.filter((m) => m.weatherKey === 'gece' || m.weatherKey === 'alacakaranlık');
+  chk('gece/alacakaranlık görevlerde sunset=1', night.length > 0 && night.every((m) => m.sunset === 1), `${night.filter((m) => m.sunset !== 1).length}/${night.length} aykırı`);
+
+  // 5) çeşitlilik dağılımı
+  const cnt = (f) => new Set(MISSION_LIST.map((m) => m[f])).size;
+  const uniqCombo = new Set(MISSION_LIST.map((m) => `${m.region}|${m.weatherKey}|${m.twist}`)).size;
+  console.log('\n=== DAĞILIM ===');
+  console.log(`  bölge      : ${cnt('region')} farklı`);
+  console.log(`  hava       : ${cnt('weatherKey')} farklı`);
+  console.log(`  twist      : ${cnt('twist')} farklı`);
+  console.log(`  konsept tür: ${cnt('conceptType')} farklı`);
+  console.log(`  biome      : ${cnt('biome')} farklı (motor 6 destekliyor)`);
+  console.log(`  benzersiz bölge+hava+twist kombinasyonu: ${uniqCombo}/${MISSION_LIST.length}`);
+  chk('en az 20 bölge kullanılıyor', cnt('region') >= 20, `${cnt('region')}`);
+  chk('8 hava durumu da kullanılıyor', cnt('weatherKey') === 8, `${cnt('weatherKey')}`);
+  chk('8 twist de kullanılıyor', cnt('twist') === 8, `${cnt('twist')}`);
+
+  console.log('\n=== ÖRNEK (ilk 6 görev) ===');
+  for (const m of MISSION_LIST.slice(0, 6)) {
+    console.log(`  #${String(m.id).padStart(3)} ${m.region.padEnd(18)} ${String(m.weatherKey).padEnd(14)} biome${m.biome} w${m.weather} sunset${m.sunset} · ${m.conceptType} · ${m.twist}`);
+  }
+  console.log('\n=== ÖZEL GÖREVLER (id≥192, elle yazılmış) ===');
+  for (const m of MISSION_LIST.filter((x) => x.id >= 192).slice(0, 4)) {
+    console.log(`  #${m.id} ${m.name} → ${m.region} / ${m.weatherKey} / ${m.twist}`);
+  }
+
+  console.log(`\nSONUÇ: ${fails === 0 ? 'plan verisi devrede ve planla birebir' : fails + ' kontrol BAŞARISIZ'}`);
   process.exit(fails === 0 ? 0 : 1);
 }
 
