@@ -1,0 +1,3410 @@
+[
+ {
+  "id": 301,
+  "region": "Buzul Fiyordu",
+  "region_en": "Glacier fjord",
+  "region_key": "ice",
+  "region_note": "Kar fırtınası, düşük görüş",
+  "type": "Konvoy İmha",
+  "type_key": "convoy",
+  "goal": "Konvoyu durdur, iki gemiyi batır",
+  "targets": [
+   "corvette",
+   "destroyer",
+   "corvette"
+  ],
+  "weather": "açık",
+  "twist": "Yalnızca düşük irtifada uçuş",
+  "name": "Buzul Fiyordu — Konvoy İmha"
+ },
+ {
+  "id": 302,
+  "region": "Buzul Fiyordu",
+  "region_en": "Glacier fjord",
+  "region_key": "ice",
+  "region_note": "Kar fırtınası, düşük görüş",
+  "type": "SAM Bastırma",
+  "type_key": "sam",
+  "goal": "Hava savunmasını sustur, sonra çıkış yap",
+  "targets": [
+   "sam",
+   "radar",
+   "sam"
+  ],
+  "weather": "sisli",
+  "twist": "Düşman her 90 saniyede takviye gönderir",
+  "name": "Buzul Fiyordu — SAM Bastırma"
+ },
+ {
+  "id": 303,
+  "region": "Buzul Fiyordu",
+  "region_en": "Glacier fjord",
+  "region_key": "ice",
+  "region_note": "Kar fırtınası, düşük görüş",
+  "type": "Köprü Yıkımı",
+  "type_key": "bridge",
+  "goal": "Tek köprüyü yık, geri dönüş yolunu kes",
+  "targets": [
+   "bridge",
+   "depot"
+  ],
+  "weather": "yağmurlu",
+  "twist": "Yakıt üç katı hızlı tükenir",
+  "name": "Buzul Fiyordu — Köprü Yıkımı"
+ },
+ {
+  "id": 304,
+  "region": "Buzul Fiyordu",
+  "region_en": "Glacier fjord",
+  "region_key": "ice",
+  "region_note": "Kar fırtınası, düşük görüş",
+  "type": "Sahil Savunması",
+  "type_key": "coast",
+  "goal": "Limanı koru, saldırı dalgalarını bitir",
+  "targets": [
+   "port",
+   "tower",
+   "corvette"
+  ],
+  "weather": "karlı",
+  "twist": "Radar kapalı, hedefler gözle bulunur",
+  "name": "Buzul Fiyordu — Sahil Savunması"
+ },
+ {
+  "id": 305,
+  "region": "Buzul Fiyordu",
+  "region_en": "Glacier fjord",
+  "region_key": "ice",
+  "region_note": "Kar fırtınası, düşük görüş",
+  "type": "Denizaltı Avı",
+  "type_key": "sub",
+  "goal": "Dalan denizaltıları yüzeyde yakala",
+  "targets": [
+   "sub",
+   "sub",
+   "destroyer"
+  ],
+  "weather": "fırtınalı",
+  "twist": "Sis perdesi görüşü yarıya indirir",
+  "name": "Buzul Fiyordu — Denizaltı Avı"
+ },
+ {
+  "id": 306,
+  "region": "Buzul Fiyordu",
+  "region_en": "Glacier fjord",
+  "region_key": "ice",
+  "region_note": "Kar fırtınası, düşük görüş",
+  "type": "Hava Üstünlüğü",
+  "type_key": "air",
+  "goal": "Gökyüzünü temizle, bombardıman uçaklarını düşür",
+  "targets": [
+   "attacker",
+   "bomber",
+   "attacker"
+  ],
+  "weather": "gece",
+  "twist": "Bir hedef saldırı sırasında kaçar",
+  "name": "Buzul Fiyordu — Hava Üstünlüğü"
+ },
+ {
+  "id": 307,
+  "region": "Buzul Fiyordu",
+  "region_en": "Glacier fjord",
+  "region_key": "ice",
+  "region_note": "Kar fırtınası, düşük görüş",
+  "type": "Keşif Hattı",
+  "type_key": "recon",
+  "goal": "Hedefleri tara, sonraki saldırı için işaretle",
+  "targets": [
+   "radar",
+   "depot"
+  ],
+  "weather": "tozlu",
+  "twist": "Yalnızca füze ile vurulabilir hedefler",
+  "name": "Buzul Fiyordu — Keşif Hattı"
+ },
+ {
+  "id": 308,
+  "region": "Buzul Fiyordu",
+  "region_en": "Glacier fjord",
+  "region_key": "ice",
+  "region_note": "Kar fırtınası, düşük görüş",
+  "type": "Gece Baskını",
+  "type_key": "night",
+  "goal": "Işıklar sönmeden tesisleri devre dışı bırak",
+  "targets": [
+   "refinery",
+   "depot",
+   "tower"
+  ],
+  "weather": "alacakaranlık",
+  "twist": "Kanat sensörü arızalı, manuel nişan",
+  "name": "Buzul Fiyordu — Gece Baskını"
+ },
+ {
+  "id": 309,
+  "region": "Kumul Kıyısı",
+  "region_en": "Dune coast",
+  "region_key": "desert",
+  "region_note": "Sıcak hava titremesi, rüzgâr",
+  "type": "Konvoy İmha",
+  "type_key": "convoy",
+  "goal": "Konvoyu durdur, iki gemiyi batır",
+  "targets": [
+   "corvette",
+   "destroyer",
+   "corvette"
+  ],
+  "weather": "sisli",
+  "twist": "Radar kapalı, hedefler gözle bulunur",
+  "name": "Kumul Kıyısı — Konvoy İmha"
+ },
+ {
+  "id": 310,
+  "region": "Kumul Kıyısı",
+  "region_en": "Dune coast",
+  "region_key": "desert",
+  "region_note": "Sıcak hava titremesi, rüzgâr",
+  "type": "SAM Bastırma",
+  "type_key": "sam",
+  "goal": "Hava savunmasını sustur, sonra çıkış yap",
+  "targets": [
+   "sam",
+   "radar",
+   "sam"
+  ],
+  "weather": "yağmurlu",
+  "twist": "Sis perdesi görüşü yarıya indirir",
+  "name": "Kumul Kıyısı — SAM Bastırma"
+ },
+ {
+  "id": 311,
+  "region": "Kumul Kıyısı",
+  "region_en": "Dune coast",
+  "region_key": "desert",
+  "region_note": "Sıcak hava titremesi, rüzgâr",
+  "type": "Köprü Yıkımı",
+  "type_key": "bridge",
+  "goal": "Tek köprüyü yık, geri dönüş yolunu kes",
+  "targets": [
+   "bridge",
+   "depot"
+  ],
+  "weather": "karlı",
+  "twist": "Bir hedef saldırı sırasında kaçar",
+  "name": "Kumul Kıyısı — Köprü Yıkımı"
+ },
+ {
+  "id": 312,
+  "region": "Kumul Kıyısı",
+  "region_en": "Dune coast",
+  "region_key": "desert",
+  "region_note": "Sıcak hava titremesi, rüzgâr",
+  "type": "Sahil Savunması",
+  "type_key": "coast",
+  "goal": "Limanı koru, saldırı dalgalarını bitir",
+  "targets": [
+   "port",
+   "tower",
+   "corvette"
+  ],
+  "weather": "fırtınalı",
+  "twist": "Yalnızca füze ile vurulabilir hedefler",
+  "name": "Kumul Kıyısı — Sahil Savunması"
+ },
+ {
+  "id": 313,
+  "region": "Kumul Kıyısı",
+  "region_en": "Dune coast",
+  "region_key": "desert",
+  "region_note": "Sıcak hava titremesi, rüzgâr",
+  "type": "Denizaltı Avı",
+  "type_key": "sub",
+  "goal": "Dalan denizaltıları yüzeyde yakala",
+  "targets": [
+   "sub",
+   "sub",
+   "destroyer"
+  ],
+  "weather": "gece",
+  "twist": "Kanat sensörü arızalı, manuel nişan",
+  "name": "Kumul Kıyısı — Denizaltı Avı"
+ },
+ {
+  "id": 314,
+  "region": "Kumul Kıyısı",
+  "region_en": "Dune coast",
+  "region_key": "desert",
+  "region_note": "Sıcak hava titremesi, rüzgâr",
+  "type": "Hava Üstünlüğü",
+  "type_key": "air",
+  "goal": "Gökyüzünü temizle, bombardıman uçaklarını düşür",
+  "targets": [
+   "attacker",
+   "bomber",
+   "attacker"
+  ],
+  "weather": "tozlu",
+  "twist": "Yalnızca düşük irtifada uçuş",
+  "name": "Kumul Kıyısı — Hava Üstünlüğü"
+ },
+ {
+  "id": 315,
+  "region": "Kumul Kıyısı",
+  "region_en": "Dune coast",
+  "region_key": "desert",
+  "region_note": "Sıcak hava titremesi, rüzgâr",
+  "type": "Keşif Hattı",
+  "type_key": "recon",
+  "goal": "Hedefleri tara, sonraki saldırı için işaretle",
+  "targets": [
+   "radar",
+   "depot"
+  ],
+  "weather": "alacakaranlık",
+  "twist": "Düşman her 90 saniyede takviye gönderir",
+  "name": "Kumul Kıyısı — Keşif Hattı"
+ },
+ {
+  "id": 316,
+  "region": "Kumul Kıyısı",
+  "region_en": "Dune coast",
+  "region_key": "desert",
+  "region_note": "Sıcak hava titremesi, rüzgâr",
+  "type": "Gece Baskını",
+  "type_key": "night",
+  "goal": "Işıklar sönmeden tesisleri devre dışı bırak",
+  "targets": [
+   "refinery",
+   "depot",
+   "tower"
+  ],
+  "weather": "açık",
+  "twist": "Yakıt üç katı hızlı tükenir",
+  "name": "Kumul Kıyısı — Gece Baskını"
+ },
+ {
+  "id": 317,
+  "region": "Mercan Atolü",
+  "region_en": "Coral atoll",
+  "region_key": "tropic",
+  "region_note": "Sığ su, uçuş üssü adaları",
+  "type": "Konvoy İmha",
+  "type_key": "convoy",
+  "goal": "Konvoyu durdur, iki gemiyi batır",
+  "targets": [
+   "corvette",
+   "destroyer",
+   "corvette"
+  ],
+  "weather": "yağmurlu",
+  "twist": "Yalnızca füze ile vurulabilir hedefler",
+  "name": "Mercan Atolü — Konvoy İmha"
+ },
+ {
+  "id": 318,
+  "region": "Mercan Atolü",
+  "region_en": "Coral atoll",
+  "region_key": "tropic",
+  "region_note": "Sığ su, uçuş üssü adaları",
+  "type": "SAM Bastırma",
+  "type_key": "sam",
+  "goal": "Hava savunmasını sustur, sonra çıkış yap",
+  "targets": [
+   "sam",
+   "radar",
+   "sam"
+  ],
+  "weather": "karlı",
+  "twist": "Kanat sensörü arızalı, manuel nişan",
+  "name": "Mercan Atolü — SAM Bastırma"
+ },
+ {
+  "id": 319,
+  "region": "Mercan Atolü",
+  "region_en": "Coral atoll",
+  "region_key": "tropic",
+  "region_note": "Sığ su, uçuş üssü adaları",
+  "type": "Köprü Yıkımı",
+  "type_key": "bridge",
+  "goal": "Tek köprüyü yık, geri dönüş yolunu kes",
+  "targets": [
+   "bridge",
+   "depot"
+  ],
+  "weather": "fırtınalı",
+  "twist": "Yalnızca düşük irtifada uçuş",
+  "name": "Mercan Atolü — Köprü Yıkımı"
+ },
+ {
+  "id": 320,
+  "region": "Mercan Atolü",
+  "region_en": "Coral atoll",
+  "region_key": "tropic",
+  "region_note": "Sığ su, uçuş üssü adaları",
+  "type": "Sahil Savunması",
+  "type_key": "coast",
+  "goal": "Limanı koru, saldırı dalgalarını bitir",
+  "targets": [
+   "port",
+   "tower",
+   "corvette"
+  ],
+  "weather": "gece",
+  "twist": "Düşman her 90 saniyede takviye gönderir",
+  "name": "Mercan Atolü — Sahil Savunması"
+ },
+ {
+  "id": 321,
+  "region": "Mercan Atolü",
+  "region_en": "Coral atoll",
+  "region_key": "tropic",
+  "region_note": "Sığ su, uçuş üssü adaları",
+  "type": "Denizaltı Avı",
+  "type_key": "sub",
+  "goal": "Dalan denizaltıları yüzeyde yakala",
+  "targets": [
+   "sub",
+   "sub",
+   "destroyer"
+  ],
+  "weather": "tozlu",
+  "twist": "Yakıt üç katı hızlı tükenir",
+  "name": "Mercan Atolü — Denizaltı Avı"
+ },
+ {
+  "id": 322,
+  "region": "Mercan Atolü",
+  "region_en": "Coral atoll",
+  "region_key": "tropic",
+  "region_note": "Sığ su, uçuş üssü adaları",
+  "type": "Hava Üstünlüğü",
+  "type_key": "air",
+  "goal": "Gökyüzünü temizle, bombardıman uçaklarını düşür",
+  "targets": [
+   "attacker",
+   "bomber",
+   "attacker"
+  ],
+  "weather": "alacakaranlık",
+  "twist": "Radar kapalı, hedefler gözle bulunur",
+  "name": "Mercan Atolü — Hava Üstünlüğü"
+ },
+ {
+  "id": 323,
+  "region": "Mercan Atolü",
+  "region_en": "Coral atoll",
+  "region_key": "tropic",
+  "region_note": "Sığ su, uçuş üssü adaları",
+  "type": "Keşif Hattı",
+  "type_key": "recon",
+  "goal": "Hedefleri tara, sonraki saldırı için işaretle",
+  "targets": [
+   "radar",
+   "depot"
+  ],
+  "weather": "açık",
+  "twist": "Sis perdesi görüşü yarıya indirir",
+  "name": "Mercan Atolü — Keşif Hattı"
+ },
+ {
+  "id": 324,
+  "region": "Mercan Atolü",
+  "region_en": "Coral atoll",
+  "region_key": "tropic",
+  "region_note": "Sığ su, uçuş üssü adaları",
+  "type": "Gece Baskını",
+  "type_key": "night",
+  "goal": "Işıklar sönmeden tesisleri devre dışı bırak",
+  "targets": [
+   "refinery",
+   "depot",
+   "tower"
+  ],
+  "weather": "sisli",
+  "twist": "Bir hedef saldırı sırasında kaçar",
+  "name": "Mercan Atolü — Gece Baskını"
+ },
+ {
+  "id": 325,
+  "region": "Volkan Adası",
+  "region_en": "Volcanic isle",
+  "region_key": "volcano",
+  "region_note": "Kül bulutu, kızgın termal",
+  "type": "Konvoy İmha",
+  "type_key": "convoy",
+  "goal": "Konvoyu durdur, iki gemiyi batır",
+  "targets": [
+   "corvette",
+   "destroyer",
+   "corvette"
+  ],
+  "weather": "karlı",
+  "twist": "Düşman her 90 saniyede takviye gönderir",
+  "name": "Volkan Adası — Konvoy İmha"
+ },
+ {
+  "id": 326,
+  "region": "Volkan Adası",
+  "region_en": "Volcanic isle",
+  "region_key": "volcano",
+  "region_note": "Kül bulutu, kızgın termal",
+  "type": "SAM Bastırma",
+  "type_key": "sam",
+  "goal": "Hava savunmasını sustur, sonra çıkış yap",
+  "targets": [
+   "sam",
+   "radar",
+   "sam"
+  ],
+  "weather": "fırtınalı",
+  "twist": "Yakıt üç katı hızlı tükenir",
+  "name": "Volkan Adası — SAM Bastırma"
+ },
+ {
+  "id": 327,
+  "region": "Volkan Adası",
+  "region_en": "Volcanic isle",
+  "region_key": "volcano",
+  "region_note": "Kül bulutu, kızgın termal",
+  "type": "Köprü Yıkımı",
+  "type_key": "bridge",
+  "goal": "Tek köprüyü yık, geri dönüş yolunu kes",
+  "targets": [
+   "bridge",
+   "depot"
+  ],
+  "weather": "gece",
+  "twist": "Radar kapalı, hedefler gözle bulunur",
+  "name": "Volkan Adası — Köprü Yıkımı"
+ },
+ {
+  "id": 328,
+  "region": "Volkan Adası",
+  "region_en": "Volcanic isle",
+  "region_key": "volcano",
+  "region_note": "Kül bulutu, kızgın termal",
+  "type": "Sahil Savunması",
+  "type_key": "coast",
+  "goal": "Limanı koru, saldırı dalgalarını bitir",
+  "targets": [
+   "port",
+   "tower",
+   "corvette"
+  ],
+  "weather": "tozlu",
+  "twist": "Sis perdesi görüşü yarıya indirir",
+  "name": "Volkan Adası — Sahil Savunması"
+ },
+ {
+  "id": 329,
+  "region": "Volkan Adası",
+  "region_en": "Volcanic isle",
+  "region_key": "volcano",
+  "region_note": "Kül bulutu, kızgın termal",
+  "type": "Denizaltı Avı",
+  "type_key": "sub",
+  "goal": "Dalan denizaltıları yüzeyde yakala",
+  "targets": [
+   "sub",
+   "sub",
+   "destroyer"
+  ],
+  "weather": "alacakaranlık",
+  "twist": "Bir hedef saldırı sırasında kaçar",
+  "name": "Volkan Adası — Denizaltı Avı"
+ },
+ {
+  "id": 330,
+  "region": "Volkan Adası",
+  "region_en": "Volcanic isle",
+  "region_key": "volcano",
+  "region_note": "Kül bulutu, kızgın termal",
+  "type": "Hava Üstünlüğü",
+  "type_key": "air",
+  "goal": "Gökyüzünü temizle, bombardıman uçaklarını düşür",
+  "targets": [
+   "attacker",
+   "bomber",
+   "attacker"
+  ],
+  "weather": "açık",
+  "twist": "Yalnızca füze ile vurulabilir hedefler",
+  "name": "Volkan Adası — Hava Üstünlüğü"
+ },
+ {
+  "id": 331,
+  "region": "Volkan Adası",
+  "region_en": "Volcanic isle",
+  "region_key": "volcano",
+  "region_note": "Kül bulutu, kızgın termal",
+  "type": "Keşif Hattı",
+  "type_key": "recon",
+  "goal": "Hedefleri tara, sonraki saldırı için işaretle",
+  "targets": [
+   "radar",
+   "depot"
+  ],
+  "weather": "sisli",
+  "twist": "Kanat sensörü arızalı, manuel nişan",
+  "name": "Volkan Adası — Keşif Hattı"
+ },
+ {
+  "id": 332,
+  "region": "Volkan Adası",
+  "region_en": "Volcanic isle",
+  "region_key": "volcano",
+  "region_note": "Kül bulutu, kızgın termal",
+  "type": "Gece Baskını",
+  "type_key": "night",
+  "goal": "Işıklar sönmeden tesisleri devre dışı bırak",
+  "targets": [
+   "refinery",
+   "depot",
+   "tower"
+  ],
+  "weather": "yağmurlu",
+  "twist": "Yalnızca düşük irtifada uçuş",
+  "name": "Volkan Adası — Gece Baskını"
+ },
+ {
+  "id": 333,
+  "region": "Kutup Boğazı",
+  "region_en": "Arctic strait",
+  "region_key": "arctic",
+  "region_note": "Buz kırıkları, radar parazit",
+  "type": "Konvoy İmha",
+  "type_key": "convoy",
+  "goal": "Konvoyu durdur, iki gemiyi batır",
+  "targets": [
+   "corvette",
+   "destroyer",
+   "corvette"
+  ],
+  "weather": "fırtınalı",
+  "twist": "Sis perdesi görüşü yarıya indirir",
+  "name": "Kutup Boğazı — Konvoy İmha"
+ },
+ {
+  "id": 334,
+  "region": "Kutup Boğazı",
+  "region_en": "Arctic strait",
+  "region_key": "arctic",
+  "region_note": "Buz kırıkları, radar parazit",
+  "type": "SAM Bastırma",
+  "type_key": "sam",
+  "goal": "Hava savunmasını sustur, sonra çıkış yap",
+  "targets": [
+   "sam",
+   "radar",
+   "sam"
+  ],
+  "weather": "gece",
+  "twist": "Bir hedef saldırı sırasında kaçar",
+  "name": "Kutup Boğazı — SAM Bastırma"
+ },
+ {
+  "id": 335,
+  "region": "Kutup Boğazı",
+  "region_en": "Arctic strait",
+  "region_key": "arctic",
+  "region_note": "Buz kırıkları, radar parazit",
+  "type": "Köprü Yıkımı",
+  "type_key": "bridge",
+  "goal": "Tek köprüyü yık, geri dönüş yolunu kes",
+  "targets": [
+   "bridge",
+   "depot"
+  ],
+  "weather": "tozlu",
+  "twist": "Yalnızca füze ile vurulabilir hedefler",
+  "name": "Kutup Boğazı — Köprü Yıkımı"
+ },
+ {
+  "id": 336,
+  "region": "Kutup Boğazı",
+  "region_en": "Arctic strait",
+  "region_key": "arctic",
+  "region_note": "Buz kırıkları, radar parazit",
+  "type": "Sahil Savunması",
+  "type_key": "coast",
+  "goal": "Limanı koru, saldırı dalgalarını bitir",
+  "targets": [
+   "port",
+   "tower",
+   "corvette"
+  ],
+  "weather": "alacakaranlık",
+  "twist": "Kanat sensörü arızalı, manuel nişan",
+  "name": "Kutup Boğazı — Sahil Savunması"
+ },
+ {
+  "id": 337,
+  "region": "Kutup Boğazı",
+  "region_en": "Arctic strait",
+  "region_key": "arctic",
+  "region_note": "Buz kırıkları, radar parazit",
+  "type": "Denizaltı Avı",
+  "type_key": "sub",
+  "goal": "Dalan denizaltıları yüzeyde yakala",
+  "targets": [
+   "sub",
+   "sub",
+   "destroyer"
+  ],
+  "weather": "açık",
+  "twist": "Yalnızca düşük irtifada uçuş",
+  "name": "Kutup Boğazı — Denizaltı Avı"
+ },
+ {
+  "id": 338,
+  "region": "Kutup Boğazı",
+  "region_en": "Arctic strait",
+  "region_key": "arctic",
+  "region_note": "Buz kırıkları, radar parazit",
+  "type": "Hava Üstünlüğü",
+  "type_key": "air",
+  "goal": "Gökyüzünü temizle, bombardıman uçaklarını düşür",
+  "targets": [
+   "attacker",
+   "bomber",
+   "attacker"
+  ],
+  "weather": "sisli",
+  "twist": "Düşman her 90 saniyede takviye gönderir",
+  "name": "Kutup Boğazı — Hava Üstünlüğü"
+ },
+ {
+  "id": 339,
+  "region": "Kutup Boğazı",
+  "region_en": "Arctic strait",
+  "region_key": "arctic",
+  "region_note": "Buz kırıkları, radar parazit",
+  "type": "Keşif Hattı",
+  "type_key": "recon",
+  "goal": "Hedefleri tara, sonraki saldırı için işaretle",
+  "targets": [
+   "radar",
+   "depot"
+  ],
+  "weather": "yağmurlu",
+  "twist": "Yakıt üç katı hızlı tükenir",
+  "name": "Kutup Boğazı — Keşif Hattı"
+ },
+ {
+  "id": 340,
+  "region": "Kutup Boğazı",
+  "region_en": "Arctic strait",
+  "region_key": "arctic",
+  "region_note": "Buz kırıkları, radar parazit",
+  "type": "Gece Baskını",
+  "type_key": "night",
+  "goal": "Işıklar sönmeden tesisleri devre dışı bırak",
+  "targets": [
+   "refinery",
+   "depot",
+   "tower"
+  ],
+  "weather": "karlı",
+  "twist": "Radar kapalı, hedefler gözle bulunur",
+  "name": "Kutup Boğazı — Gece Baskını"
+ },
+ {
+  "id": 341,
+  "region": "Muson Deltası",
+  "region_en": "Monsoon delta",
+  "region_key": "delta",
+  "region_note": "Yağmur perdesi, nehir ağları",
+  "type": "Konvoy İmha",
+  "type_key": "convoy",
+  "goal": "Konvoyu durdur, iki gemiyi batır",
+  "targets": [
+   "corvette",
+   "destroyer",
+   "corvette"
+  ],
+  "weather": "gece",
+  "twist": "Kanat sensörü arızalı, manuel nişan",
+  "name": "Muson Deltası — Konvoy İmha"
+ },
+ {
+  "id": 342,
+  "region": "Muson Deltası",
+  "region_en": "Monsoon delta",
+  "region_key": "delta",
+  "region_note": "Yağmur perdesi, nehir ağları",
+  "type": "SAM Bastırma",
+  "type_key": "sam",
+  "goal": "Hava savunmasını sustur, sonra çıkış yap",
+  "targets": [
+   "sam",
+   "radar",
+   "sam"
+  ],
+  "weather": "tozlu",
+  "twist": "Yalnızca düşük irtifada uçuş",
+  "name": "Muson Deltası — SAM Bastırma"
+ },
+ {
+  "id": 343,
+  "region": "Muson Deltası",
+  "region_en": "Monsoon delta",
+  "region_key": "delta",
+  "region_note": "Yağmur perdesi, nehir ağları",
+  "type": "Köprü Yıkımı",
+  "type_key": "bridge",
+  "goal": "Tek köprüyü yık, geri dönüş yolunu kes",
+  "targets": [
+   "bridge",
+   "depot"
+  ],
+  "weather": "alacakaranlık",
+  "twist": "Düşman her 90 saniyede takviye gönderir",
+  "name": "Muson Deltası — Köprü Yıkımı"
+ },
+ {
+  "id": 344,
+  "region": "Muson Deltası",
+  "region_en": "Monsoon delta",
+  "region_key": "delta",
+  "region_note": "Yağmur perdesi, nehir ağları",
+  "type": "Sahil Savunması",
+  "type_key": "coast",
+  "goal": "Limanı koru, saldırı dalgalarını bitir",
+  "targets": [
+   "port",
+   "tower",
+   "corvette"
+  ],
+  "weather": "açık",
+  "twist": "Yakıt üç katı hızlı tükenir",
+  "name": "Muson Deltası — Sahil Savunması"
+ },
+ {
+  "id": 345,
+  "region": "Muson Deltası",
+  "region_en": "Monsoon delta",
+  "region_key": "delta",
+  "region_note": "Yağmur perdesi, nehir ağları",
+  "type": "Denizaltı Avı",
+  "type_key": "sub",
+  "goal": "Dalan denizaltıları yüzeyde yakala",
+  "targets": [
+   "sub",
+   "sub",
+   "destroyer"
+  ],
+  "weather": "sisli",
+  "twist": "Radar kapalı, hedefler gözle bulunur",
+  "name": "Muson Deltası — Denizaltı Avı"
+ },
+ {
+  "id": 346,
+  "region": "Muson Deltası",
+  "region_en": "Monsoon delta",
+  "region_key": "delta",
+  "region_note": "Yağmur perdesi, nehir ağları",
+  "type": "Hava Üstünlüğü",
+  "type_key": "air",
+  "goal": "Gökyüzünü temizle, bombardıman uçaklarını düşür",
+  "targets": [
+   "attacker",
+   "bomber",
+   "attacker"
+  ],
+  "weather": "yağmurlu",
+  "twist": "Sis perdesi görüşü yarıya indirir",
+  "name": "Muson Deltası — Hava Üstünlüğü"
+ },
+ {
+  "id": 347,
+  "region": "Muson Deltası",
+  "region_en": "Monsoon delta",
+  "region_key": "delta",
+  "region_note": "Yağmur perdesi, nehir ağları",
+  "type": "Keşif Hattı",
+  "type_key": "recon",
+  "goal": "Hedefleri tara, sonraki saldırı için işaretle",
+  "targets": [
+   "radar",
+   "depot"
+  ],
+  "weather": "karlı",
+  "twist": "Bir hedef saldırı sırasında kaçar",
+  "name": "Muson Deltası — Keşif Hattı"
+ },
+ {
+  "id": 348,
+  "region": "Muson Deltası",
+  "region_en": "Monsoon delta",
+  "region_key": "delta",
+  "region_note": "Yağmur perdesi, nehir ağları",
+  "type": "Gece Baskını",
+  "type_key": "night",
+  "goal": "Işıklar sönmeden tesisleri devre dışı bırak",
+  "targets": [
+   "refinery",
+   "depot",
+   "tower"
+  ],
+  "weather": "fırtınalı",
+  "twist": "Yalnızca füze ile vurulabilir hedefler",
+  "name": "Muson Deltası — Gece Baskını"
+ },
+ {
+  "id": 349,
+  "region": "Tuz Gölü",
+  "region_en": "Salt lake",
+  "region_key": "salt",
+  "region_note": "Parlak yansıma, gölge yok",
+  "type": "Konvoy İmha",
+  "type_key": "convoy",
+  "goal": "Konvoyu durdur, iki gemiyi batır",
+  "targets": [
+   "corvette",
+   "destroyer",
+   "corvette"
+  ],
+  "weather": "tozlu",
+  "twist": "Yakıt üç katı hızlı tükenir",
+  "name": "Tuz Gölü — Konvoy İmha"
+ },
+ {
+  "id": 350,
+  "region": "Tuz Gölü",
+  "region_en": "Salt lake",
+  "region_key": "salt",
+  "region_note": "Parlak yansıma, gölge yok",
+  "type": "SAM Bastırma",
+  "type_key": "sam",
+  "goal": "Hava savunmasını sustur, sonra çıkış yap",
+  "targets": [
+   "sam",
+   "radar",
+   "sam"
+  ],
+  "weather": "alacakaranlık",
+  "twist": "Radar kapalı, hedefler gözle bulunur",
+  "name": "Tuz Gölü — SAM Bastırma"
+ },
+ {
+  "id": 351,
+  "region": "Tuz Gölü",
+  "region_en": "Salt lake",
+  "region_key": "salt",
+  "region_note": "Parlak yansıma, gölge yok",
+  "type": "Köprü Yıkımı",
+  "type_key": "bridge",
+  "goal": "Tek köprüyü yık, geri dönüş yolunu kes",
+  "targets": [
+   "bridge",
+   "depot"
+  ],
+  "weather": "açık",
+  "twist": "Sis perdesi görüşü yarıya indirir",
+  "name": "Tuz Gölü — Köprü Yıkımı"
+ },
+ {
+  "id": 352,
+  "region": "Tuz Gölü",
+  "region_en": "Salt lake",
+  "region_key": "salt",
+  "region_note": "Parlak yansıma, gölge yok",
+  "type": "Sahil Savunması",
+  "type_key": "coast",
+  "goal": "Limanı koru, saldırı dalgalarını bitir",
+  "targets": [
+   "port",
+   "tower",
+   "corvette"
+  ],
+  "weather": "sisli",
+  "twist": "Bir hedef saldırı sırasında kaçar",
+  "name": "Tuz Gölü — Sahil Savunması"
+ },
+ {
+  "id": 353,
+  "region": "Tuz Gölü",
+  "region_en": "Salt lake",
+  "region_key": "salt",
+  "region_note": "Parlak yansıma, gölge yok",
+  "type": "Denizaltı Avı",
+  "type_key": "sub",
+  "goal": "Dalan denizaltıları yüzeyde yakala",
+  "targets": [
+   "sub",
+   "sub",
+   "destroyer"
+  ],
+  "weather": "yağmurlu",
+  "twist": "Yalnızca füze ile vurulabilir hedefler",
+  "name": "Tuz Gölü — Denizaltı Avı"
+ },
+ {
+  "id": 354,
+  "region": "Tuz Gölü",
+  "region_en": "Salt lake",
+  "region_key": "salt",
+  "region_note": "Parlak yansıma, gölge yok",
+  "type": "Hava Üstünlüğü",
+  "type_key": "air",
+  "goal": "Gökyüzünü temizle, bombardıman uçaklarını düşür",
+  "targets": [
+   "attacker",
+   "bomber",
+   "attacker"
+  ],
+  "weather": "karlı",
+  "twist": "Kanat sensörü arızalı, manuel nişan",
+  "name": "Tuz Gölü — Hava Üstünlüğü"
+ },
+ {
+  "id": 355,
+  "region": "Tuz Gölü",
+  "region_en": "Salt lake",
+  "region_key": "salt",
+  "region_note": "Parlak yansıma, gölge yok",
+  "type": "Keşif Hattı",
+  "type_key": "recon",
+  "goal": "Hedefleri tara, sonraki saldırı için işaretle",
+  "targets": [
+   "radar",
+   "depot"
+  ],
+  "weather": "fırtınalı",
+  "twist": "Yalnızca düşük irtifada uçuş",
+  "name": "Tuz Gölü — Keşif Hattı"
+ },
+ {
+  "id": 356,
+  "region": "Tuz Gölü",
+  "region_en": "Salt lake",
+  "region_key": "salt",
+  "region_note": "Parlak yansıma, gölge yok",
+  "type": "Gece Baskını",
+  "type_key": "night",
+  "goal": "Işıklar sönmeden tesisleri devre dışı bırak",
+  "targets": [
+   "refinery",
+   "depot",
+   "tower"
+  ],
+  "weather": "gece",
+  "twist": "Düşman her 90 saniyede takviye gönderir",
+  "name": "Tuz Gölü — Gece Baskını"
+ },
+ {
+  "id": 357,
+  "region": "Buzul Körfezi",
+  "region_en": "Glacier bay",
+  "region_key": "bay",
+  "region_note": "Yüzen buz, uçuş koridorları",
+  "type": "Konvoy İmha",
+  "type_key": "convoy",
+  "goal": "Konvoyu durdur, iki gemiyi batır",
+  "targets": [
+   "corvette",
+   "destroyer",
+   "corvette"
+  ],
+  "weather": "alacakaranlık",
+  "twist": "Bir hedef saldırı sırasında kaçar",
+  "name": "Buzul Körfezi — Konvoy İmha"
+ },
+ {
+  "id": 358,
+  "region": "Buzul Körfezi",
+  "region_en": "Glacier bay",
+  "region_key": "bay",
+  "region_note": "Yüzen buz, uçuş koridorları",
+  "type": "SAM Bastırma",
+  "type_key": "sam",
+  "goal": "Hava savunmasını sustur, sonra çıkış yap",
+  "targets": [
+   "sam",
+   "radar",
+   "sam"
+  ],
+  "weather": "açık",
+  "twist": "Yalnızca füze ile vurulabilir hedefler",
+  "name": "Buzul Körfezi — SAM Bastırma"
+ },
+ {
+  "id": 359,
+  "region": "Buzul Körfezi",
+  "region_en": "Glacier bay",
+  "region_key": "bay",
+  "region_note": "Yüzen buz, uçuş koridorları",
+  "type": "Köprü Yıkımı",
+  "type_key": "bridge",
+  "goal": "Tek köprüyü yık, geri dönüş yolunu kes",
+  "targets": [
+   "bridge",
+   "depot"
+  ],
+  "weather": "sisli",
+  "twist": "Kanat sensörü arızalı, manuel nişan",
+  "name": "Buzul Körfezi — Köprü Yıkımı"
+ },
+ {
+  "id": 360,
+  "region": "Buzul Körfezi",
+  "region_en": "Glacier bay",
+  "region_key": "bay",
+  "region_note": "Yüzen buz, uçuş koridorları",
+  "type": "Sahil Savunması",
+  "type_key": "coast",
+  "goal": "Limanı koru, saldırı dalgalarını bitir",
+  "targets": [
+   "port",
+   "tower",
+   "corvette"
+  ],
+  "weather": "yağmurlu",
+  "twist": "Yalnızca düşük irtifada uçuş",
+  "name": "Buzul Körfezi — Sahil Savunması"
+ },
+ {
+  "id": 361,
+  "region": "Buzul Körfezi",
+  "region_en": "Glacier bay",
+  "region_key": "bay",
+  "region_note": "Yüzen buz, uçuş koridorları",
+  "type": "Denizaltı Avı",
+  "type_key": "sub",
+  "goal": "Dalan denizaltıları yüzeyde yakala",
+  "targets": [
+   "sub",
+   "sub",
+   "destroyer"
+  ],
+  "weather": "karlı",
+  "twist": "Düşman her 90 saniyede takviye gönderir",
+  "name": "Buzul Körfezi — Denizaltı Avı"
+ },
+ {
+  "id": 362,
+  "region": "Buzul Körfezi",
+  "region_en": "Glacier bay",
+  "region_key": "bay",
+  "region_note": "Yüzen buz, uçuş koridorları",
+  "type": "Hava Üstünlüğü",
+  "type_key": "air",
+  "goal": "Gökyüzünü temizle, bombardıman uçaklarını düşür",
+  "targets": [
+   "attacker",
+   "bomber",
+   "attacker"
+  ],
+  "weather": "fırtınalı",
+  "twist": "Yakıt üç katı hızlı tükenir",
+  "name": "Buzul Körfezi — Hava Üstünlüğü"
+ },
+ {
+  "id": 363,
+  "region": "Buzul Körfezi",
+  "region_en": "Glacier bay",
+  "region_key": "bay",
+  "region_note": "Yüzen buz, uçuş koridorları",
+  "type": "Keşif Hattı",
+  "type_key": "recon",
+  "goal": "Hedefleri tara, sonraki saldırı için işaretle",
+  "targets": [
+   "radar",
+   "depot"
+  ],
+  "weather": "gece",
+  "twist": "Radar kapalı, hedefler gözle bulunur",
+  "name": "Buzul Körfezi — Keşif Hattı"
+ },
+ {
+  "id": 364,
+  "region": "Buzul Körfezi",
+  "region_en": "Glacier bay",
+  "region_key": "bay",
+  "region_note": "Yüzen buz, uçuş koridorları",
+  "type": "Gece Baskını",
+  "type_key": "night",
+  "goal": "Işıklar sönmeden tesisleri devre dışı bırak",
+  "targets": [
+   "refinery",
+   "depot",
+   "tower"
+  ],
+  "weather": "tozlu",
+  "twist": "Sis perdesi görüşü yarıya indirir",
+  "name": "Buzul Körfezi — Gece Baskını"
+ },
+ {
+  "id": 365,
+  "region": "Mangrov Haliç",
+  "region_en": "Mangrove estuary",
+  "region_key": "estuary",
+  "region_note": "Alçak sis, sıkışık kanallar",
+  "type": "Konvoy İmha",
+  "type_key": "convoy",
+  "goal": "Konvoyu durdur, iki gemiyi batır",
+  "targets": [
+   "corvette",
+   "destroyer",
+   "corvette"
+  ],
+  "weather": "açık",
+  "twist": "Yalnızca düşük irtifada uçuş",
+  "name": "Mangrov Haliç — Konvoy İmha"
+ },
+ {
+  "id": 366,
+  "region": "Mangrov Haliç",
+  "region_en": "Mangrove estuary",
+  "region_key": "estuary",
+  "region_note": "Alçak sis, sıkışık kanallar",
+  "type": "SAM Bastırma",
+  "type_key": "sam",
+  "goal": "Hava savunmasını sustur, sonra çıkış yap",
+  "targets": [
+   "sam",
+   "radar",
+   "sam"
+  ],
+  "weather": "sisli",
+  "twist": "Düşman her 90 saniyede takviye gönderir",
+  "name": "Mangrov Haliç — SAM Bastırma"
+ },
+ {
+  "id": 367,
+  "region": "Mangrov Haliç",
+  "region_en": "Mangrove estuary",
+  "region_key": "estuary",
+  "region_note": "Alçak sis, sıkışık kanallar",
+  "type": "Köprü Yıkımı",
+  "type_key": "bridge",
+  "goal": "Tek köprüyü yık, geri dönüş yolunu kes",
+  "targets": [
+   "bridge",
+   "depot"
+  ],
+  "weather": "yağmurlu",
+  "twist": "Yakıt üç katı hızlı tükenir",
+  "name": "Mangrov Haliç — Köprü Yıkımı"
+ },
+ {
+  "id": 368,
+  "region": "Mangrov Haliç",
+  "region_en": "Mangrove estuary",
+  "region_key": "estuary",
+  "region_note": "Alçak sis, sıkışık kanallar",
+  "type": "Sahil Savunması",
+  "type_key": "coast",
+  "goal": "Limanı koru, saldırı dalgalarını bitir",
+  "targets": [
+   "port",
+   "tower",
+   "corvette"
+  ],
+  "weather": "karlı",
+  "twist": "Radar kapalı, hedefler gözle bulunur",
+  "name": "Mangrov Haliç — Sahil Savunması"
+ },
+ {
+  "id": 369,
+  "region": "Mangrov Haliç",
+  "region_en": "Mangrove estuary",
+  "region_key": "estuary",
+  "region_note": "Alçak sis, sıkışık kanallar",
+  "type": "Denizaltı Avı",
+  "type_key": "sub",
+  "goal": "Dalan denizaltıları yüzeyde yakala",
+  "targets": [
+   "sub",
+   "sub",
+   "destroyer"
+  ],
+  "weather": "fırtınalı",
+  "twist": "Sis perdesi görüşü yarıya indirir",
+  "name": "Mangrov Haliç — Denizaltı Avı"
+ },
+ {
+  "id": 370,
+  "region": "Mangrov Haliç",
+  "region_en": "Mangrove estuary",
+  "region_key": "estuary",
+  "region_note": "Alçak sis, sıkışık kanallar",
+  "type": "Hava Üstünlüğü",
+  "type_key": "air",
+  "goal": "Gökyüzünü temizle, bombardıman uçaklarını düşür",
+  "targets": [
+   "attacker",
+   "bomber",
+   "attacker"
+  ],
+  "weather": "gece",
+  "twist": "Bir hedef saldırı sırasında kaçar",
+  "name": "Mangrov Haliç — Hava Üstünlüğü"
+ },
+ {
+  "id": 371,
+  "region": "Mangrov Haliç",
+  "region_en": "Mangrove estuary",
+  "region_key": "estuary",
+  "region_note": "Alçak sis, sıkışık kanallar",
+  "type": "Keşif Hattı",
+  "type_key": "recon",
+  "goal": "Hedefleri tara, sonraki saldırı için işaretle",
+  "targets": [
+   "radar",
+   "depot"
+  ],
+  "weather": "tozlu",
+  "twist": "Yalnızca füze ile vurulabilir hedefler",
+  "name": "Mangrov Haliç — Keşif Hattı"
+ },
+ {
+  "id": 372,
+  "region": "Mangrov Haliç",
+  "region_en": "Mangrove estuary",
+  "region_key": "estuary",
+  "region_note": "Alçak sis, sıkışık kanallar",
+  "type": "Gece Baskını",
+  "type_key": "night",
+  "goal": "Işıklar sönmeden tesisleri devre dışı bırak",
+  "targets": [
+   "refinery",
+   "depot",
+   "tower"
+  ],
+  "weather": "alacakaranlık",
+  "twist": "Kanat sensörü arızalı, manuel nişan",
+  "name": "Mangrov Haliç — Gece Baskını"
+ },
+ {
+  "id": 373,
+  "region": "Platform Sahası",
+  "region_en": "Offshore rig field",
+  "region_key": "rig",
+  "region_note": "Petrol platformları, dar hava sahası",
+  "type": "Konvoy İmha",
+  "type_key": "convoy",
+  "goal": "Konvoyu durdur, iki gemiyi batır",
+  "targets": [
+   "corvette",
+   "destroyer",
+   "corvette"
+  ],
+  "weather": "sisli",
+  "twist": "Radar kapalı, hedefler gözle bulunur",
+  "name": "Platform Sahası — Konvoy İmha"
+ },
+ {
+  "id": 374,
+  "region": "Platform Sahası",
+  "region_en": "Offshore rig field",
+  "region_key": "rig",
+  "region_note": "Petrol platformları, dar hava sahası",
+  "type": "SAM Bastırma",
+  "type_key": "sam",
+  "goal": "Hava savunmasını sustur, sonra çıkış yap",
+  "targets": [
+   "sam",
+   "radar",
+   "sam"
+  ],
+  "weather": "yağmurlu",
+  "twist": "Sis perdesi görüşü yarıya indirir",
+  "name": "Platform Sahası — SAM Bastırma"
+ },
+ {
+  "id": 375,
+  "region": "Platform Sahası",
+  "region_en": "Offshore rig field",
+  "region_key": "rig",
+  "region_note": "Petrol platformları, dar hava sahası",
+  "type": "Köprü Yıkımı",
+  "type_key": "bridge",
+  "goal": "Tek köprüyü yık, geri dönüş yolunu kes",
+  "targets": [
+   "bridge",
+   "depot"
+  ],
+  "weather": "karlı",
+  "twist": "Bir hedef saldırı sırasında kaçar",
+  "name": "Platform Sahası — Köprü Yıkımı"
+ },
+ {
+  "id": 376,
+  "region": "Platform Sahası",
+  "region_en": "Offshore rig field",
+  "region_key": "rig",
+  "region_note": "Petrol platformları, dar hava sahası",
+  "type": "Sahil Savunması",
+  "type_key": "coast",
+  "goal": "Limanı koru, saldırı dalgalarını bitir",
+  "targets": [
+   "port",
+   "tower",
+   "corvette"
+  ],
+  "weather": "fırtınalı",
+  "twist": "Yalnızca füze ile vurulabilir hedefler",
+  "name": "Platform Sahası — Sahil Savunması"
+ },
+ {
+  "id": 377,
+  "region": "Platform Sahası",
+  "region_en": "Offshore rig field",
+  "region_key": "rig",
+  "region_note": "Petrol platformları, dar hava sahası",
+  "type": "Denizaltı Avı",
+  "type_key": "sub",
+  "goal": "Dalan denizaltıları yüzeyde yakala",
+  "targets": [
+   "sub",
+   "sub",
+   "destroyer"
+  ],
+  "weather": "gece",
+  "twist": "Kanat sensörü arızalı, manuel nişan",
+  "name": "Platform Sahası — Denizaltı Avı"
+ },
+ {
+  "id": 378,
+  "region": "Platform Sahası",
+  "region_en": "Offshore rig field",
+  "region_key": "rig",
+  "region_note": "Petrol platformları, dar hava sahası",
+  "type": "Hava Üstünlüğü",
+  "type_key": "air",
+  "goal": "Gökyüzünü temizle, bombardıman uçaklarını düşür",
+  "targets": [
+   "attacker",
+   "bomber",
+   "attacker"
+  ],
+  "weather": "tozlu",
+  "twist": "Yalnızca düşük irtifada uçuş",
+  "name": "Platform Sahası — Hava Üstünlüğü"
+ },
+ {
+  "id": 379,
+  "region": "Platform Sahası",
+  "region_en": "Offshore rig field",
+  "region_key": "rig",
+  "region_note": "Petrol platformları, dar hava sahası",
+  "type": "Keşif Hattı",
+  "type_key": "recon",
+  "goal": "Hedefleri tara, sonraki saldırı için işaretle",
+  "targets": [
+   "radar",
+   "depot"
+  ],
+  "weather": "alacakaranlık",
+  "twist": "Düşman her 90 saniyede takviye gönderir",
+  "name": "Platform Sahası — Keşif Hattı"
+ },
+ {
+  "id": 380,
+  "region": "Platform Sahası",
+  "region_en": "Offshore rig field",
+  "region_key": "rig",
+  "region_note": "Petrol platformları, dar hava sahası",
+  "type": "Gece Baskını",
+  "type_key": "night",
+  "goal": "Işıklar sönmeden tesisleri devre dışı bırak",
+  "targets": [
+   "refinery",
+   "depot",
+   "tower"
+  ],
+  "weather": "açık",
+  "twist": "Yakıt üç katı hızlı tükenir",
+  "name": "Platform Sahası — Gece Baskını"
+ },
+ {
+  "id": 381,
+  "region": "Fırtına Cephesi",
+  "region_en": "Storm front",
+  "region_key": "storm",
+  "region_note": "Türbülans, kısa görüş",
+  "type": "Konvoy İmha",
+  "type_key": "convoy",
+  "goal": "Konvoyu durdur, iki gemiyi batır",
+  "targets": [
+   "corvette",
+   "destroyer",
+   "corvette"
+  ],
+  "weather": "yağmurlu",
+  "twist": "Yalnızca füze ile vurulabilir hedefler",
+  "name": "Fırtına Cephesi — Konvoy İmha"
+ },
+ {
+  "id": 382,
+  "region": "Fırtına Cephesi",
+  "region_en": "Storm front",
+  "region_key": "storm",
+  "region_note": "Türbülans, kısa görüş",
+  "type": "SAM Bastırma",
+  "type_key": "sam",
+  "goal": "Hava savunmasını sustur, sonra çıkış yap",
+  "targets": [
+   "sam",
+   "radar",
+   "sam"
+  ],
+  "weather": "karlı",
+  "twist": "Kanat sensörü arızalı, manuel nişan",
+  "name": "Fırtına Cephesi — SAM Bastırma"
+ },
+ {
+  "id": 383,
+  "region": "Fırtına Cephesi",
+  "region_en": "Storm front",
+  "region_key": "storm",
+  "region_note": "Türbülans, kısa görüş",
+  "type": "Köprü Yıkımı",
+  "type_key": "bridge",
+  "goal": "Tek köprüyü yık, geri dönüş yolunu kes",
+  "targets": [
+   "bridge",
+   "depot"
+  ],
+  "weather": "fırtınalı",
+  "twist": "Yalnızca düşük irtifada uçuş",
+  "name": "Fırtına Cephesi — Köprü Yıkımı"
+ },
+ {
+  "id": 384,
+  "region": "Fırtına Cephesi",
+  "region_en": "Storm front",
+  "region_key": "storm",
+  "region_note": "Türbülans, kısa görüş",
+  "type": "Sahil Savunması",
+  "type_key": "coast",
+  "goal": "Limanı koru, saldırı dalgalarını bitir",
+  "targets": [
+   "port",
+   "tower",
+   "corvette"
+  ],
+  "weather": "gece",
+  "twist": "Düşman her 90 saniyede takviye gönderir",
+  "name": "Fırtına Cephesi — Sahil Savunması"
+ },
+ {
+  "id": 385,
+  "region": "Fırtına Cephesi",
+  "region_en": "Storm front",
+  "region_key": "storm",
+  "region_note": "Türbülans, kısa görüş",
+  "type": "Denizaltı Avı",
+  "type_key": "sub",
+  "goal": "Dalan denizaltıları yüzeyde yakala",
+  "targets": [
+   "sub",
+   "sub",
+   "destroyer"
+  ],
+  "weather": "tozlu",
+  "twist": "Yakıt üç katı hızlı tükenir",
+  "name": "Fırtına Cephesi — Denizaltı Avı"
+ },
+ {
+  "id": 386,
+  "region": "Fırtına Cephesi",
+  "region_en": "Storm front",
+  "region_key": "storm",
+  "region_note": "Türbülans, kısa görüş",
+  "type": "Hava Üstünlüğü",
+  "type_key": "air",
+  "goal": "Gökyüzünü temizle, bombardıman uçaklarını düşür",
+  "targets": [
+   "attacker",
+   "bomber",
+   "attacker"
+  ],
+  "weather": "alacakaranlık",
+  "twist": "Radar kapalı, hedefler gözle bulunur",
+  "name": "Fırtına Cephesi — Hava Üstünlüğü"
+ },
+ {
+  "id": 387,
+  "region": "Fırtına Cephesi",
+  "region_en": "Storm front",
+  "region_key": "storm",
+  "region_note": "Türbülans, kısa görüş",
+  "type": "Keşif Hattı",
+  "type_key": "recon",
+  "goal": "Hedefleri tara, sonraki saldırı için işaretle",
+  "targets": [
+   "radar",
+   "depot"
+  ],
+  "weather": "açık",
+  "twist": "Sis perdesi görüşü yarıya indirir",
+  "name": "Fırtına Cephesi — Keşif Hattı"
+ },
+ {
+  "id": 388,
+  "region": "Fırtına Cephesi",
+  "region_en": "Storm front",
+  "region_key": "storm",
+  "region_note": "Türbülans, kısa görüş",
+  "type": "Gece Baskını",
+  "type_key": "night",
+  "goal": "Işıklar sönmeden tesisleri devre dışı bırak",
+  "targets": [
+   "refinery",
+   "depot",
+   "tower"
+  ],
+  "weather": "sisli",
+  "twist": "Bir hedef saldırı sırasında kaçar",
+  "name": "Fırtına Cephesi — Gece Baskını"
+ },
+ {
+  "id": 389,
+  "region": "Gece Limanı",
+  "region_en": "Night harbor",
+  "region_key": "night",
+  "region_note": "Gece, projektör ışıkları",
+  "type": "Konvoy İmha",
+  "type_key": "convoy",
+  "goal": "Konvoyu durdur, iki gemiyi batır",
+  "targets": [
+   "corvette",
+   "destroyer",
+   "corvette"
+  ],
+  "weather": "karlı",
+  "twist": "Düşman her 90 saniyede takviye gönderir",
+  "name": "Gece Limanı — Konvoy İmha"
+ },
+ {
+  "id": 390,
+  "region": "Gece Limanı",
+  "region_en": "Night harbor",
+  "region_key": "night",
+  "region_note": "Gece, projektör ışıkları",
+  "type": "SAM Bastırma",
+  "type_key": "sam",
+  "goal": "Hava savunmasını sustur, sonra çıkış yap",
+  "targets": [
+   "sam",
+   "radar",
+   "sam"
+  ],
+  "weather": "fırtınalı",
+  "twist": "Yakıt üç katı hızlı tükenir",
+  "name": "Gece Limanı — SAM Bastırma"
+ },
+ {
+  "id": 391,
+  "region": "Gece Limanı",
+  "region_en": "Night harbor",
+  "region_key": "night",
+  "region_note": "Gece, projektör ışıkları",
+  "type": "Köprü Yıkımı",
+  "type_key": "bridge",
+  "goal": "Tek köprüyü yık, geri dönüş yolunu kes",
+  "targets": [
+   "bridge",
+   "depot"
+  ],
+  "weather": "gece",
+  "twist": "Radar kapalı, hedefler gözle bulunur",
+  "name": "Gece Limanı — Köprü Yıkımı"
+ },
+ {
+  "id": 392,
+  "region": "Gece Limanı",
+  "region_en": "Night harbor",
+  "region_key": "night",
+  "region_note": "Gece, projektör ışıkları",
+  "type": "Sahil Savunması",
+  "type_key": "coast",
+  "goal": "Limanı koru, saldırı dalgalarını bitir",
+  "targets": [
+   "port",
+   "tower",
+   "corvette"
+  ],
+  "weather": "tozlu",
+  "twist": "Sis perdesi görüşü yarıya indirir",
+  "name": "Gece Limanı — Sahil Savunması"
+ },
+ {
+  "id": 393,
+  "region": "Gece Limanı",
+  "region_en": "Night harbor",
+  "region_key": "night",
+  "region_note": "Gece, projektör ışıkları",
+  "type": "Denizaltı Avı",
+  "type_key": "sub",
+  "goal": "Dalan denizaltıları yüzeyde yakala",
+  "targets": [
+   "sub",
+   "sub",
+   "destroyer"
+  ],
+  "weather": "alacakaranlık",
+  "twist": "Bir hedef saldırı sırasında kaçar",
+  "name": "Gece Limanı — Denizaltı Avı"
+ },
+ {
+  "id": 394,
+  "region": "Gece Limanı",
+  "region_en": "Night harbor",
+  "region_key": "night",
+  "region_note": "Gece, projektör ışıkları",
+  "type": "Hava Üstünlüğü",
+  "type_key": "air",
+  "goal": "Gökyüzünü temizle, bombardıman uçaklarını düşür",
+  "targets": [
+   "attacker",
+   "bomber",
+   "attacker"
+  ],
+  "weather": "açık",
+  "twist": "Yalnızca füze ile vurulabilir hedefler",
+  "name": "Gece Limanı — Hava Üstünlüğü"
+ },
+ {
+  "id": 395,
+  "region": "Gece Limanı",
+  "region_en": "Night harbor",
+  "region_key": "night",
+  "region_note": "Gece, projektör ışıkları",
+  "type": "Keşif Hattı",
+  "type_key": "recon",
+  "goal": "Hedefleri tara, sonraki saldırı için işaretle",
+  "targets": [
+   "radar",
+   "depot"
+  ],
+  "weather": "sisli",
+  "twist": "Kanat sensörü arızalı, manuel nişan",
+  "name": "Gece Limanı — Keşif Hattı"
+ },
+ {
+  "id": 396,
+  "region": "Gece Limanı",
+  "region_en": "Night harbor",
+  "region_key": "night",
+  "region_note": "Gece, projektör ışıkları",
+  "type": "Gece Baskını",
+  "type_key": "night",
+  "goal": "Işıklar sönmeden tesisleri devre dışı bırak",
+  "targets": [
+   "refinery",
+   "depot",
+   "tower"
+  ],
+  "weather": "yağmurlu",
+  "twist": "Yalnızca düşük irtifada uçuş",
+  "name": "Gece Limanı — Gece Baskını"
+ },
+ {
+  "id": 397,
+  "region": "Kanyon Nehri",
+  "region_en": "Canyon river",
+  "region_key": "canyon",
+  "region_note": "Dar vadi, dağ yankısı",
+  "type": "Konvoy İmha",
+  "type_key": "convoy",
+  "goal": "Konvoyu durdur, iki gemiyi batır",
+  "targets": [
+   "corvette",
+   "destroyer",
+   "corvette"
+  ],
+  "weather": "fırtınalı",
+  "twist": "Sis perdesi görüşü yarıya indirir",
+  "name": "Kanyon Nehri — Konvoy İmha"
+ },
+ {
+  "id": 398,
+  "region": "Kanyon Nehri",
+  "region_en": "Canyon river",
+  "region_key": "canyon",
+  "region_note": "Dar vadi, dağ yankısı",
+  "type": "SAM Bastırma",
+  "type_key": "sam",
+  "goal": "Hava savunmasını sustur, sonra çıkış yap",
+  "targets": [
+   "sam",
+   "radar",
+   "sam"
+  ],
+  "weather": "gece",
+  "twist": "Bir hedef saldırı sırasında kaçar",
+  "name": "Kanyon Nehri — SAM Bastırma"
+ },
+ {
+  "id": 399,
+  "region": "Kanyon Nehri",
+  "region_en": "Canyon river",
+  "region_key": "canyon",
+  "region_note": "Dar vadi, dağ yankısı",
+  "type": "Köprü Yıkımı",
+  "type_key": "bridge",
+  "goal": "Tek köprüyü yık, geri dönüş yolunu kes",
+  "targets": [
+   "bridge",
+   "depot"
+  ],
+  "weather": "tozlu",
+  "twist": "Yalnızca füze ile vurulabilir hedefler",
+  "name": "Kanyon Nehri — Köprü Yıkımı"
+ },
+ {
+  "id": 400,
+  "region": "Kanyon Nehri",
+  "region_en": "Canyon river",
+  "region_key": "canyon",
+  "region_note": "Dar vadi, dağ yankısı",
+  "type": "Sahil Savunması",
+  "type_key": "coast",
+  "goal": "Limanı koru, saldırı dalgalarını bitir",
+  "targets": [
+   "port",
+   "tower",
+   "corvette"
+  ],
+  "weather": "alacakaranlık",
+  "twist": "Kanat sensörü arızalı, manuel nişan",
+  "name": "Kanyon Nehri — Sahil Savunması"
+ },
+ {
+  "id": 401,
+  "region": "Kanyon Nehri",
+  "region_en": "Canyon river",
+  "region_key": "canyon",
+  "region_note": "Dar vadi, dağ yankısı",
+  "type": "Denizaltı Avı",
+  "type_key": "sub",
+  "goal": "Dalan denizaltıları yüzeyde yakala",
+  "targets": [
+   "sub",
+   "sub",
+   "destroyer"
+  ],
+  "weather": "açık",
+  "twist": "Yalnızca düşük irtifada uçuş",
+  "name": "Kanyon Nehri — Denizaltı Avı"
+ },
+ {
+  "id": 402,
+  "region": "Kanyon Nehri",
+  "region_en": "Canyon river",
+  "region_key": "canyon",
+  "region_note": "Dar vadi, dağ yankısı",
+  "type": "Hava Üstünlüğü",
+  "type_key": "air",
+  "goal": "Gökyüzünü temizle, bombardıman uçaklarını düşür",
+  "targets": [
+   "attacker",
+   "bomber",
+   "attacker"
+  ],
+  "weather": "sisli",
+  "twist": "Düşman her 90 saniyede takviye gönderir",
+  "name": "Kanyon Nehri — Hava Üstünlüğü"
+ },
+ {
+  "id": 403,
+  "region": "Kanyon Nehri",
+  "region_en": "Canyon river",
+  "region_key": "canyon",
+  "region_note": "Dar vadi, dağ yankısı",
+  "type": "Keşif Hattı",
+  "type_key": "recon",
+  "goal": "Hedefleri tara, sonraki saldırı için işaretle",
+  "targets": [
+   "radar",
+   "depot"
+  ],
+  "weather": "yağmurlu",
+  "twist": "Yakıt üç katı hızlı tükenir",
+  "name": "Kanyon Nehri — Keşif Hattı"
+ },
+ {
+  "id": 404,
+  "region": "Kanyon Nehri",
+  "region_en": "Canyon river",
+  "region_key": "canyon",
+  "region_note": "Dar vadi, dağ yankısı",
+  "type": "Gece Baskını",
+  "type_key": "night",
+  "goal": "Işıklar sönmeden tesisleri devre dışı bırak",
+  "targets": [
+   "refinery",
+   "depot",
+   "tower"
+  ],
+  "weather": "karlı",
+  "twist": "Radar kapalı, hedefler gözle bulunur",
+  "name": "Kanyon Nehri — Gece Baskını"
+ },
+ {
+  "id": 405,
+  "region": "Kayalık Koy",
+  "region_en": "Cliff bay",
+  "region_key": "cliff",
+  "region_note": "Yüksek falezler, kıyı radarı",
+  "type": "Konvoy İmha",
+  "type_key": "convoy",
+  "goal": "Konvoyu durdur, iki gemiyi batır",
+  "targets": [
+   "corvette",
+   "destroyer",
+   "corvette"
+  ],
+  "weather": "gece",
+  "twist": "Kanat sensörü arızalı, manuel nişan",
+  "name": "Kayalık Koy — Konvoy İmha"
+ },
+ {
+  "id": 406,
+  "region": "Kayalık Koy",
+  "region_en": "Cliff bay",
+  "region_key": "cliff",
+  "region_note": "Yüksek falezler, kıyı radarı",
+  "type": "SAM Bastırma",
+  "type_key": "sam",
+  "goal": "Hava savunmasını sustur, sonra çıkış yap",
+  "targets": [
+   "sam",
+   "radar",
+   "sam"
+  ],
+  "weather": "tozlu",
+  "twist": "Yalnızca düşük irtifada uçuş",
+  "name": "Kayalık Koy — SAM Bastırma"
+ },
+ {
+  "id": 407,
+  "region": "Kayalık Koy",
+  "region_en": "Cliff bay",
+  "region_key": "cliff",
+  "region_note": "Yüksek falezler, kıyı radarı",
+  "type": "Köprü Yıkımı",
+  "type_key": "bridge",
+  "goal": "Tek köprüyü yık, geri dönüş yolunu kes",
+  "targets": [
+   "bridge",
+   "depot"
+  ],
+  "weather": "alacakaranlık",
+  "twist": "Düşman her 90 saniyede takviye gönderir",
+  "name": "Kayalık Koy — Köprü Yıkımı"
+ },
+ {
+  "id": 408,
+  "region": "Kayalık Koy",
+  "region_en": "Cliff bay",
+  "region_key": "cliff",
+  "region_note": "Yüksek falezler, kıyı radarı",
+  "type": "Sahil Savunması",
+  "type_key": "coast",
+  "goal": "Limanı koru, saldırı dalgalarını bitir",
+  "targets": [
+   "port",
+   "tower",
+   "corvette"
+  ],
+  "weather": "açık",
+  "twist": "Yakıt üç katı hızlı tükenir",
+  "name": "Kayalık Koy — Sahil Savunması"
+ },
+ {
+  "id": 409,
+  "region": "Kayalık Koy",
+  "region_en": "Cliff bay",
+  "region_key": "cliff",
+  "region_note": "Yüksek falezler, kıyı radarı",
+  "type": "Denizaltı Avı",
+  "type_key": "sub",
+  "goal": "Dalan denizaltıları yüzeyde yakala",
+  "targets": [
+   "sub",
+   "sub",
+   "destroyer"
+  ],
+  "weather": "sisli",
+  "twist": "Radar kapalı, hedefler gözle bulunur",
+  "name": "Kayalık Koy — Denizaltı Avı"
+ },
+ {
+  "id": 410,
+  "region": "Kayalık Koy",
+  "region_en": "Cliff bay",
+  "region_key": "cliff",
+  "region_note": "Yüksek falezler, kıyı radarı",
+  "type": "Hava Üstünlüğü",
+  "type_key": "air",
+  "goal": "Gökyüzünü temizle, bombardıman uçaklarını düşür",
+  "targets": [
+   "attacker",
+   "bomber",
+   "attacker"
+  ],
+  "weather": "yağmurlu",
+  "twist": "Sis perdesi görüşü yarıya indirir",
+  "name": "Kayalık Koy — Hava Üstünlüğü"
+ },
+ {
+  "id": 411,
+  "region": "Kayalık Koy",
+  "region_en": "Cliff bay",
+  "region_key": "cliff",
+  "region_note": "Yüksek falezler, kıyı radarı",
+  "type": "Keşif Hattı",
+  "type_key": "recon",
+  "goal": "Hedefleri tara, sonraki saldırı için işaretle",
+  "targets": [
+   "radar",
+   "depot"
+  ],
+  "weather": "karlı",
+  "twist": "Bir hedef saldırı sırasında kaçar",
+  "name": "Kayalık Koy — Keşif Hattı"
+ },
+ {
+  "id": 412,
+  "region": "Kayalık Koy",
+  "region_en": "Cliff bay",
+  "region_key": "cliff",
+  "region_note": "Yüksek falezler, kıyı radarı",
+  "type": "Gece Baskını",
+  "type_key": "night",
+  "goal": "Işıklar sönmeden tesisleri devre dışı bırak",
+  "targets": [
+   "refinery",
+   "depot",
+   "tower"
+  ],
+  "weather": "fırtınalı",
+  "twist": "Yalnızca füze ile vurulabilir hedefler",
+  "name": "Kayalık Koy — Gece Baskını"
+ },
+ {
+  "id": 413,
+  "region": "Resif Takımadası",
+  "region_en": "Reef archipelago",
+  "region_key": "reef",
+  "region_note": "Sığ resifler, küçük hedefler",
+  "type": "Konvoy İmha",
+  "type_key": "convoy",
+  "goal": "Konvoyu durdur, iki gemiyi batır",
+  "targets": [
+   "corvette",
+   "destroyer",
+   "corvette"
+  ],
+  "weather": "tozlu",
+  "twist": "Yakıt üç katı hızlı tükenir",
+  "name": "Resif Takımadası — Konvoy İmha"
+ },
+ {
+  "id": 414,
+  "region": "Resif Takımadası",
+  "region_en": "Reef archipelago",
+  "region_key": "reef",
+  "region_note": "Sığ resifler, küçük hedefler",
+  "type": "SAM Bastırma",
+  "type_key": "sam",
+  "goal": "Hava savunmasını sustur, sonra çıkış yap",
+  "targets": [
+   "sam",
+   "radar",
+   "sam"
+  ],
+  "weather": "alacakaranlık",
+  "twist": "Radar kapalı, hedefler gözle bulunur",
+  "name": "Resif Takımadası — SAM Bastırma"
+ },
+ {
+  "id": 415,
+  "region": "Resif Takımadası",
+  "region_en": "Reef archipelago",
+  "region_key": "reef",
+  "region_note": "Sığ resifler, küçük hedefler",
+  "type": "Köprü Yıkımı",
+  "type_key": "bridge",
+  "goal": "Tek köprüyü yık, geri dönüş yolunu kes",
+  "targets": [
+   "bridge",
+   "depot"
+  ],
+  "weather": "açık",
+  "twist": "Sis perdesi görüşü yarıya indirir",
+  "name": "Resif Takımadası — Köprü Yıkımı"
+ },
+ {
+  "id": 416,
+  "region": "Resif Takımadası",
+  "region_en": "Reef archipelago",
+  "region_key": "reef",
+  "region_note": "Sığ resifler, küçük hedefler",
+  "type": "Sahil Savunması",
+  "type_key": "coast",
+  "goal": "Limanı koru, saldırı dalgalarını bitir",
+  "targets": [
+   "port",
+   "tower",
+   "corvette"
+  ],
+  "weather": "sisli",
+  "twist": "Bir hedef saldırı sırasında kaçar",
+  "name": "Resif Takımadası — Sahil Savunması"
+ },
+ {
+  "id": 417,
+  "region": "Resif Takımadası",
+  "region_en": "Reef archipelago",
+  "region_key": "reef",
+  "region_note": "Sığ resifler, küçük hedefler",
+  "type": "Denizaltı Avı",
+  "type_key": "sub",
+  "goal": "Dalan denizaltıları yüzeyde yakala",
+  "targets": [
+   "sub",
+   "sub",
+   "destroyer"
+  ],
+  "weather": "yağmurlu",
+  "twist": "Yalnızca füze ile vurulabilir hedefler",
+  "name": "Resif Takımadası — Denizaltı Avı"
+ },
+ {
+  "id": 418,
+  "region": "Resif Takımadası",
+  "region_en": "Reef archipelago",
+  "region_key": "reef",
+  "region_note": "Sığ resifler, küçük hedefler",
+  "type": "Hava Üstünlüğü",
+  "type_key": "air",
+  "goal": "Gökyüzünü temizle, bombardıman uçaklarını düşür",
+  "targets": [
+   "attacker",
+   "bomber",
+   "attacker"
+  ],
+  "weather": "karlı",
+  "twist": "Kanat sensörü arızalı, manuel nişan",
+  "name": "Resif Takımadası — Hava Üstünlüğü"
+ },
+ {
+  "id": 419,
+  "region": "Resif Takımadası",
+  "region_en": "Reef archipelago",
+  "region_key": "reef",
+  "region_note": "Sığ resifler, küçük hedefler",
+  "type": "Keşif Hattı",
+  "type_key": "recon",
+  "goal": "Hedefleri tara, sonraki saldırı için işaretle",
+  "targets": [
+   "radar",
+   "depot"
+  ],
+  "weather": "fırtınalı",
+  "twist": "Yalnızca düşük irtifada uçuş",
+  "name": "Resif Takımadası — Keşif Hattı"
+ },
+ {
+  "id": 420,
+  "region": "Resif Takımadası",
+  "region_en": "Reef archipelago",
+  "region_key": "reef",
+  "region_note": "Sığ resifler, küçük hedefler",
+  "type": "Gece Baskını",
+  "type_key": "night",
+  "goal": "Işıklar sönmeden tesisleri devre dışı bırak",
+  "targets": [
+   "refinery",
+   "depot",
+   "tower"
+  ],
+  "weather": "gece",
+  "twist": "Düşman her 90 saniyede takviye gönderir",
+  "name": "Resif Takımadası — Gece Baskını"
+ },
+ {
+  "id": 421,
+  "region": "Bozkır Kıyısı",
+  "region_en": "Steppe coast",
+  "region_key": "steppe",
+  "region_note": "Açık alan, geniş görüş",
+  "type": "Konvoy İmha",
+  "type_key": "convoy",
+  "goal": "Konvoyu durdur, iki gemiyi batır",
+  "targets": [
+   "corvette",
+   "destroyer",
+   "corvette"
+  ],
+  "weather": "alacakaranlık",
+  "twist": "Bir hedef saldırı sırasında kaçar",
+  "name": "Bozkır Kıyısı — Konvoy İmha"
+ },
+ {
+  "id": 422,
+  "region": "Bozkır Kıyısı",
+  "region_en": "Steppe coast",
+  "region_key": "steppe",
+  "region_note": "Açık alan, geniş görüş",
+  "type": "SAM Bastırma",
+  "type_key": "sam",
+  "goal": "Hava savunmasını sustur, sonra çıkış yap",
+  "targets": [
+   "sam",
+   "radar",
+   "sam"
+  ],
+  "weather": "açık",
+  "twist": "Yalnızca füze ile vurulabilir hedefler",
+  "name": "Bozkır Kıyısı — SAM Bastırma"
+ },
+ {
+  "id": 423,
+  "region": "Bozkır Kıyısı",
+  "region_en": "Steppe coast",
+  "region_key": "steppe",
+  "region_note": "Açık alan, geniş görüş",
+  "type": "Köprü Yıkımı",
+  "type_key": "bridge",
+  "goal": "Tek köprüyü yık, geri dönüş yolunu kes",
+  "targets": [
+   "bridge",
+   "depot"
+  ],
+  "weather": "sisli",
+  "twist": "Kanat sensörü arızalı, manuel nişan",
+  "name": "Bozkır Kıyısı — Köprü Yıkımı"
+ },
+ {
+  "id": 424,
+  "region": "Bozkır Kıyısı",
+  "region_en": "Steppe coast",
+  "region_key": "steppe",
+  "region_note": "Açık alan, geniş görüş",
+  "type": "Sahil Savunması",
+  "type_key": "coast",
+  "goal": "Limanı koru, saldırı dalgalarını bitir",
+  "targets": [
+   "port",
+   "tower",
+   "corvette"
+  ],
+  "weather": "yağmurlu",
+  "twist": "Yalnızca düşük irtifada uçuş",
+  "name": "Bozkır Kıyısı — Sahil Savunması"
+ },
+ {
+  "id": 425,
+  "region": "Bozkır Kıyısı",
+  "region_en": "Steppe coast",
+  "region_key": "steppe",
+  "region_note": "Açık alan, geniş görüş",
+  "type": "Denizaltı Avı",
+  "type_key": "sub",
+  "goal": "Dalan denizaltıları yüzeyde yakala",
+  "targets": [
+   "sub",
+   "sub",
+   "destroyer"
+  ],
+  "weather": "karlı",
+  "twist": "Düşman her 90 saniyede takviye gönderir",
+  "name": "Bozkır Kıyısı — Denizaltı Avı"
+ },
+ {
+  "id": 426,
+  "region": "Bozkır Kıyısı",
+  "region_en": "Steppe coast",
+  "region_key": "steppe",
+  "region_note": "Açık alan, geniş görüş",
+  "type": "Hava Üstünlüğü",
+  "type_key": "air",
+  "goal": "Gökyüzünü temizle, bombardıman uçaklarını düşür",
+  "targets": [
+   "attacker",
+   "bomber",
+   "attacker"
+  ],
+  "weather": "fırtınalı",
+  "twist": "Yakıt üç katı hızlı tükenir",
+  "name": "Bozkır Kıyısı — Hava Üstünlüğü"
+ },
+ {
+  "id": 427,
+  "region": "Bozkır Kıyısı",
+  "region_en": "Steppe coast",
+  "region_key": "steppe",
+  "region_note": "Açık alan, geniş görüş",
+  "type": "Keşif Hattı",
+  "type_key": "recon",
+  "goal": "Hedefleri tara, sonraki saldırı için işaretle",
+  "targets": [
+   "radar",
+   "depot"
+  ],
+  "weather": "gece",
+  "twist": "Radar kapalı, hedefler gözle bulunur",
+  "name": "Bozkır Kıyısı — Keşif Hattı"
+ },
+ {
+  "id": 428,
+  "region": "Bozkır Kıyısı",
+  "region_en": "Steppe coast",
+  "region_key": "steppe",
+  "region_note": "Açık alan, geniş görüş",
+  "type": "Gece Baskını",
+  "type_key": "night",
+  "goal": "Işıklar sönmeden tesisleri devre dışı bırak",
+  "targets": [
+   "refinery",
+   "depot",
+   "tower"
+  ],
+  "weather": "tozlu",
+  "twist": "Sis perdesi görüşü yarıya indirir",
+  "name": "Bozkır Kıyısı — Gece Baskını"
+ },
+ {
+  "id": 429,
+  "region": "Kutup Buz Rafı",
+  "region_en": "Polar ice shelf",
+  "region_key": "shelf",
+  "region_note": "Beyaz zemin, düşük kontrast",
+  "type": "Konvoy İmha",
+  "type_key": "convoy",
+  "goal": "Konvoyu durdur, iki gemiyi batır",
+  "targets": [
+   "corvette",
+   "destroyer",
+   "corvette"
+  ],
+  "weather": "açık",
+  "twist": "Yalnızca düşük irtifada uçuş",
+  "name": "Kutup Buz Rafı — Konvoy İmha"
+ },
+ {
+  "id": 430,
+  "region": "Kutup Buz Rafı",
+  "region_en": "Polar ice shelf",
+  "region_key": "shelf",
+  "region_note": "Beyaz zemin, düşük kontrast",
+  "type": "SAM Bastırma",
+  "type_key": "sam",
+  "goal": "Hava savunmasını sustur, sonra çıkış yap",
+  "targets": [
+   "sam",
+   "radar",
+   "sam"
+  ],
+  "weather": "sisli",
+  "twist": "Düşman her 90 saniyede takviye gönderir",
+  "name": "Kutup Buz Rafı — SAM Bastırma"
+ },
+ {
+  "id": 431,
+  "region": "Kutup Buz Rafı",
+  "region_en": "Polar ice shelf",
+  "region_key": "shelf",
+  "region_note": "Beyaz zemin, düşük kontrast",
+  "type": "Köprü Yıkımı",
+  "type_key": "bridge",
+  "goal": "Tek köprüyü yık, geri dönüş yolunu kes",
+  "targets": [
+   "bridge",
+   "depot"
+  ],
+  "weather": "yağmurlu",
+  "twist": "Yakıt üç katı hızlı tükenir",
+  "name": "Kutup Buz Rafı — Köprü Yıkımı"
+ },
+ {
+  "id": 432,
+  "region": "Kutup Buz Rafı",
+  "region_en": "Polar ice shelf",
+  "region_key": "shelf",
+  "region_note": "Beyaz zemin, düşük kontrast",
+  "type": "Sahil Savunması",
+  "type_key": "coast",
+  "goal": "Limanı koru, saldırı dalgalarını bitir",
+  "targets": [
+   "port",
+   "tower",
+   "corvette"
+  ],
+  "weather": "karlı",
+  "twist": "Radar kapalı, hedefler gözle bulunur",
+  "name": "Kutup Buz Rafı — Sahil Savunması"
+ },
+ {
+  "id": 433,
+  "region": "Kutup Buz Rafı",
+  "region_en": "Polar ice shelf",
+  "region_key": "shelf",
+  "region_note": "Beyaz zemin, düşük kontrast",
+  "type": "Denizaltı Avı",
+  "type_key": "sub",
+  "goal": "Dalan denizaltıları yüzeyde yakala",
+  "targets": [
+   "sub",
+   "sub",
+   "destroyer"
+  ],
+  "weather": "fırtınalı",
+  "twist": "Sis perdesi görüşü yarıya indirir",
+  "name": "Kutup Buz Rafı — Denizaltı Avı"
+ },
+ {
+  "id": 434,
+  "region": "Kutup Buz Rafı",
+  "region_en": "Polar ice shelf",
+  "region_key": "shelf",
+  "region_note": "Beyaz zemin, düşük kontrast",
+  "type": "Hava Üstünlüğü",
+  "type_key": "air",
+  "goal": "Gökyüzünü temizle, bombardıman uçaklarını düşür",
+  "targets": [
+   "attacker",
+   "bomber",
+   "attacker"
+  ],
+  "weather": "gece",
+  "twist": "Bir hedef saldırı sırasında kaçar",
+  "name": "Kutup Buz Rafı — Hava Üstünlüğü"
+ },
+ {
+  "id": 435,
+  "region": "Kutup Buz Rafı",
+  "region_en": "Polar ice shelf",
+  "region_key": "shelf",
+  "region_note": "Beyaz zemin, düşük kontrast",
+  "type": "Keşif Hattı",
+  "type_key": "recon",
+  "goal": "Hedefleri tara, sonraki saldırı için işaretle",
+  "targets": [
+   "radar",
+   "depot"
+  ],
+  "weather": "tozlu",
+  "twist": "Yalnızca füze ile vurulabilir hedefler",
+  "name": "Kutup Buz Rafı — Keşif Hattı"
+ },
+ {
+  "id": 436,
+  "region": "Kutup Buz Rafı",
+  "region_en": "Polar ice shelf",
+  "region_key": "shelf",
+  "region_note": "Beyaz zemin, düşük kontrast",
+  "type": "Gece Baskını",
+  "type_key": "night",
+  "goal": "Işıklar sönmeden tesisleri devre dışı bırak",
+  "targets": [
+   "refinery",
+   "depot",
+   "tower"
+  ],
+  "weather": "alacakaranlık",
+  "twist": "Kanat sensörü arızalı, manuel nişan",
+  "name": "Kutup Buz Rafı — Gece Baskını"
+ },
+ {
+  "id": 437,
+  "region": "Tayfun Denizi",
+  "region_en": "Typhoon sea",
+  "region_key": "typhoon",
+  "region_note": "Dalga yüksekliği, çok hava",
+  "type": "Konvoy İmha",
+  "type_key": "convoy",
+  "goal": "Konvoyu durdur, iki gemiyi batır",
+  "targets": [
+   "corvette",
+   "destroyer",
+   "corvette"
+  ],
+  "weather": "sisli",
+  "twist": "Radar kapalı, hedefler gözle bulunur",
+  "name": "Tayfun Denizi — Konvoy İmha"
+ },
+ {
+  "id": 438,
+  "region": "Tayfun Denizi",
+  "region_en": "Typhoon sea",
+  "region_key": "typhoon",
+  "region_note": "Dalga yüksekliği, çok hava",
+  "type": "SAM Bastırma",
+  "type_key": "sam",
+  "goal": "Hava savunmasını sustur, sonra çıkış yap",
+  "targets": [
+   "sam",
+   "radar",
+   "sam"
+  ],
+  "weather": "yağmurlu",
+  "twist": "Sis perdesi görüşü yarıya indirir",
+  "name": "Tayfun Denizi — SAM Bastırma"
+ },
+ {
+  "id": 439,
+  "region": "Tayfun Denizi",
+  "region_en": "Typhoon sea",
+  "region_key": "typhoon",
+  "region_note": "Dalga yüksekliği, çok hava",
+  "type": "Köprü Yıkımı",
+  "type_key": "bridge",
+  "goal": "Tek köprüyü yık, geri dönüş yolunu kes",
+  "targets": [
+   "bridge",
+   "depot"
+  ],
+  "weather": "karlı",
+  "twist": "Bir hedef saldırı sırasında kaçar",
+  "name": "Tayfun Denizi — Köprü Yıkımı"
+ },
+ {
+  "id": 440,
+  "region": "Tayfun Denizi",
+  "region_en": "Typhoon sea",
+  "region_key": "typhoon",
+  "region_note": "Dalga yüksekliği, çok hava",
+  "type": "Sahil Savunması",
+  "type_key": "coast",
+  "goal": "Limanı koru, saldırı dalgalarını bitir",
+  "targets": [
+   "port",
+   "tower",
+   "corvette"
+  ],
+  "weather": "fırtınalı",
+  "twist": "Yalnızca füze ile vurulabilir hedefler",
+  "name": "Tayfun Denizi — Sahil Savunması"
+ },
+ {
+  "id": 441,
+  "region": "Tayfun Denizi",
+  "region_en": "Typhoon sea",
+  "region_key": "typhoon",
+  "region_note": "Dalga yüksekliği, çok hava",
+  "type": "Denizaltı Avı",
+  "type_key": "sub",
+  "goal": "Dalan denizaltıları yüzeyde yakala",
+  "targets": [
+   "sub",
+   "sub",
+   "destroyer"
+  ],
+  "weather": "gece",
+  "twist": "Kanat sensörü arızalı, manuel nişan",
+  "name": "Tayfun Denizi — Denizaltı Avı"
+ },
+ {
+  "id": 442,
+  "region": "Tayfun Denizi",
+  "region_en": "Typhoon sea",
+  "region_key": "typhoon",
+  "region_note": "Dalga yüksekliği, çok hava",
+  "type": "Hava Üstünlüğü",
+  "type_key": "air",
+  "goal": "Gökyüzünü temizle, bombardıman uçaklarını düşür",
+  "targets": [
+   "attacker",
+   "bomber",
+   "attacker"
+  ],
+  "weather": "tozlu",
+  "twist": "Yalnızca düşük irtifada uçuş",
+  "name": "Tayfun Denizi — Hava Üstünlüğü"
+ },
+ {
+  "id": 443,
+  "region": "Tayfun Denizi",
+  "region_en": "Typhoon sea",
+  "region_key": "typhoon",
+  "region_note": "Dalga yüksekliği, çok hava",
+  "type": "Keşif Hattı",
+  "type_key": "recon",
+  "goal": "Hedefleri tara, sonraki saldırı için işaretle",
+  "targets": [
+   "radar",
+   "depot"
+  ],
+  "weather": "alacakaranlık",
+  "twist": "Düşman her 90 saniyede takviye gönderir",
+  "name": "Tayfun Denizi — Keşif Hattı"
+ },
+ {
+  "id": 444,
+  "region": "Tayfun Denizi",
+  "region_en": "Typhoon sea",
+  "region_key": "typhoon",
+  "region_note": "Dalga yüksekliği, çok hava",
+  "type": "Gece Baskını",
+  "type_key": "night",
+  "goal": "Işıklar sönmeden tesisleri devre dışı bırak",
+  "targets": [
+   "refinery",
+   "depot",
+   "tower"
+  ],
+  "weather": "açık",
+  "twist": "Yakıt üç katı hızlı tükenir",
+  "name": "Tayfun Denizi — Gece Baskını"
+ },
+ {
+  "id": 445,
+  "region": "Lav Kıyısı",
+  "region_en": "Lava coast",
+  "region_key": "lava",
+  "region_note": "Sıcak plaj, termal hedef",
+  "type": "Konvoy İmha",
+  "type_key": "convoy",
+  "goal": "Konvoyu durdur, iki gemiyi batır",
+  "targets": [
+   "corvette",
+   "destroyer",
+   "corvette"
+  ],
+  "weather": "yağmurlu",
+  "twist": "Yalnızca füze ile vurulabilir hedefler",
+  "name": "Lav Kıyısı — Konvoy İmha"
+ },
+ {
+  "id": 446,
+  "region": "Lav Kıyısı",
+  "region_en": "Lava coast",
+  "region_key": "lava",
+  "region_note": "Sıcak plaj, termal hedef",
+  "type": "SAM Bastırma",
+  "type_key": "sam",
+  "goal": "Hava savunmasını sustur, sonra çıkış yap",
+  "targets": [
+   "sam",
+   "radar",
+   "sam"
+  ],
+  "weather": "karlı",
+  "twist": "Kanat sensörü arızalı, manuel nişan",
+  "name": "Lav Kıyısı — SAM Bastırma"
+ },
+ {
+  "id": 447,
+  "region": "Lav Kıyısı",
+  "region_en": "Lava coast",
+  "region_key": "lava",
+  "region_note": "Sıcak plaj, termal hedef",
+  "type": "Köprü Yıkımı",
+  "type_key": "bridge",
+  "goal": "Tek köprüyü yık, geri dönüş yolunu kes",
+  "targets": [
+   "bridge",
+   "depot"
+  ],
+  "weather": "fırtınalı",
+  "twist": "Yalnızca düşük irtifada uçuş",
+  "name": "Lav Kıyısı — Köprü Yıkımı"
+ },
+ {
+  "id": 448,
+  "region": "Lav Kıyısı",
+  "region_en": "Lava coast",
+  "region_key": "lava",
+  "region_note": "Sıcak plaj, termal hedef",
+  "type": "Sahil Savunması",
+  "type_key": "coast",
+  "goal": "Limanı koru, saldırı dalgalarını bitir",
+  "targets": [
+   "port",
+   "tower",
+   "corvette"
+  ],
+  "weather": "gece",
+  "twist": "Düşman her 90 saniyede takviye gönderir",
+  "name": "Lav Kıyısı — Sahil Savunması"
+ },
+ {
+  "id": 449,
+  "region": "Lav Kıyısı",
+  "region_en": "Lava coast",
+  "region_key": "lava",
+  "region_note": "Sıcak plaj, termal hedef",
+  "type": "Denizaltı Avı",
+  "type_key": "sub",
+  "goal": "Dalan denizaltıları yüzeyde yakala",
+  "targets": [
+   "sub",
+   "sub",
+   "destroyer"
+  ],
+  "weather": "tozlu",
+  "twist": "Yakıt üç katı hızlı tükenir",
+  "name": "Lav Kıyısı — Denizaltı Avı"
+ },
+ {
+  "id": 450,
+  "region": "Lav Kıyısı",
+  "region_en": "Lava coast",
+  "region_key": "lava",
+  "region_note": "Sıcak plaj, termal hedef",
+  "type": "Hava Üstünlüğü",
+  "type_key": "air",
+  "goal": "Gökyüzünü temizle, bombardıman uçaklarını düşür",
+  "targets": [
+   "attacker",
+   "bomber",
+   "attacker"
+  ],
+  "weather": "alacakaranlık",
+  "twist": "Radar kapalı, hedefler gözle bulunur",
+  "name": "Lav Kıyısı — Hava Üstünlüğü"
+ },
+ {
+  "id": 451,
+  "region": "Lav Kıyısı",
+  "region_en": "Lava coast",
+  "region_key": "lava",
+  "region_note": "Sıcak plaj, termal hedef",
+  "type": "Keşif Hattı",
+  "type_key": "recon",
+  "goal": "Hedefleri tara, sonraki saldırı için işaretle",
+  "targets": [
+   "radar",
+   "depot"
+  ],
+  "weather": "açık",
+  "twist": "Sis perdesi görüşü yarıya indirir",
+  "name": "Lav Kıyısı — Keşif Hattı"
+ },
+ {
+  "id": 452,
+  "region": "Lav Kıyısı",
+  "region_en": "Lava coast",
+  "region_key": "lava",
+  "region_note": "Sıcak plaj, termal hedef",
+  "type": "Gece Baskını",
+  "type_key": "night",
+  "goal": "Işıklar sönmeden tesisleri devre dışı bırak",
+  "targets": [
+   "refinery",
+   "depot",
+   "tower"
+  ],
+  "weather": "sisli",
+  "twist": "Bir hedef saldırı sırasında kaçar",
+  "name": "Lav Kıyısı — Gece Baskını"
+ },
+ {
+  "id": 453,
+  "region": "Yayla Gölü",
+  "region_en": "Plateau lake",
+  "region_key": "plateau",
+  "region_note": "Yüksek irtifa, ince hava",
+  "type": "Konvoy İmha",
+  "type_key": "convoy",
+  "goal": "Konvoyu durdur, iki gemiyi batır",
+  "targets": [
+   "corvette",
+   "destroyer",
+   "corvette"
+  ],
+  "weather": "karlı",
+  "twist": "Düşman her 90 saniyede takviye gönderir",
+  "name": "Yayla Gölü — Konvoy İmha"
+ },
+ {
+  "id": 454,
+  "region": "Yayla Gölü",
+  "region_en": "Plateau lake",
+  "region_key": "plateau",
+  "region_note": "Yüksek irtifa, ince hava",
+  "type": "SAM Bastırma",
+  "type_key": "sam",
+  "goal": "Hava savunmasını sustur, sonra çıkış yap",
+  "targets": [
+   "sam",
+   "radar",
+   "sam"
+  ],
+  "weather": "fırtınalı",
+  "twist": "Yakıt üç katı hızlı tükenir",
+  "name": "Yayla Gölü — SAM Bastırma"
+ },
+ {
+  "id": 455,
+  "region": "Yayla Gölü",
+  "region_en": "Plateau lake",
+  "region_key": "plateau",
+  "region_note": "Yüksek irtifa, ince hava",
+  "type": "Köprü Yıkımı",
+  "type_key": "bridge",
+  "goal": "Tek köprüyü yık, geri dönüş yolunu kes",
+  "targets": [
+   "bridge",
+   "depot"
+  ],
+  "weather": "gece",
+  "twist": "Radar kapalı, hedefler gözle bulunur",
+  "name": "Yayla Gölü — Köprü Yıkımı"
+ },
+ {
+  "id": 456,
+  "region": "Yayla Gölü",
+  "region_en": "Plateau lake",
+  "region_key": "plateau",
+  "region_note": "Yüksek irtifa, ince hava",
+  "type": "Sahil Savunması",
+  "type_key": "coast",
+  "goal": "Limanı koru, saldırı dalgalarını bitir",
+  "targets": [
+   "port",
+   "tower",
+   "corvette"
+  ],
+  "weather": "tozlu",
+  "twist": "Sis perdesi görüşü yarıya indirir",
+  "name": "Yayla Gölü — Sahil Savunması"
+ },
+ {
+  "id": 457,
+  "region": "Yayla Gölü",
+  "region_en": "Plateau lake",
+  "region_key": "plateau",
+  "region_note": "Yüksek irtifa, ince hava",
+  "type": "Denizaltı Avı",
+  "type_key": "sub",
+  "goal": "Dalan denizaltıları yüzeyde yakala",
+  "targets": [
+   "sub",
+   "sub",
+   "destroyer"
+  ],
+  "weather": "alacakaranlık",
+  "twist": "Bir hedef saldırı sırasında kaçar",
+  "name": "Yayla Gölü — Denizaltı Avı"
+ },
+ {
+  "id": 458,
+  "region": "Yayla Gölü",
+  "region_en": "Plateau lake",
+  "region_key": "plateau",
+  "region_note": "Yüksek irtifa, ince hava",
+  "type": "Hava Üstünlüğü",
+  "type_key": "air",
+  "goal": "Gökyüzünü temizle, bombardıman uçaklarını düşür",
+  "targets": [
+   "attacker",
+   "bomber",
+   "attacker"
+  ],
+  "weather": "açık",
+  "twist": "Yalnızca füze ile vurulabilir hedefler",
+  "name": "Yayla Gölü — Hava Üstünlüğü"
+ },
+ {
+  "id": 459,
+  "region": "Yayla Gölü",
+  "region_en": "Plateau lake",
+  "region_key": "plateau",
+  "region_note": "Yüksek irtifa, ince hava",
+  "type": "Keşif Hattı",
+  "type_key": "recon",
+  "goal": "Hedefleri tara, sonraki saldırı için işaretle",
+  "targets": [
+   "radar",
+   "depot"
+  ],
+  "weather": "sisli",
+  "twist": "Kanat sensörü arızalı, manuel nişan",
+  "name": "Yayla Gölü — Keşif Hattı"
+ },
+ {
+  "id": 460,
+  "region": "Yayla Gölü",
+  "region_en": "Plateau lake",
+  "region_key": "plateau",
+  "region_note": "Yüksek irtifa, ince hava",
+  "type": "Gece Baskını",
+  "type_key": "night",
+  "goal": "Işıklar sönmeden tesisleri devre dışı bırak",
+  "targets": [
+   "refinery",
+   "depot",
+   "tower"
+  ],
+  "weather": "yağmurlu",
+  "twist": "Yalnızca düşük irtifada uçuş",
+  "name": "Yayla Gölü — Gece Baskını"
+ },
+ {
+  "id": 461,
+  "region": "Sis Vadisi",
+  "region_en": "Fog valley",
+  "region_key": "fogvalley",
+  "region_note": "Sadece radarla görünür hedefler",
+  "type": "Konvoy İmha",
+  "type_key": "convoy",
+  "goal": "Konvoyu durdur, iki gemiyi batır",
+  "targets": [
+   "corvette",
+   "destroyer",
+   "corvette"
+  ],
+  "weather": "fırtınalı",
+  "twist": "Sis perdesi görüşü yarıya indirir",
+  "name": "Sis Vadisi — Konvoy İmha"
+ },
+ {
+  "id": 462,
+  "region": "Sis Vadisi",
+  "region_en": "Fog valley",
+  "region_key": "fogvalley",
+  "region_note": "Sadece radarla görünür hedefler",
+  "type": "SAM Bastırma",
+  "type_key": "sam",
+  "goal": "Hava savunmasını sustur, sonra çıkış yap",
+  "targets": [
+   "sam",
+   "radar",
+   "sam"
+  ],
+  "weather": "gece",
+  "twist": "Bir hedef saldırı sırasında kaçar",
+  "name": "Sis Vadisi — SAM Bastırma"
+ },
+ {
+  "id": 463,
+  "region": "Sis Vadisi",
+  "region_en": "Fog valley",
+  "region_key": "fogvalley",
+  "region_note": "Sadece radarla görünür hedefler",
+  "type": "Köprü Yıkımı",
+  "type_key": "bridge",
+  "goal": "Tek köprüyü yık, geri dönüş yolunu kes",
+  "targets": [
+   "bridge",
+   "depot"
+  ],
+  "weather": "tozlu",
+  "twist": "Yalnızca füze ile vurulabilir hedefler",
+  "name": "Sis Vadisi — Köprü Yıkımı"
+ },
+ {
+  "id": 464,
+  "region": "Sis Vadisi",
+  "region_en": "Fog valley",
+  "region_key": "fogvalley",
+  "region_note": "Sadece radarla görünür hedefler",
+  "type": "Sahil Savunması",
+  "type_key": "coast",
+  "goal": "Limanı koru, saldırı dalgalarını bitir",
+  "targets": [
+   "port",
+   "tower",
+   "corvette"
+  ],
+  "weather": "alacakaranlık",
+  "twist": "Kanat sensörü arızalı, manuel nişan",
+  "name": "Sis Vadisi — Sahil Savunması"
+ },
+ {
+  "id": 465,
+  "region": "Sis Vadisi",
+  "region_en": "Fog valley",
+  "region_key": "fogvalley",
+  "region_note": "Sadece radarla görünür hedefler",
+  "type": "Denizaltı Avı",
+  "type_key": "sub",
+  "goal": "Dalan denizaltıları yüzeyde yakala",
+  "targets": [
+   "sub",
+   "sub",
+   "destroyer"
+  ],
+  "weather": "açık",
+  "twist": "Yalnızca düşük irtifada uçuş",
+  "name": "Sis Vadisi — Denizaltı Avı"
+ },
+ {
+  "id": 466,
+  "region": "Sis Vadisi",
+  "region_en": "Fog valley",
+  "region_key": "fogvalley",
+  "region_note": "Sadece radarla görünür hedefler",
+  "type": "Hava Üstünlüğü",
+  "type_key": "air",
+  "goal": "Gökyüzünü temizle, bombardıman uçaklarını düşür",
+  "targets": [
+   "attacker",
+   "bomber",
+   "attacker"
+  ],
+  "weather": "sisli",
+  "twist": "Düşman her 90 saniyede takviye gönderir",
+  "name": "Sis Vadisi — Hava Üstünlüğü"
+ },
+ {
+  "id": 467,
+  "region": "Sis Vadisi",
+  "region_en": "Fog valley",
+  "region_key": "fogvalley",
+  "region_note": "Sadece radarla görünür hedefler",
+  "type": "Keşif Hattı",
+  "type_key": "recon",
+  "goal": "Hedefleri tara, sonraki saldırı için işaretle",
+  "targets": [
+   "radar",
+   "depot"
+  ],
+  "weather": "yağmurlu",
+  "twist": "Yakıt üç katı hızlı tükenir",
+  "name": "Sis Vadisi — Keşif Hattı"
+ },
+ {
+  "id": 468,
+  "region": "Sis Vadisi",
+  "region_en": "Fog valley",
+  "region_key": "fogvalley",
+  "region_note": "Sadece radarla görünür hedefler",
+  "type": "Gece Baskını",
+  "type_key": "night",
+  "goal": "Işıklar sönmeden tesisleri devre dışı bırak",
+  "targets": [
+   "refinery",
+   "depot",
+   "tower"
+  ],
+  "weather": "karlı",
+  "twist": "Radar kapalı, hedefler gözle bulunur",
+  "name": "Sis Vadisi — Gece Baskını"
+ },
+ {
+  "id": 469,
+  "region": "Orman Nehri Ağzı",
+  "region_en": "Jungle river mouth",
+  "region_key": "jungle",
+  "region_note": "Ağaç tepesi seviyesi uçuş",
+  "type": "Konvoy İmha",
+  "type_key": "convoy",
+  "goal": "Konvoyu durdur, iki gemiyi batır",
+  "targets": [
+   "corvette",
+   "destroyer",
+   "corvette"
+  ],
+  "weather": "gece",
+  "twist": "Kanat sensörü arızalı, manuel nişan",
+  "name": "Orman Nehri Ağzı — Konvoy İmha"
+ },
+ {
+  "id": 470,
+  "region": "Orman Nehri Ağzı",
+  "region_en": "Jungle river mouth",
+  "region_key": "jungle",
+  "region_note": "Ağaç tepesi seviyesi uçuş",
+  "type": "SAM Bastırma",
+  "type_key": "sam",
+  "goal": "Hava savunmasını sustur, sonra çıkış yap",
+  "targets": [
+   "sam",
+   "radar",
+   "sam"
+  ],
+  "weather": "tozlu",
+  "twist": "Yalnızca düşük irtifada uçuş",
+  "name": "Orman Nehri Ağzı — SAM Bastırma"
+ },
+ {
+  "id": 471,
+  "region": "Orman Nehri Ağzı",
+  "region_en": "Jungle river mouth",
+  "region_key": "jungle",
+  "region_note": "Ağaç tepesi seviyesi uçuş",
+  "type": "Köprü Yıkımı",
+  "type_key": "bridge",
+  "goal": "Tek köprüyü yık, geri dönüş yolunu kes",
+  "targets": [
+   "bridge",
+   "depot"
+  ],
+  "weather": "alacakaranlık",
+  "twist": "Düşman her 90 saniyede takviye gönderir",
+  "name": "Orman Nehri Ağzı — Köprü Yıkımı"
+ },
+ {
+  "id": 472,
+  "region": "Orman Nehri Ağzı",
+  "region_en": "Jungle river mouth",
+  "region_key": "jungle",
+  "region_note": "Ağaç tepesi seviyesi uçuş",
+  "type": "Sahil Savunması",
+  "type_key": "coast",
+  "goal": "Limanı koru, saldırı dalgalarını bitir",
+  "targets": [
+   "port",
+   "tower",
+   "corvette"
+  ],
+  "weather": "açık",
+  "twist": "Yakıt üç katı hızlı tükenir",
+  "name": "Orman Nehri Ağzı — Sahil Savunması"
+ },
+ {
+  "id": 473,
+  "region": "Orman Nehri Ağzı",
+  "region_en": "Jungle river mouth",
+  "region_key": "jungle",
+  "region_note": "Ağaç tepesi seviyesi uçuş",
+  "type": "Denizaltı Avı",
+  "type_key": "sub",
+  "goal": "Dalan denizaltıları yüzeyde yakala",
+  "targets": [
+   "sub",
+   "sub",
+   "destroyer"
+  ],
+  "weather": "sisli",
+  "twist": "Radar kapalı, hedefler gözle bulunur",
+  "name": "Orman Nehri Ağzı — Denizaltı Avı"
+ },
+ {
+  "id": 474,
+  "region": "Orman Nehri Ağzı",
+  "region_en": "Jungle river mouth",
+  "region_key": "jungle",
+  "region_note": "Ağaç tepesi seviyesi uçuş",
+  "type": "Hava Üstünlüğü",
+  "type_key": "air",
+  "goal": "Gökyüzünü temizle, bombardıman uçaklarını düşür",
+  "targets": [
+   "attacker",
+   "bomber",
+   "attacker"
+  ],
+  "weather": "yağmurlu",
+  "twist": "Sis perdesi görüşü yarıya indirir",
+  "name": "Orman Nehri Ağzı — Hava Üstünlüğü"
+ },
+ {
+  "id": 475,
+  "region": "Orman Nehri Ağzı",
+  "region_en": "Jungle river mouth",
+  "region_key": "jungle",
+  "region_note": "Ağaç tepesi seviyesi uçuş",
+  "type": "Keşif Hattı",
+  "type_key": "recon",
+  "goal": "Hedefleri tara, sonraki saldırı için işaretle",
+  "targets": [
+   "radar",
+   "depot"
+  ],
+  "weather": "karlı",
+  "twist": "Bir hedef saldırı sırasında kaçar",
+  "name": "Orman Nehri Ağzı — Keşif Hattı"
+ },
+ {
+  "id": 476,
+  "region": "Orman Nehri Ağzı",
+  "region_en": "Jungle river mouth",
+  "region_key": "jungle",
+  "region_note": "Ağaç tepesi seviyesi uçuş",
+  "type": "Gece Baskını",
+  "type_key": "night",
+  "goal": "Işıklar sönmeden tesisleri devre dışı bırak",
+  "targets": [
+   "refinery",
+   "depot",
+   "tower"
+  ],
+  "weather": "fırtınalı",
+  "twist": "Yalnızca füze ile vurulabilir hedefler",
+  "name": "Orman Nehri Ağzı — Gece Baskını"
+ },
+ {
+  "id": 477,
+  "region": "Dalgakıran Hattı",
+  "region_en": "Breakwater line",
+  "region_key": "breakwater",
+  "region_note": "Kıyı tabyası, dar koridor",
+  "type": "Konvoy İmha",
+  "type_key": "convoy",
+  "goal": "Konvoyu durdur, iki gemiyi batır",
+  "targets": [
+   "corvette",
+   "destroyer",
+   "corvette"
+  ],
+  "weather": "tozlu",
+  "twist": "Yakıt üç katı hızlı tükenir",
+  "name": "Dalgakıran Hattı — Konvoy İmha"
+ },
+ {
+  "id": 478,
+  "region": "Dalgakıran Hattı",
+  "region_en": "Breakwater line",
+  "region_key": "breakwater",
+  "region_note": "Kıyı tabyası, dar koridor",
+  "type": "SAM Bastırma",
+  "type_key": "sam",
+  "goal": "Hava savunmasını sustur, sonra çıkış yap",
+  "targets": [
+   "sam",
+   "radar",
+   "sam"
+  ],
+  "weather": "alacakaranlık",
+  "twist": "Radar kapalı, hedefler gözle bulunur",
+  "name": "Dalgakıran Hattı — SAM Bastırma"
+ },
+ {
+  "id": 479,
+  "region": "Dalgakıran Hattı",
+  "region_en": "Breakwater line",
+  "region_key": "breakwater",
+  "region_note": "Kıyı tabyası, dar koridor",
+  "type": "Köprü Yıkımı",
+  "type_key": "bridge",
+  "goal": "Tek köprüyü yık, geri dönüş yolunu kes",
+  "targets": [
+   "bridge",
+   "depot"
+  ],
+  "weather": "açık",
+  "twist": "Sis perdesi görüşü yarıya indirir",
+  "name": "Dalgakıran Hattı — Köprü Yıkımı"
+ },
+ {
+  "id": 480,
+  "region": "Dalgakıran Hattı",
+  "region_en": "Breakwater line",
+  "region_key": "breakwater",
+  "region_note": "Kıyı tabyası, dar koridor",
+  "type": "Sahil Savunması",
+  "type_key": "coast",
+  "goal": "Limanı koru, saldırı dalgalarını bitir",
+  "targets": [
+   "port",
+   "tower",
+   "corvette"
+  ],
+  "weather": "sisli",
+  "twist": "Bir hedef saldırı sırasında kaçar",
+  "name": "Dalgakıran Hattı — Sahil Savunması"
+ },
+ {
+  "id": 481,
+  "region": "Dalgakıran Hattı",
+  "region_en": "Breakwater line",
+  "region_key": "breakwater",
+  "region_note": "Kıyı tabyası, dar koridor",
+  "type": "Denizaltı Avı",
+  "type_key": "sub",
+  "goal": "Dalan denizaltıları yüzeyde yakala",
+  "targets": [
+   "sub",
+   "sub",
+   "destroyer"
+  ],
+  "weather": "yağmurlu",
+  "twist": "Yalnızca füze ile vurulabilir hedefler",
+  "name": "Dalgakıran Hattı — Denizaltı Avı"
+ },
+ {
+  "id": 482,
+  "region": "Dalgakıran Hattı",
+  "region_en": "Breakwater line",
+  "region_key": "breakwater",
+  "region_note": "Kıyı tabyası, dar koridor",
+  "type": "Hava Üstünlüğü",
+  "type_key": "air",
+  "goal": "Gökyüzünü temizle, bombardıman uçaklarını düşür",
+  "targets": [
+   "attacker",
+   "bomber",
+   "attacker"
+  ],
+  "weather": "karlı",
+  "twist": "Kanat sensörü arızalı, manuel nişan",
+  "name": "Dalgakıran Hattı — Hava Üstünlüğü"
+ },
+ {
+  "id": 483,
+  "region": "Dalgakıran Hattı",
+  "region_en": "Breakwater line",
+  "region_key": "breakwater",
+  "region_note": "Kıyı tabyası, dar koridor",
+  "type": "Keşif Hattı",
+  "type_key": "recon",
+  "goal": "Hedefleri tara, sonraki saldırı için işaretle",
+  "targets": [
+   "radar",
+   "depot"
+  ],
+  "weather": "fırtınalı",
+  "twist": "Yalnızca düşük irtifada uçuş",
+  "name": "Dalgakıran Hattı — Keşif Hattı"
+ },
+ {
+  "id": 484,
+  "region": "Dalgakıran Hattı",
+  "region_en": "Breakwater line",
+  "region_key": "breakwater",
+  "region_note": "Kıyı tabyası, dar koridor",
+  "type": "Gece Baskını",
+  "type_key": "night",
+  "goal": "Işıklar sönmeden tesisleri devre dışı bırak",
+  "targets": [
+   "refinery",
+   "depot",
+   "tower"
+  ],
+  "weather": "gece",
+  "twist": "Düşman her 90 saniyede takviye gönderir",
+  "name": "Dalgakıran Hattı — Gece Baskını"
+ },
+ {
+  "id": 485,
+  "region": "Kırmızı Ova",
+  "region_en": "Red plain",
+  "region_key": "redplain",
+  "region_note": "Kıyı bataklıkları, uzun ray",
+  "type": "Konvoy İmha",
+  "type_key": "convoy",
+  "goal": "Konvoyu durdur, iki gemiyi batır",
+  "targets": [
+   "corvette",
+   "destroyer",
+   "corvette"
+  ],
+  "weather": "alacakaranlık",
+  "twist": "Bir hedef saldırı sırasında kaçar",
+  "name": "Kırmızı Ova — Konvoy İmha"
+ },
+ {
+  "id": 486,
+  "region": "Kırmızı Ova",
+  "region_en": "Red plain",
+  "region_key": "redplain",
+  "region_note": "Kıyı bataklıkları, uzun ray",
+  "type": "SAM Bastırma",
+  "type_key": "sam",
+  "goal": "Hava savunmasını sustur, sonra çıkış yap",
+  "targets": [
+   "sam",
+   "radar",
+   "sam"
+  ],
+  "weather": "açık",
+  "twist": "Yalnızca füze ile vurulabilir hedefler",
+  "name": "Kırmızı Ova — SAM Bastırma"
+ },
+ {
+  "id": 487,
+  "region": "Kırmızı Ova",
+  "region_en": "Red plain",
+  "region_key": "redplain",
+  "region_note": "Kıyı bataklıkları, uzun ray",
+  "type": "Köprü Yıkımı",
+  "type_key": "bridge",
+  "goal": "Tek köprüyü yık, geri dönüş yolunu kes",
+  "targets": [
+   "bridge",
+   "depot"
+  ],
+  "weather": "sisli",
+  "twist": "Kanat sensörü arızalı, manuel nişan",
+  "name": "Kırmızı Ova — Köprü Yıkımı"
+ },
+ {
+  "id": 488,
+  "region": "Kırmızı Ova",
+  "region_en": "Red plain",
+  "region_key": "redplain",
+  "region_note": "Kıyı bataklıkları, uzun ray",
+  "type": "Sahil Savunması",
+  "type_key": "coast",
+  "goal": "Limanı koru, saldırı dalgalarını bitir",
+  "targets": [
+   "port",
+   "tower",
+   "corvette"
+  ],
+  "weather": "yağmurlu",
+  "twist": "Yalnızca düşük irtifada uçuş",
+  "name": "Kırmızı Ova — Sahil Savunması"
+ },
+ {
+  "id": 489,
+  "region": "Kırmızı Ova",
+  "region_en": "Red plain",
+  "region_key": "redplain",
+  "region_note": "Kıyı bataklıkları, uzun ray",
+  "type": "Denizaltı Avı",
+  "type_key": "sub",
+  "goal": "Dalan denizaltıları yüzeyde yakala",
+  "targets": [
+   "sub",
+   "sub",
+   "destroyer"
+  ],
+  "weather": "karlı",
+  "twist": "Düşman her 90 saniyede takviye gönderir",
+  "name": "Kırmızı Ova — Denizaltı Avı"
+ },
+ {
+  "id": 490,
+  "region": "Kırmızı Ova",
+  "region_en": "Red plain",
+  "region_key": "redplain",
+  "region_note": "Kıyı bataklıkları, uzun ray",
+  "type": "Hava Üstünlüğü",
+  "type_key": "air",
+  "goal": "Gökyüzünü temizle, bombardıman uçaklarını düşür",
+  "targets": [
+   "attacker",
+   "bomber",
+   "attacker"
+  ],
+  "weather": "fırtınalı",
+  "twist": "Yakıt üç katı hızlı tükenir",
+  "name": "Kırmızı Ova — Hava Üstünlüğü"
+ },
+ {
+  "id": 491,
+  "region": "Kırmızı Ova",
+  "region_en": "Red plain",
+  "region_key": "redplain",
+  "region_note": "Kıyı bataklıkları, uzun ray",
+  "type": "Keşif Hattı",
+  "type_key": "recon",
+  "goal": "Hedefleri tara, sonraki saldırı için işaretle",
+  "targets": [
+   "radar",
+   "depot"
+  ],
+  "weather": "gece",
+  "twist": "Radar kapalı, hedefler gözle bulunur",
+  "name": "Kırmızı Ova — Keşif Hattı"
+ },
+ {
+  "id": 492,
+  "region": "Kırmızı Ova",
+  "region_en": "Red plain",
+  "region_key": "redplain",
+  "region_note": "Kıyı bataklıkları, uzun ray",
+  "type": "Gece Baskını",
+  "type_key": "night",
+  "goal": "Işıklar sönmeden tesisleri devre dışı bırak",
+  "targets": [
+   "refinery",
+   "depot",
+   "tower"
+  ],
+  "weather": "tozlu",
+  "twist": "Sis perdesi görüşü yarıya indirir",
+  "name": "Kırmızı Ova — Gece Baskını"
+ }
+]

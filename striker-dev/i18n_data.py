@@ -176,3 +176,40 @@ T["heavyMissiles"]=("SCHWERE RAKETEN","MISILES PESADOS","MISSILES LOURDS","MISSI
 T["heavyMissilesHint"]=("70% mehr Schaden, langsamere Rakete, längere Nachladezeit.","70% más de daño, misil más lento y recarga más larga.","70% de dégâts en plus, missile plus lent et rechargement plus long.","70% di danni in più, missile più lento e ricarica più lunga.","70% mais de dano, míssil mais lento e recarga maior.","На 70% больше урона, медленнее, дольше перезарядка.","70% kerusakan lebih besar, rudal lebih lambat, isi ulang lebih lama.")
 T["wingman"]=("KI-FLÜGELPARTNER","ALA DE IA","AILIER IA","GREGARIO IA","ALA DE IA","ИИ-ВЕДОМЫЙ","PENDAMPING AI")
 T["wingmanHint"]=("Ein KI-Jet folgt dir und feuert auf nahe Gegner.","Un caza de IA te sigue y dispara a enemigos cercanos.","Un chasseur IA vous suit et tire sur les ennemis proches.","Un caccia IA ti segue e spara ai nemici vicini.","Um caça de IA te segue e atira em inimigos próximos.","ИИ-истребитель следует за тобой и стреляет по ближайшим целям.","Jet AI mengikuti dan menembak musuh terdekat.")
+
+T["dailySortie"]=("TÄGLICHER EINSATZ","SALIDA DIARIA","SORTIE DU JOUR","SORTITA GIORNALIERA","SORTIDA DIÁRIA","ЕЖЕДНЕВНЫЙ ВЫЛЕТ","SORTI HARIAN")
+
+T["watchReplay"]=("WIEDERHOLUNG ANSEHEN","VER REPETICIÓN","VOIR LE REPLAY","GUARDA IL REPLAY","VER REPRISE","СМОТРЕТЬ ПОВТОР","TONTON ULANG")
+
+T["fire"]=("FEUER","FUEGO","TIR","FUOCO","FOGO","ОГОНЬ","TEMBAK")
+T["doubleCredits"]=("CREDITS VERDOPPELN","DUPLICAR CRÉDITOS","DOUBLER LES CRÉDITS","RADDOPPIA CREDITI","DOBRAR CRÉDITOS","УДВОИТЬ КРЕДИТЫ","GANDAKAN KREDIT")
+T["bestSorties"]=("BESTE EINSÄTZE","MEJORES SALIDAS","MEILLEURES SORTIES","SORTITE MIGLIORI","MELHORES SORTIDAS","ЛУЧШИЕ ВЫЛЕТЫ","SORTI TERBAIK")
+
+T["spring"]=("FRÜHLING","PRIMAVERA","PRINTEMPS","PRIMAVERA","PRIMAVERA","ВЕСНА","MUSIM SEMI")
+T["summer"]=("SOMMER","VERANO","ÉTÉ","ESTATE","VERÃO","ЛЕТО","MUSIM PANAS")
+T["autumn"]=("HERBST","OTOÑO","AUTOMNE","AUTUNNO","OUTONO","ОСЕНЬ","MUSIM GUGUR")
+T["winter"]=("WINTER","INVIERNO","HIVER","INVERNO","INVERNO","ЗИМА","MUSIM DINGIN")
+
+T["music"]=("MUSIK","MÚSICA","MUSIQUE","MUSICA","MÚSICA","МУЗЫКА","MUSIK")
+T["musicHint"]=("Hintergrundmusik umschalten (Effekte bleiben an).","Activa/desactiva la música (los efectos siguen).","Activer/couper la musique (effets conservés).","Attiva/disattiva la musica (gli effetti restano).","Liga/desliga a música (efeitos continuam).","Вкл/выкл фоновую музыку (эффекты остаются).","Nyalakan/matikan musik (efek tetap aktif).")
+T["aiDuel"]=("KI-DUELL","DUELO IA","DUEL IA","DUELLO IA","DUELO IA","ДУЭЛЬ С ИИ","DUEL AI")
+T["startAuto"]=("AUTOPILOT","PILOTO AUTOMÁTICO","PILOTE AUTO","AUTOPILOTA","PILOTO AUTOMÁTICO","АВТОПИЛОТ","AUTOPILOT")
+T["startManual"]=("MANUELL","MANUAL","MANUEL","MANUALE","MANUAL","РУЧНОЙ","MANUAL")
+
+T["nextOp"]=("NÄCHSTE OPERATION","PRÓXIMA OPERACIÓN","PROCHAINE OPÉRATION","PROSSIMA OPERAZIONE","PRÓXIMA OPERAÇÃO","СЛЕДУЮЩАЯ ОПЕРАЦИЯ","OPERASI BERIKUT")
+T["seasonPass"]=("SAISON-PASS","PASE DE TEMPORADA","PASSE DE SAISON","PASS STAGIONALE","PASSE DE TEMPORADA","СЕЗОННЫЙ ПРОПУСК","PASS MUSIM")
+T["tier"]=("STUFE","NIVEL","PALIER","LIVELLO","NÍVEL","УРОВЕНЬ","TINGKAT")
+T["dataSafe"]=("DATENSCHUTZ: LOKAL · KEIN TRACKING · OFFLINE","DATOS: GUARDADO LOCAL · SIN RASTREO · OFFLINE","DONNÉES: LOCALES · SANS SUIVI · HORS LIGNE","DATI: SALVATAGGIO LOCALE · NO TRACKING · OFFLINE","DADOS: LOCAL · SEM RASTREIO · OFFLINE","ДАННЫЕ: ЛОКАЛЬНО · БЕЗ ТРЕКИНГА · ОФЛАЙН","DATA: LOKAL · TANPA PELACAKAN · OFFLINE")
+
+T["shop"]=("SHOP","TIENDA","BOUTIQUE","NEGOZIO","LOJA","МАГАЗИН","TOKO")
+T["packDaily"]=("TÄGLICHE LIEFERUNG +750","SUMINISTRO DIARIO +750","RAVITAILLEMENT DU JOUR +750","RIFORNIMENTO GIORNALIERO +750","SUPRIMENTO DIÁRIO +750","ЕЖЕДНЕВНЫЙ ПАКЕТ +750","PASOKAN HARIAN +750")
+T["packWeekly"]=("WÖCHENTLICHE KISTE +3000","CAJA SEMANAL +3000","CAISSE HEBDO +3000","CASSETTA SETTIMANALE +3000","CAIXA SEMANAL +3000","НЕДЕЛЬНЫЙ ЯЩИК +3000","PETI MINGGUAN +3000")
+T["claimed"]=("ERHALTEN","RECLAMADO","RÉCUPÉRÉ","RITIRATO","RESGATADO","ПОЛУЧЕНО","DIKLAIM")
+T["ace"]=("ASS-PILOT IM FELD — BONUS 300","PILOTO AS EN CAMPO — BONUS 300","AS EN SCÈNE — BONUS 300","ASSO IN CAMPO — BONUS 300","ÁS EM CAMPO — BÔNUS 300","АС В ВОЗДУХЕ — БОНУС 300","PILOT AS DI LAPANGAN — BONUS 300")
+T["supply"]=("NACHSCHUB — MUNITION VOLL","SUMINISTRO — MUNICIÓN REPUESTA","RAVITAILLEMENT — MUNITIONS OK","RIFORNIMENTO — MUNIZIONI OK","SUPRIMENTO — MUNIÇÃO OK","СНАБЖЕНИЕ — БОЕЗАПАС ПОПОЛНЕН","PASOKAN — AMUNISI PENUH")
+T["frenzy"]=("PUNKTE-RAUSCH ×2 — 20s","FRENESÍ ×2 — 20s","FRÉNÉSIE ×2 — 20s","FRENESIA ×2 — 20s","FRENESI ×2 — 20s","БЕШЕНСТВО ×2 — 20с","FRENZI ×2 — 20s")
+
+T["wDmg"]=("DONNER-RAKETEN +50% SCHADEN","MISILES TRUENO +50% DAÑO","MISSILES TONNERRE +50% DÉGÂTS","MISSILI TUONO +50% DANNI","MÍSSEIS TROVÃO +50% DANO","РАКЕТЫ ГРОМ +50% УРОНА","RAKET PETIR +50% DAMAGE")
+T["wBomb"]=("SMART-BOMBENLAFETTE +2","RACK BOMBAS INTELIGENTES +2","RÂTEAU BOMBES GUIDÉES +2","RASTRELLO BOMBE +2","SUPORTE DE BOMBAS +2","ПИЛОН УМНЫХ БОМБ +2","RAK BOM CERDAS +2")
+T["wFlr"]=("FÄCKELMAGAZIN +2","CARGADOR DE BENGALAS +2","MAGASIN LEURRES +2","CARICATORE FLARE +2","PENTE DE FLARES +2","МАГАЗИН ЛОВУШЕК +2","SELASAK FLARE +2")
+T["adWatch"]=("ANZEIGE +250","VER ANUNCIO +250","PUB +250","ANNUNCIO +250","ANÚNCIO +250","РЕКЛАМА +250","IKLAN +250")

@@ -1,0 +1,1 @@
+v86b: limit and par x1.5 for generated missions (26-31 targets)
