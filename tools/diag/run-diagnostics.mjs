@@ -54,7 +54,8 @@ const findAny = (patterns, what) => {
 };
 const DIAG = findAny([/function (\$?\w+)\(\)\{const \w+=\[\],\w+=\(\w+,\w+\)=>\{try\{\w+\(\),\w+\.push\(\{name:\w+,passed:!0/], 'tanılama koşucusu');
 const MISSIONS = findAny([
-  /(\w+)=\w+\.map\(\(\w+,\w+\)=>\{const \w+=Math\.floor\(\w+\/\d+\)/,
+  /(\w+)=\w+\.map\(\(\w+,\w+\)=>\{const \w+=Math\.floor\(\w+%\d+\/\d+\)/,   // v3.x : sezonlu (e%48/12)
+  /(\w+)=\w+\.map\(\(\w+,\w+\)=>\{const \w+=Math\.floor\(\w+\/\d+\)/,       // v1.x
   /(\w+)=\w+\.map\(\(\w+,\w+\)=>\{[^}]{0,120}?kind:/,
 ], 'görev dizisi');
 const AIRCRAFT = findAny([/(\w+)=\[\{id:"striker",code:/], 'uçak dizisi');
