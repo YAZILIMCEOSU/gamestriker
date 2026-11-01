@@ -505,6 +505,8 @@ if (MODE === 'curve') {
     chk('dar telefonda stat kartı merkezin önünde değil', card < w / 2, String(card));
     chk('sonraki görev önceki geçiş ve puan ister', html.includes('function Rl(s,e){if(!(s>0))return!0') && html.includes('(p.score||0)>=100') && !html.includes('s<3||s===4||s===11'), 'kapı yok');
     chk('kilitli görev uyarı metni var', html.includes('needPass:') && html.includes('Önceki görev geçilmeli'), 'metin yok');
+    chk('aydınlatma metni var, reklam sdk yok', html.includes('Veri sorumlusu: Idea Game') && html.includes('Reklam veya analiz yazılımı yüklü değildir') && html.includes('function KvkkN') && !html.includes('googlesyndication') && !html.includes('pagead2'), 'metin veya sdk');
+    chk('uçuş aydınlatma kaydı olmadan başlamaz', html.includes('s.kvkkAck!=="2026-11-a"') && html.includes('kvkkAck:e.kvkkAck==="2026-11-a"'), 'kapı yok');
   }
   // gerçek doğuş: aynı uçakta erken görev düşmanı geç görevden zayıf ve az
   const PR = { ...__defaults().preferences, assisted: true, difficulty: 'normal' };
