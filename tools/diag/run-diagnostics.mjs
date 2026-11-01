@@ -508,6 +508,7 @@ if (MODE === 'curve') {
     const ce = html.slice(html.indexOf('Ce=id=>{'), html.indexOf('Ce=id=>{') + 900);
     chk('göreve çıkış kvkk beklemez', ce.includes('typeof id==="number"') && ce.includes('Te("webgl")') && ce.includes('force-flight') && !ce.includes('kvkk'), ce.slice(0, 180));
     chk('hangar ve ana üs sortiyi açar', html.includes('onStart:()=>{const id=x_(s.records);p(id);Ce(id)}'), 'kalkış yok');
+    chk('hava düşmanı görünen ölçek 2.5, yarıçap aynı', html.includes('n.airborne&&a.scale.setScalar(2.5)') && html.includes('f?22:c==="destroyer"?39:30'), 'ölçek');
   }
   // gerçek doğuş: aynı uçakta erken görev düşmanı geç görevden zayıf ve az
   const PR = { ...__defaults().preferences, assisted: true, difficulty: 'normal' };
