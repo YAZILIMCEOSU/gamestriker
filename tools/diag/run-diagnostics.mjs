@@ -499,16 +499,15 @@ if (MODE === 'curve') {
   chk('hpScale kolay < as', MISSION_LIST[0].hpScale < (late && late.hpScale), `${MISSION_LIST[0].hpScale}/${late && late.hpScale}`);
   {
     const html = readFileSync(target, 'utf8');
-    chk('hangar uçağın görsel merkezine bakar', html.includes('this.target.copy(n?new H(0,205+bob,0):this.player.position)') && html.includes('n?1.6*Math.sin(yaw):0') && html.includes('new H(0,-1.6,0)'), 'çerçeve yok');
+    chk('hangar uçağı düz ve merkezde', html.includes('this.target.copy(n?new H(0,205+bob,0):this.player.position)') && html.includes('this.player.position.set(0,205+bob,0)') && html.includes('n?0:') && html.includes('new H(0,0,0)'), 'yamuk');
     chk('kredi yetmezse satın alma uyarı verir', html.includes('if(z.credits<cost){P(Te("insufficient"))') && html.includes('if(z.credits<WP[k]){P(Te("insufficient"))') && !html.includes('disabled:s.credits<V.price') && !html.includes('disabled:t>=3||s.credits<cost'), 'uyarı kapalı');
-    const card = 188, w = 390;
-    chk('dar telefonda stat kartı merkezin önünde değil', html.includes('width:min(188px,40vw)') && card < w / 2, String(card));
+    chk('renk ve puan kartı ayrı kenarda', html.includes('hangar-clear-v3106') && html.includes('.hg2-camo{position:absolute!important') && html.includes('.hg3-stats{position:absolute!important') && html.includes('left:8px!important') && html.includes('right:8px!important'), 'üst üste');
     chk('sonraki görev önceki geçiş ve puan ister', html.includes('function Rl(s,e){if(!(s>0))return!0') && html.includes('(p.score||0)>=100') && !html.includes('s<3||s===4||s===11'), 'kapı yok');
     chk('kilitli görev uyarı metni var', html.includes('needPass:') && html.includes('Önceki görev geçilmeli'), 'metin yok');
     chk('gizlilik duvarı kalkışı kesmez', !html.includes('s.kvkkAck!=="2026-11-a"') && !html.includes('seenIntro&&s.kvkkAck') && !html.includes('googlesyndication') && !html.includes('pagead2'), 'kapı duruyor');
-    const ce = html.slice(html.indexOf('Ce=()=>{'), html.indexOf('Ce=()=>{') + 220);
-    chk('göreve çıkış kvkk beklemez', ce.startsWith('Ce=()=>{') && ce.includes('P(Te("webgl"))') && !ce.includes('kvkk'), ce.slice(0, 180));
-    chk('ana üs brifing açar', html.includes('onStart:()=>ve()'), 'kalkış yok');
+    const ce = html.slice(html.indexOf('Ce=id=>{'), html.indexOf('Ce=id=>{') + 260);
+    chk('göreve çıkış kvkk beklemez', ce.includes('typeof id==="number"') && ce.includes('P(Te("webgl"))') && !ce.includes('kvkk'), ce.slice(0, 180));
+    chk('hangar ve ana üs sortiyi açar', html.includes('onStart:()=>{const id=x_(s.records);p(id);Ce(id)}'), 'kalkış yok');
   }
   // gerçek doğuş: aynı uçakta erken görev düşmanı geç görevden zayıf ve az
   const PR = { ...__defaults().preferences, assisted: true, difficulty: 'normal' };
