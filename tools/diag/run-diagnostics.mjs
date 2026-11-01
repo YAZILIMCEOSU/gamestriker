@@ -548,6 +548,26 @@ if (MODE === 'curve') {
   chk('görev 1 sorti canı %60 üstü', s0.u.healthPercent >= 60, String(s0.u.healthPercent));
   chk('iniş gemi ekseninde', Math.abs(s0.u.player.x + 12) < 20 && Math.abs(s0.u.heading) < 0.25 && s0.u.player.z > 1510 && s0.u.player.z < 1600, `x=${s0.u.player.x.toFixed(1)} z=${s0.u.player.z.toFixed(1)} hdg=${s0.u.heading.toFixed(2)}`);
   {
+    const u = new Sim(MISSION_LIST.find((m) => m.id === 1), 'striker', PR);
+    const deck = u.terr(-12, 1560);
+    const ridge = u.terr(-4000, 2500);
+    chk('görev 2 güvertesi denizde', deck < 5 && ridge > 200, `güverte ${Math.round(deck)} sırt ${Math.round(ridge)}`);
+    const input = { yaw: 0, pitch: 0, throttle: 0.55, fire: true, boost: false };
+    let maxY = 0, fired = 0;
+    for (let i = 0; i < 120 * 60 && !u.result; i++) {
+      u.update(1 / 60, input);
+      if (u.lock >= 1) {
+        const n = u.missiles;
+        u.fireMissile();
+        if (u.missiles < n) fired++;
+      }
+      u.events.length = 0;
+      maxY = Math.max(maxY, u.player.y);
+    }
+    console.log(`  görev 2: ${u.result ? u.result.reason : 'bitmedi'} y ${Math.round(maxY)} füze ${fired} can ${u.healthPercent}`);
+    chk('görev 2 kar duvarında kilitlenmiyor, füze atıp iniyor', u.result && u.result.success && fired >= 1 && maxY < 500 && Number.isFinite(u.player.x), `y=${Math.round(maxY)} füze=${fired} ${u.result && u.result.reason}`);
+  }
+  {
     const u = new Sim(MISSION_LIST[0], 'striker', PR);
     const jet0 = u.entities.find((e) => e.kind === 'interceptor');
     const shots = [];
