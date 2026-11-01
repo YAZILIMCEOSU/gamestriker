@@ -505,8 +505,8 @@ if (MODE === 'curve') {
     chk('sonraki görev önceki geçiş ve puan ister', html.includes('function Rl(s,e){if(!(s>0))return!0') && html.includes('(p.score||0)>=100') && !html.includes('s<3||s===4||s===11'), 'kapı yok');
     chk('kilitli görev uyarı metni var', html.includes('needPass:') && html.includes('Önceki görev geçilmeli'), 'metin yok');
     chk('gizlilik duvarı kalkışı kesmez', !html.includes('s.kvkkAck!=="2026-11-a"') && !html.includes('seenIntro&&s.kvkkAck') && !html.includes('googlesyndication') && !html.includes('pagead2'), 'kapı duruyor');
-    const ce = html.slice(html.indexOf('Ce=id=>{'), html.indexOf('Ce=id=>{') + 260);
-    chk('göreve çıkış kvkk beklemez', ce.includes('typeof id==="number"') && ce.includes('P(Te("webgl"))') && !ce.includes('kvkk'), ce.slice(0, 180));
+    const ce = html.slice(html.indexOf('Ce=id=>{'), html.indexOf('Ce=id=>{') + 900);
+    chk('göreve çıkış kvkk beklemez', ce.includes('typeof id==="number"') && ce.includes('Te("webgl")') && ce.includes('force-flight') && !ce.includes('kvkk'), ce.slice(0, 180));
     chk('hangar ve ana üs sortiyi açar', html.includes('onStart:()=>{const id=x_(s.records);p(id);Ce(id)}'), 'kalkış yok');
   }
   // gerçek doğuş: aynı uçakta erken görev düşmanı geç görevden zayıf ve az
