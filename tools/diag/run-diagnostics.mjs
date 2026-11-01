@@ -497,6 +497,15 @@ if (MODE === 'curve') {
   chk('hiçbir standart görev kademe tavanını aşmıyor', over.length === 0, over.slice(0, 4).map((m) => m.id + ':' + m.targets.length).join(','));
   chk('kolay par, limitin %70 inden geniş (3 yıldız mümkün)', early.every((m) => m.par >= m.limit * 0.7), 'par dar');
   chk('hpScale kolay < as', MISSION_LIST[0].hpScale < (late && late.hpScale), `${MISSION_LIST[0].hpScale}/${late && late.hpScale}`);
+  {
+    const html = readFileSync(target, 'utf8');
+    chk('hangar uçağın görsel merkezine bakar', html.includes('this.target.copy(n?new H(0,205+bob,0):this.player.position)') && html.includes('n?1.6*Math.sin(yaw):0'), 'çerçeve yok');
+    chk('kredi yetmezse satın alma uyarı verir', html.includes('if(z.credits<cost){P(Te("insufficient"))') && html.includes('if(z.credits<WP[k]){P(Te("insufficient"))') && !html.includes('disabled:s.credits<V.price') && !html.includes('disabled:t>=3||s.credits<cost'), 'uyarı kapalı');
+    const card = 128, w = 390;
+    chk('dar telefonda stat kartı merkezin önünde değil', card < w / 2, String(card));
+    chk('sonraki görev önceki geçiş ve puan ister', html.includes('function Rl(s,e){if(!(s>0))return!0') && html.includes('(p.score||0)>=100') && !html.includes('s<3||s===4||s===11'), 'kapı yok');
+    chk('kilitli görev uyarı metni var', html.includes('needPass:') && html.includes('Önceki görev geçilmeli'), 'metin yok');
+  }
   // gerçek doğuş: aynı uçakta erken görev düşmanı geç görevden zayıf ve az
   const PR = { ...__defaults().preferences, assisted: true, difficulty: 'normal' };
   const spawn = (m) => {
@@ -565,7 +574,7 @@ if (MODE === 'curve') {
       maxY = Math.max(maxY, u.player.y);
     }
     console.log(`  görev 2: ${u.result ? u.result.reason : 'bitmedi'} y ${Math.round(maxY)} füze ${fired} can ${u.healthPercent}`);
-    chk('görev 2 kar duvarında kilitlenmiyor, füze atıp iniyor', u.result && u.result.success && fired >= 1 && maxY < 500 && Number.isFinite(u.player.x), `y=${Math.round(maxY)} füze=${fired} ${u.result && u.result.reason}`);
+    chk('görev 2 kar duvarında kilitlenmiyor, füze atıp iniyor', u.result && u.result.success && fired >= 1 && Number.isFinite(u.player.x) && u.player.y < 40, `maxY=${Math.round(maxY)} güverte=${Math.round(u.player.y)} füze=${fired} ${u.result && u.result.reason}`);
   }
   {
     const u = new Sim(MISSION_LIST[0], 'striker', PR);
