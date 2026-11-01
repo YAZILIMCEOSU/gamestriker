@@ -507,6 +507,19 @@ if (MODE === 'curve') {
     chk('kilitli görev uyarı metni var', html.includes('needPass:') && html.includes('Önceki görev geçilmeli'), 'metin yok');
     chk('gizlilik notu kısa, reklam sdk yok', html.includes('Çağrı adın ve skorun yalnız bu cihazda kalır.') && html.includes('Bu sürümde reklam yok.') && !html.includes('Veri sorumlusu') && !html.includes('KVKK / PRIVACY') && html.includes('function KvkkN') && !html.includes('googlesyndication') && !html.includes('pagead2'), 'metin veya sdk');
     chk('gizlilik notu uçuşu kesmez', !html.includes('s.kvkkAck!=="2026-11-a"') && html.includes('o==="kvkk"?S.jsx(KvkkN'), 'kapı duruyor');
+    const rankBody = html.slice(html.indexOf('function pilotStats'), html.indexOf('function kw'));
+    const pilotStats = new Function('sv', rankBody.slice(rankBody.indexOf('{') + 1, rankBody.lastIndexOf('}')));
+    const zRank = pilotStats({ records: {} });
+    chk('rütbe çömezden başlar', zRank.key === 'rank0' && zRank.passed === 0 && zRank.nextKey === 'rank1' && zRank.nextAt === 1, JSON.stringify(zRank));
+    const oneRank = pilotStats({ records: { 0: { stars: 1, score: 120 } } });
+    chk('bir görev pilot adayı', oneRank.key === 'rank1' && oneRank.passed === 1, JSON.stringify(oneRank));
+    const lowRank = pilotStats({ records: { 0: { stars: 0, score: 400 }, 1: { stars: 1, score: 40 } } });
+    chk('yıldızsız veya düşük skor rütbe saymaz', lowRank.passed === 0 && lowRank.key === 'rank0', JSON.stringify(lowRank));
+    const capRec = {};
+    for (let i = 0; i < 20; i++) capRec[i] = { stars: 1, score: 200 };
+    const capRank = pilotStats({ records: capRec });
+    chk('20 görev kaptan', capRank.key === 'rank4' && capRank.top === true, JSON.stringify(capRank));
+    chk('girişte rütbe görünür', html.includes('className:"rank-now"') && html.includes('className:"rank-next"') && html.includes('ÇÖMEZ') && html.includes('PİLOT ADAYI') && html.includes('ÜSTEĞMEN') && html.includes('YÜZBAŞI') && html.includes('KAPTAN'), 'satır yok');
   }
   // gerçek doğuş: aynı uçakta erken görev düşmanı geç görevden zayıf ve az
   const PR = { ...__defaults().preferences, assisted: true, difficulty: 'normal' };
