@@ -501,7 +501,7 @@ if (MODE === 'curve') {
     const html = readFileSync(target, 'utf8');
     chk('hangar uçağı düz ve merkezde', html.includes('this.target.copy(n?new H(0,205+bob,0):this.player.position)') && html.includes('this.player.position.set(0,205+bob,0)') && html.includes('n?0:') && html.includes('new H(0,0,0)'), 'yamuk');
     chk('kredi yetmezse satın alma uyarı verir', html.includes('if(z.credits<cost){P(Te("insufficient"))') && html.includes('if(z.credits<WP[k]){P(Te("insufficient"))') && !html.includes('disabled:s.credits<V.price') && !html.includes('disabled:t>=3||s.credits<cost'), 'uyarı kapalı');
-    chk('renk paleti uçak şeridinin üstünde değil', html.includes('hangar-clear-v3108') && html.includes('.hg2-camo{position:absolute!important;top:86px') && html.includes('.hg2-dock{z-index:8') && !html.includes('bottom:calc(16vh + 8px)'), 'çakışma');
+    chk('hangar menüsü uçağı kapatmıyor', html.includes('hangar-fit-v3110') && html.includes('a?48:36') && html.includes('.hg2-chip{width:72px!important') && html.includes('.hg2-panel{max-height:16vh!important') && !html.includes('bottom:calc(16vh + 8px)'), 'kadraj');
     chk('sonraki görev önceki geçiş ve puan ister', html.includes('function Rl(s,e){if(!(s>0))return!0') && html.includes('(p.score||0)>=100') && !html.includes('s<3||s===4||s===11'), 'kapı yok');
     chk('kilitli görev uyarı metni var', html.includes('needPass:') && html.includes('Önceki görev geçilmeli'), 'metin yok');
     chk('gizlilik duvarı kalkışı kesmez', !html.includes('s.kvkkAck!=="2026-11-a"') && !html.includes('seenIntro&&s.kvkkAck') && !html.includes('googlesyndication') && !html.includes('pagead2'), 'kapı duruyor');
