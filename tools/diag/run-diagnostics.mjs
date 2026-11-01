@@ -506,7 +506,9 @@ if (MODE === 'curve') {
     chk('sonraki görev önceki geçiş ve puan ister', html.includes('function Rl(s,e){if(!(s>0))return!0') && html.includes('(p.score||0)>=100') && !html.includes('s<3||s===4||s===11'), 'kapı yok');
     chk('kilitli görev uyarı metni var', html.includes('needPass:') && html.includes('Önceki görev geçilmeli'), 'metin yok');
     chk('gizlilik notu kısa, reklam sdk yok', html.includes('Çağrı adın ve skorun yalnız bu cihazda kalır.') && html.includes('Bu sürümde reklam yok.') && !html.includes('Veri sorumlusu') && !html.includes('KVKK / PRIVACY') && html.includes('function KvkkN') && !html.includes('googlesyndication') && !html.includes('pagead2'), 'metin veya sdk');
-    chk('gizlilik notu uçuşu kesmez', !html.includes('s.kvkkAck!=="2026-11-a"') && html.includes('o==="kvkk"?S.jsx(KvkkN'), 'kapı duruyor');
+    chk('gizlilik notu uçuşu kesmez', !html.includes('s.kvkkAck!=="2026-11-a"') && !html.includes('o==="kvkk"?S.jsx(KvkkN') && !html.includes('className:"privacy-line"'), 'kapı duruyor');
+    const ce = html.slice(html.indexOf('Ce=()=>{'), html.indexOf('Ce=()=>{') + 280);
+    chk('göreve çıkış kvkk beklemez', ce.includes('P(Te("webgl"))') && !ce.includes('kvkk'), ce.slice(0, 180));
     const rankBody = html.slice(html.indexOf('function pilotStats'), html.indexOf('function kw'));
     const pilotStats = new Function('sv', rankBody.slice(rankBody.indexOf('{') + 1, rankBody.lastIndexOf('}')));
     const zRank = pilotStats({ records: {} });

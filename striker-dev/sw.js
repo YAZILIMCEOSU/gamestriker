@@ -1,21 +1,19 @@
-const V = "striker-v2.0";
-const CORE = ["./", "./index.html", "./favicon.svg", "./manifest.webmanifest"];
+const V = "striker-v3.103";
 self.addEventListener("install", (e) => {
-  e.waitUntil(caches.open(V).then((c) => c.addAll(CORE)).then(() => self.skipWaiting()));
+  e.waitUntil(self.skipWaiting());
 });
 self.addEventListener("activate", (e) => {
   e.waitUntil(
     caches.keys()
-      .then((k) => Promise.all(k.filter((x) => x !== V).map((x) => caches.delete(x))))
+      .then((k) => Promise.all(k.map((x) => caches.delete(x))))
       .then(() => self.clients.claim())
+      .then(() => self.clients.matchAll({ type: "window" }))
+      .then((cs) => Promise.all(cs.map((c) => (c.navigate ? c.navigate(c.url) : null))))
   );
 });
 self.addEventListener("fetch", (e) => {
   const r = e.request;
   if (r.method !== "GET") return;
-  e.respondWith(
-    fetch(r)
-      .then((n) => { const cp = n.clone(); caches.open(V).then((c) => c.put(r, cp)); return n; })
-      .catch(() => caches.match(r).then((m) => m || caches.match("./index.html")))
-  );
+  if (r.mode === "navigate" || (r.headers.get("accept") || "").includes("text/html")) return;
+  e.respondWith(fetch(r).catch(() => caches.match(r)));
 });
