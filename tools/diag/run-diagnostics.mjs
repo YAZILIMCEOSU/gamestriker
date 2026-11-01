@@ -550,6 +550,22 @@ if (MODE === 'curve') {
   chk('görev 1 pusu dalgası yok (yalnızca listedeki hedefler)', extra <= 0, `fazla öldürme ${extra}`);
   chk('görev 1 bitince can %40 üstü', s0.u.healthPercent >= 40, String(s0.u.healthPercent));
   chk('görev 1 sorti canı %90 üstü', s0.u.healthPercent >= 90, String(s0.u.healthPercent));
+  {
+    const u = new Sim(MISSION_LIST.find((m) => m.id === 0), 'striker', { ...PR, assisted: true });
+    const input = { yaw: 1, pitch: 1, throttle: 0.46, fire: false, boost: false };
+    let maxDy = 0, maxHdg = 0, pop = 0, yAtBow = null, prev = u.player.y;
+    const bow = u.homePos.z - 130;
+    for (let i = 0; i < 8 * 60 && u.phase === 'takeoff'; i++) {
+      u.update(1 / 60, input);
+      maxDy = Math.max(maxDy, u.player.y - prev);
+      prev = u.player.y;
+      maxHdg = Math.max(maxHdg, Math.abs(u.heading));
+      if (u.player.y > 40 && u.player.z > bow) pop++;
+      if (yAtBow == null && u.player.z <= bow) yAtBow = u.player.y;
+    }
+    console.log(`  katapult: faz ${u.phase} yBow ${yAtBow == null ? 'yok' : yAtBow.toFixed(1)} dy ${maxDy.toFixed(1)} hdg ${(maxHdg * 180 / Math.PI).toFixed(1)}`);
+    chk('katapult güvertede düz gider', u.phase === 'combat' && maxHdg < 0.08 && pop === 0 && yAtBow != null && yAtBow < 40 && maxDy < 4, `y=${yAtBow} dy=${maxDy.toFixed(1)} hdg=${maxHdg.toFixed(3)} pop=${pop}`);
+  }
   const s1 = sortie(1, 95);
   chk('görev 2 takviye twist\'i oyunu çökertmiyor', !s1.threw, s1.threw && s1.threw.message);
   const sea = new Sim(MISSION_LIST[0], 'striker', { ...PR, assisted: false });
