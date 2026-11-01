@@ -517,14 +517,10 @@ if (MODE === 'curve') {
   console.log(`  görev 0 en yakın hedef ${Math.round(n0)} m · görev 11 ${Math.round(n11)} m`);
   const u0 = new Sim(MISSION_LIST[0], 'striker', PR);
   const d0 = u0.entities.filter((e) => e.hp > 0 && !e.friendly).map((e) => Math.round(Math.hypot(e.position.x - u0.player.x, e.position.z - u0.player.z)));
-  chk('görev 0 dört hedefi de 3.2 km içinde', d0.length === 4 && d0.every((d) => d < 3200), d0.join(','));
-  const noClose = MISSION_LIST.filter((m) => m.tier < 2 && m.targets).filter((m) => {
-    const u = new Sim(m, 'striker', PR);
-    const ds = u.entities.filter((e) => e.hp > 0 && !e.friendly).map((e) => Math.hypot(e.position.x - u.player.x, e.position.z - u.player.z));
-    return Math.min(...ds) > 2500;
-  });
-  chk('kolay ve orta görevlerin hepsinde 2.5 km içinde hedef var', noClose.length === 0, noClose.map((m) => m.id).join(','));
-  chk('kolay görevde ilk hedef 2 km içinde (kilit menzili 2.9 km)', n0 < 2000 && n11 < 2200, `${Math.round(n0)}/${Math.round(n11)}`);
+  chk('görev 0 düşman bölgesi 3-5.2 km', d0.length === 4 && d0.every((d) => d >= 3000 && d <= 5200), d0.join(','));
+  chk('kolay görevde avcı uçak var', (MISSION_LIST[0].targets || []).includes('interceptor'), (MISSION_LIST[0].targets || []).join(','));
+  const midNear = near(MISSION_LIST.find((m) => m.id === 20));
+  chk('kolay bölge 3 km, orta bölge daha ileride', n0 >= 3000 && n0 <= 4200 && midNear > n0 + 600, `${Math.round(n0)}/${Math.round(midNear)}`);
   console.log(`  doğuş görev0: ${a.n} düşman, toplam can ${Math.round(a.hp)}, gövde ${a.hull}`);
   console.log(`  doğuş görev160: ${b.n} düşman, toplam can ${Math.round(b.hp)}, gövde ${b.hull}`);
   chk('simülasyon: görev 0, görev 160 dan az düşman', a.n < b.n, `${a.n}/${b.n}`);
@@ -549,22 +545,54 @@ if (MODE === 'curve') {
   chk('görev 1 çökmeden bitiyor', !s0.threw && s0.u.result && s0.u.result.success, s0.threw ? s0.threw.message : (s0.u.result && s0.u.result.reason) || 'bitmedi');
   chk('görev 1 pusu dalgası yok (yalnızca listedeki hedefler)', extra <= 0, `fazla öldürme ${extra}`);
   chk('görev 1 bitince can %40 üstü', s0.u.healthPercent >= 40, String(s0.u.healthPercent));
-  chk('görev 1 sorti canı %90 üstü', s0.u.healthPercent >= 90, String(s0.u.healthPercent));
+  chk('görev 1 sorti canı %60 üstü', s0.u.healthPercent >= 60, String(s0.u.healthPercent));
+  chk('iniş gemi ekseninde', Math.abs(s0.u.player.x + 12) < 20 && Math.abs(s0.u.heading) < 0.25 && s0.u.player.z > 1510 && s0.u.player.z < 1600, `x=${s0.u.player.x.toFixed(1)} z=${s0.u.player.z.toFixed(1)} hdg=${s0.u.heading.toFixed(2)}`);
+  {
+    const u = new Sim(MISSION_LIST[0], 'striker', PR);
+    const jet0 = u.entities.find((e) => e.kind === 'interceptor');
+    const shots = [];
+    const orig = u.spawn.bind(u);
+    u.spawn = (kind, pos, vel, life, dmg, target, msl) => {
+      if (kind === 'hostile') {
+        let src = '?', bd = 1e9;
+        for (const ent of u.entities) {
+          if (!ent.hp || ent.friendly) continue;
+          const d = Math.hypot(ent.position.x - pos.x, ent.position.z - pos.z);
+          if (d < bd) { bd = d; src = ent.kind; }
+        }
+        shots.push(src);
+      }
+      return orig(kind, pos, vel, life, dmg, target, msl);
+    };
+    let minD = 1e9;
+    const input = { yaw: 0, pitch: 0, throttle: 0.55, fire: true, boost: false };
+    for (let i = 0; i < 70 * 60 && !u.result; i++) {
+      u.update(1 / 60, input);
+      if (u.lock >= 1) u.fireMissile();
+      u.events.length = 0;
+      const jet = u.entities.find((e) => e.kind === 'interceptor' && e.hp > 0);
+      if (jet) minD = Math.min(minD, Math.hypot(jet.position.x - u.player.x, jet.position.z - u.player.z));
+    }
+    const airShots = shots.filter((s) => s === 'interceptor').length;
+    console.log(`  it dalaşı: kapanış ${Math.round(minD)} m · avcı atışı ${airShots} · can ${jet0 ? jet0.maxHp : 0}`);
+    chk('avcı bölgeye girince kovalıyor ve ateş ediyor', minD < 900 && airShots >= 1, `kapanış ${Math.round(minD)} atış ${airShots}`);
+  }
   {
     const u = new Sim(MISSION_LIST.find((m) => m.id === 0), 'striker', { ...PR, assisted: true });
     const input = { yaw: 1, pitch: 1, throttle: 0.46, fire: false, boost: false };
-    let maxDy = 0, maxHdg = 0, pop = 0, yAtBow = null, prev = u.player.y;
+    let maxDy = 0, maxHdg = 0, pop = 0, yAtBow = null, maxOff = 0, prev = u.player.y;
     const bow = u.homePos.z - 130;
     for (let i = 0; i < 8 * 60 && u.phase === 'takeoff'; i++) {
       u.update(1 / 60, input);
       maxDy = Math.max(maxDy, u.player.y - prev);
       prev = u.player.y;
       maxHdg = Math.max(maxHdg, Math.abs(u.heading));
+      maxOff = Math.max(maxOff, Math.abs(u.player.x + 12));
       if (u.player.y > 40 && u.player.z > bow) pop++;
       if (yAtBow == null && u.player.z <= bow) yAtBow = u.player.y;
     }
-    console.log(`  katapult: faz ${u.phase} yBow ${yAtBow == null ? 'yok' : yAtBow.toFixed(1)} dy ${maxDy.toFixed(1)} hdg ${(maxHdg * 180 / Math.PI).toFixed(1)}`);
-    chk('katapult güvertede düz gider', u.phase === 'combat' && maxHdg < 0.08 && pop === 0 && yAtBow != null && yAtBow < 40 && maxDy < 4, `y=${yAtBow} dy=${maxDy.toFixed(1)} hdg=${maxHdg.toFixed(3)} pop=${pop}`);
+    console.log(`  katapult: faz ${u.phase} yBow ${yAtBow == null ? 'yok' : yAtBow.toFixed(1)} dy ${maxDy.toFixed(1)} hdg ${(maxHdg * 180 / Math.PI).toFixed(1)} eksen ${maxOff.toFixed(1)}`);
+    chk('katapult güvertede düz gider', u.phase === 'combat' && maxHdg < 0.08 && pop === 0 && yAtBow != null && yAtBow < 40 && maxDy < 4 && maxOff < 8, `y=${yAtBow} dy=${maxDy.toFixed(1)} hdg=${maxHdg.toFixed(3)} pop=${pop} x=${maxOff.toFixed(1)}`);
   }
   const s1 = sortie(1, 95);
   chk('görev 2 takviye twist\'i oyunu çökertmiyor', !s1.threw, s1.threw && s1.threw.message);
