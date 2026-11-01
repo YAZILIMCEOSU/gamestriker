@@ -682,6 +682,17 @@ if (MODE === 'curve') {
   chk('dalmış denizaltı radar listesinde, kilitlenemez', !!sb && !sb.surf && sb.position.y < 0 && su.alive.some((e) => e.id === sb.id) && (su.targetId = sb.id, su.target == null), `y=${sb && sb.position.y}`);
   const htmlNow = readFileSync(target, 'utf8');
   chk('radar denizi baklava, dalmışı halka çizer', htmlNow.includes('b.sea?"#7ee0ff"') && htmlNow.includes('b.sub?S.jsx("circle"') && htmlNow.includes('M0-4.2l3.4'), 'şekil yok');
+  chk('ateş düğmesi dokunuşu yutmaz', htmlNow.includes('a.current.firePulse=(a.current.firePulse||0)+1') && htmlNow.includes('fire:!!(B.current.fire||B.current.firePulse||he.has("KeyJ"))') && htmlNow.includes('ne.phase!=="takeoff"&&(B.current.firePulse=0)') && !htmlNow.includes('fire-button",style:{background:"#3a1f16",borderColor:"#ff8a5c"},onPointerDown:e=>{e.preventDefault()'), 'pulse yok');
+  {
+    const u = new Sim(MISSION_LIST[0], 'striker', PR);
+    const hold = { yaw: 0, pitch: 0, throttle: 0.7, fire: false, boost: false };
+    for (let i = 0; i < 20 * 60 && u.phase === 'takeoff'; i++) u.update(1 / 60, hold);
+    const before = u.projectiles.filter((p) => p.active && p.kind === 'gun').length;
+    u.update(1 / 60, { ...hold, fire: true });
+    const after = u.projectiles.filter((p) => p.active && p.kind === 'gun').length;
+    const flash = u.events.some((ev) => ev.kind === 'gun');
+    chk('ateş bir karede mermi ve namlu izi üretir', u.phase === 'combat' && after > before && flash, `faz ${u.phase} ${before}->${after} iz ${flash}`);
+  }
   chk('kenar oku deniz türünü yazar', htmlNow.includes('corvette:"COR"') && htmlNow.includes('sea-mark'), 'etiket yok');
   const foot = [
     ['radar', 90, 2.45],
