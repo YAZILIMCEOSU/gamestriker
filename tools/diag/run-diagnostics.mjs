@@ -530,10 +530,10 @@ if (MODE === 'curve') {
   console.log(`  görev 0 en yakın hedef ${Math.round(n0)} m · görev 11 ${Math.round(n11)} m`);
   const u0 = new Sim(MISSION_LIST[0], 'striker', PR);
   const d0 = u0.entities.filter((e) => e.hp > 0 && !e.friendly).map((e) => Math.round(Math.hypot(e.position.x - u0.player.x, e.position.z - u0.player.z)));
-  chk('görev 0 düşman bölgesi 12-14.5 km', d0.length === 4 && d0.every((d) => d >= 12000 && d <= 14500), d0.join(','));
+  chk('görev 0 düşman bölgesi 4.8-6.4 km', d0.length === 4 && d0.every((d) => d >= 4800 && d <= 6400), d0.join(','));
   chk('kolay görevde avcı uçak var', (MISSION_LIST[0].targets || []).includes('interceptor'), (MISSION_LIST[0].targets || []).join(','));
   const midNear = near(MISSION_LIST.find((m) => m.id === 20));
-  chk('kolay bölge 12 km, orta bölge daha ileride', n0 >= 12000 && n0 <= 14000 && midNear > n0 + 1500, `${Math.round(n0)}/${Math.round(midNear)}`);
+  chk('kolay bölge 5 km, orta bölge daha ileride', n0 >= 4800 && n0 <= 6400 && midNear > n0 + 1500, `${Math.round(n0)}/${Math.round(midNear)}`);
   console.log(`  doğuş görev0: ${a.n} düşman, toplam can ${Math.round(a.hp)}, gövde ${a.hull}`);
   console.log(`  doğuş görev160: ${b.n} düşman, toplam can ${Math.round(b.hp)}, gövde ${b.hull}`);
   chk('simülasyon: görev 0, görev 160 dan az düşman', a.n < b.n, `${a.n}/${b.n}`);
@@ -559,7 +559,7 @@ if (MODE === 'curve') {
   chk('görev 1 pusu dalgası yok (yalnızca listedeki hedefler)', extra <= 0, `fazla öldürme ${extra}`);
   chk('görev 1 bitince can %40 üstü', s0.u.healthPercent >= 40, String(s0.u.healthPercent));
   chk('görev 1 sorti canı %60 üstü', s0.u.healthPercent >= 60, String(s0.u.healthPercent));
-  chk('görev 1 sortisi 2.5 dakikadan kısa bitmiyor', s0.u.result && s0.u.time >= 150, `${Math.round(s0.u.time)}s`);
+  chk('görev 1 sortisi 70 sn altına düşmez', s0.u.result && s0.u.time >= 70, `${Math.round(s0.u.time)}s`);
   chk('iniş gemi ekseninde', Math.abs(s0.u.player.x + 12) < 20 && Math.abs(s0.u.heading) < 0.25 && s0.u.player.z > 1510 && s0.u.player.z < 1600, `x=${s0.u.player.x.toFixed(1)} z=${s0.u.player.z.toFixed(1)} hdg=${s0.u.heading.toFixed(2)}`);
   {
     const u = new Sim(MISSION_LIST.find((m) => m.id === 1), 'striker', PR);

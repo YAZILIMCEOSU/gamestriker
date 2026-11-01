@@ -56,18 +56,18 @@ Yapılacak, yalnız bu:
 
 Yapılmayacak: otomatik ateş, eğriyi geri alma, kıyı körfezini 3400 m’den çıkarma.
 
-## Dilim 23 — süre, 4 dakika tabanı
+## Dilim 23 — boş uçuşu kısalt, süreyi mesafe ile uzatma
 
-162 s hâlâ kısa. 7–10 dk bu dilimde yok. Önce 4 dk, koridor açıkken.
+Kullanıcı: hedefler çok uzakta, oyuna giren sıkılır. 12 km bandı ve «4 dk için koridoru uzat» yürürlükten kalktı. 30–40 sn’lik görev de kapanış değil.
 
 Yapılacak:
 
 1. Yalnız kıyı dışı erken bölge. Görev 2 körfezi 2800–5200 m kalır.
 2. Koridor testi aynı: ±600 m, 400 m adım, arazi ≤12 m. Dağ sırtına geri dönme.
-3. İşaret yarıçapı bölgeden en az 2 km büyük. Sis ve radar-kapalı özel yarıçapları büyütme.
+3. Erken bant 5.2 km, orta 7.8 km. 12 km’ye geri alma. İşaret yarıçapını bu dilimde küçültme.
 4. Yakıt bitmeden iniş. Can %60 altı olursa mesafeyi geri al, düşmanı zayıflatma.
-5. Kabul: assisted görev 1 iniş, süre ≥ 230 s, can ≥ 60, 4 hedef, görev 2 iniş bozulmaz.
-6. 230 s geçmeden «süre düzeldi» yazılmaz. 7–10 ancak 4 dk uçulup sen «hâlâ kısa» dersen sonraki dilim.
+5. Kabul: assisted görev 1 iniş, süre ≥ 70 s, can ≥ 60, 4 hedef, görev 2 iniş bozulmaz. 70 sn altı 40 sn’lik çöküş sayılır.
+6. «Süre düzeldi» yazılmaz. Sıkıntı boş uçuşsa mesafe uzatılmaz; dövüş isterse hedef eklenir, kilometre değil.
 
 ## Dilim 24 — ne vurduğunun görünmesi
 
