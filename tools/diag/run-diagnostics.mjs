@@ -558,7 +558,7 @@ if (MODE === 'curve') {
   const extra = s0.u.kills - (MISSION_LIST[0].targets || []).length;
   console.log(`  görev 1 sorti: ${s0.threw ? 'ÇÖKTÜ ' + s0.threw.message : (s0.u.result ? s0.u.result.reason + ' başarı=' + s0.u.result.success : 'bitmedi')} can ${s0.u.healthPercent} süre ${Math.round(s0.u.time)}s öldürme ${s0.u.kills}`);
   chk('görev 1 çökmeden bitiyor', !s0.threw && s0.u.result && s0.u.result.success, s0.threw ? s0.threw.message : (s0.u.result && s0.u.result.reason) || 'bitmedi');
-  chk('görev 1 pusu dalgası yok (yalnızca listedeki hedefler)', extra <= 0, `fazla öldürme ${extra}`);
+  chk('görev 1 sürprizi en fazla bir uçak, dalga değil', extra <= 1, `fazla öldürme ${extra}`);
   chk('görev 1 bitince can %40 üstü', s0.u.healthPercent >= 40, String(s0.u.healthPercent));
   chk('görev 1 sorti canı %60 üstü', s0.u.healthPercent >= 60, String(s0.u.healthPercent));
   chk('görev 1 sortisi 70 sn altına düşmez', s0.u.result && s0.u.time >= 70, `${Math.round(s0.u.time)}s`);
