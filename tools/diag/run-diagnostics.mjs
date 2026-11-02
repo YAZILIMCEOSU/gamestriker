@@ -532,10 +532,10 @@ if (MODE === 'curve') {
   console.log(`  görev 0 en yakın hedef ${Math.round(n0)} m · görev 11 ${Math.round(n11)} m`);
   const u0 = new Sim(MISSION_LIST[0], 'striker', PR);
   const d0 = u0.entities.filter((e) => e.hp > 0 && !e.friendly).map((e) => Math.round(Math.hypot(e.position.x - u0.player.x, e.position.z - u0.player.z)));
-  chk('görev 0 düşman bölgesi 4.8-6.4 km', d0.length === 4 && d0.every((d) => d >= 4800 && d <= 6400), d0.join(','));
+  chk('görev 0 yakın çift 4.2-5.8 km, devriye yayılmış', d0.length === 4 && Math.min(...d0) >= 4200 && Math.min(...d0) <= 5800 && Math.max(...d0) <= 9800 && Math.max(...d0) - Math.min(...d0) >= 2200, d0.join(','));
   chk('kolay görevde avcı uçak var', (MISSION_LIST[0].targets || []).includes('interceptor'), (MISSION_LIST[0].targets || []).join(','));
   const midNear = near(MISSION_LIST.find((m) => m.id === 20));
-  chk('kolay bölge 5 km, orta bölge daha ileride', n0 >= 4800 && n0 <= 6400 && midNear > n0 + 1500, `${Math.round(n0)}/${Math.round(midNear)}`);
+  chk('kolay bölge 5 km, orta bölge daha ileride', n0 >= 4200 && n0 <= 5800 && midNear > n0 + 1500, `${Math.round(n0)}/${Math.round(midNear)}`);
   console.log(`  doğuş görev0: ${a.n} düşman, toplam can ${Math.round(a.hp)}, gövde ${a.hull}`);
   console.log(`  doğuş görev160: ${b.n} düşman, toplam can ${Math.round(b.hp)}, gövde ${b.hull}`);
   chk('simülasyon: görev 0, görev 160 dan az düşman', a.n < b.n, `${a.n}/${b.n}`);
