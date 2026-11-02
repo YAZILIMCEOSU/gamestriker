@@ -87,6 +87,8 @@ Yapılacak: ilk iki hedef düşünce ikinci avcı dövüş kutusuna girer. Yeni 
 
 Kabul: yardımlı görev 1 iner, can ≥ 60, düşman atışı > 0, süre bir önceki dilimden uzun. 4 dk yoksa «4 dk oldu» yazılmaz. Görev 2 inişi bozulmaz.
 
+Ölçüm 3.125, sim, cihaz yok: görev 1 üç koşu 132 / 137 / 140 s, can 98–100, iniş var, öldürme 6. Önceki dilim 97 s. 4 dk yok. İniş artık geminin önünden kaydırma değil: gemi geçilir, kıçta dönülür, eğimle güverteye uçulur. Görev 2 dönüşe giren koşular indi; sırtta kalanlar eski sapma.
+
 ### Dilim D — bir görev türü diğerinden ayrılsın
 
 Şu an `strike`, `intercept`, `defense` aynı öldür-listesi. 205’ini birden değiştirmek yok.
