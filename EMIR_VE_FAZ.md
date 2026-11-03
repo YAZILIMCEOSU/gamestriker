@@ -170,6 +170,10 @@ Uçuş kabulünden sonra. Çağrı adı silinmez. Rütbe merdiveni durur. Metin 
 
 Hangar, kış ve yağmur, müzik, 205’e yayma, tablet, AdMob SDK, Capacitor. Oynanış kabulünden sonra. Bir turda yok.
 
+## 3.128 notu — SİHA
+
+Eski `droneTick` ilk satırda dronu gizleyip dönüyordu. O yüzden görünmüyordu. 3.128’de combat 12–38 sn arasında uzun kanatlı SİHA burnun 560 m önünden geçer. Radyo `siha` 12. sn’de ölçüldü. Deep Sky Winter’da düşman dron da 640 m önde doğuyor. Kart sayısına eklenmez. Cihazda görülmeden «göründü» denmez. İniş, 4 dk, yakıt tankeri bu turda yok.
+
 ## Senin turun
 
 Önizlemede `DEEP SKY · WINTER` (ikinci kart, id 1). Üç şey yaz: kaç saniyede bitti, iniş neden olmadı, kalkışta 3 yazısını gördün mü. Cihaz sesi bu listede kapanmaz.
