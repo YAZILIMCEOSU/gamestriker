@@ -109,6 +109,24 @@ A–D bir görevde ölçülünce aynı kalıp, kademe kademe yayılır. Her kade
 
 Dilim C ölçüldükten sonra tabloya bakılır. Süre hâlâ 2 dk altındaysa üçüncü vuruş (kaçan hedef veya tek takviye) konuşulur, koridor değil. 4 dk, boş daire veya `time>=240` ile kapatılmaz. Rakip verisi 4–5 dk ortalaması vermedi; bu senin alt sınırın, dövüşün sonucu olacak.
 
+## Kalıcı istek (2026-11-03)
+
+Kullanıcı yazdı, bu dosya kaydı. Bir dilimde hepsi yok.
+
+- İt dalaşı kalitesiz. İçinden geçip 3 metreye yapışmak dövüş değil.
+- Her görevde uçak gemisi saldırısı ve Apache. Karttaki 4 hedefe eklenmez, taşıyıcı skor hedefi olmaz.
+- Her bölümde sürpriz araç değişir: avcı, Apache, dron. Aynı avcıyı kopyalamak yetmez.
+- Güvenli bölgeye boş ve yavaş dönüş istenmiyor. Kıça iniş durur, 1 km boş bacak durmaz.
+- Korvet ve destroyer küçük görünüyor. Çarpışma yarıçapı bu dilimde değişmez, yalnız görünen boy.
+- 205 görev birden yazılmaz. Mobil ve tablet: 44 px ve üç genişlik durur, cihaz turu ayrıca.
+- Sahte AdMob SDK yok.
+
+### Dilim G — boş dönüş, okunur gemi, farklı saldırı
+
+Bu tur. Kabul: yardımlı görev 1 iner, can ≥ 60, düşman atışı > 0. Kuzeyden gelen iniş kıçta başlar, adım 4 metreyi geçmez. Görev 2 dönüşe girerse iner. 4 dk yazılmaz.
+
+Ölçüm 3.126, sim: kuzeyden iniş 20 s, kıçta başladı, adım 1,5 m. Görev 1 üç koşu 115 / 126 / 127 s, can 98–100, öldürme 6. Eğri 125 s, çıkış 0. İt dalaşı kapanış 232 m, atış 2. Önceki kapanış 3 m. Görev 2 indi. 4 dk yok. Tablet bu turda yok.
+
 ## Senin turun
 
 Dilim A kodlanınca 8080’de görev 1. Bakılacak üç şey: avcı dönüyor mu, gemi ateş ediyor mu, sorti hâlâ düz vuruşla bitiyor mu. Cihaz ölçümü bu ortamda kapanmaz.
