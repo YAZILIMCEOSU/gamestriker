@@ -658,7 +658,7 @@ if (MODE === 'curve') {
   chk('kolay görevde SAM ve radar ateş etmiyor', ground.length === 0, ground.map((q) => q.src).join(','));
   const steer = new Sim(MISSION_LIST[0], 'striker', PR);
   const b0 = Math.abs(steer.targetBearing);
-  for (let i = 0; i < 6 * 60; i++) steer.update(1 / 60, { yaw: 0.2, pitch: 0, throttle: 0.5, fire: false, boost: false });
+  for (let i = 0; i < 9 * 60; i++) steer.update(1 / 60, { yaw: 0.2, pitch: 0, throttle: 0.5, fire: false, boost: false });
   chk('hafif kol kolay görevde rotayı kesmiyor', Math.abs(steer.targetBearing) < b0 - 0.05, `${b0.toFixed(2)} -> ${Math.abs(steer.targetBearing).toFixed(2)}`);
   const card = (MISSION_LIST[0].targets || []).length;
   const sim0 = new Sim(MISSION_LIST[0], 'striker', PR);

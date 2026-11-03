@@ -130,3 +130,11 @@ Bu tur. Kabul: yardımlı görev 1 iner, can ≥ 60, düşman atışı > 0. Kuze
 ## Senin turun
 
 Dilim A kodlanınca 8080’de görev 1. Bakılacak üç şey: avcı dönüyor mu, gemi ateş ediyor mu, sorti hâlâ düz vuruşla bitiyor mu. Cihaz ölçümü bu ortamda kapanmaz.
+
+### Dilim H — kalkış geri sayımı, iniş tekerleği, pilot dosyası
+
+3.127. Hız artırılmadı. Hedef sayısı değişmedi. 3.126 iniş oluğu duruyor.
+
+Sim, dt tavanı 0.04: 3,05 sn fren, hız 0, z 1560, tekerlek açık. Mesaj sırası count3, count2, count1, catapult. Hareket 3,7 sn, combat 7,2 sn, o anda tekerlek kapalı. Kuzeyden iniş denemesi: tekerlek açık, gearDown, 2,2 sn sonra clearedLand, sonuç landed, y 17, z 1513. Konuşma sentezi cihazda ölçülmedi.
+
+Eğri bir koşuda görev 2 bitmedi (maxY 1296, sonuç yok). Aynı kodda sonraki koşu EXIT 0: görev 1 126 s, görev 2 indi, it dalaşı kapanış 310 m. 4 dk yok. Kol penceresi 6 sn iken uçak hâlâ kalkıştaydı; ölçüm 9 sn’ye alındı, iddia değişmedi.
