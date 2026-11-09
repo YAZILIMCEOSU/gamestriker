@@ -1,4 +1,4 @@
-const V = "striker-v3.143";
+const V = "striker-v3.144";
 self.addEventListener("install", (e) => {
   e.waitUntil(self.skipWaiting());
 });
