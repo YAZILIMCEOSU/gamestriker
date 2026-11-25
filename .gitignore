@@ -4,3 +4,11 @@ __pycache__/
 .venv/
 *.pyc
 tools/diag/.build/
+
+# Büyük ikili ve arşiv dosyaları repoya girmesin (arşivler GitHub Release'te)
+*.mp4
+*.zip
+*.log
+.DS_Store
+Thumbs.db
+tools/blender/stubs/
